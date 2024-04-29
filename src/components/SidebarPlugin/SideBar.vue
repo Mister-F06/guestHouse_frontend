@@ -5,7 +5,7 @@
             <navbar-toggle-button @click.native="showSidebar">
             </navbar-toggle-button>
             <router-link class="navbar-brand" to="/">
-                <img :src="logo" class="navbar-brand-img" alt="..."style="width:45% !important; height: 70%;">
+                <img :src="logo" class="navbar-brand-img" alt="..."style="width:200px !important; height: 70%;">
             </router-link>
             <slot name="mobile-right">
                 <ul class="nav align-items-center d-md-none">
