@@ -30,15 +30,23 @@
             </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form role="form" @submit.prevent="handleSubmit(onCreateUser)">
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="ni ni-hat-3"
-                              placeholder="Name"
-                              name="Name"
+                              placeholder="Nom"
+                              name="Firstname"
                               :rules="{required: true}"
-                              v-model="model.name">
+                              v-model="model.firstname">
                   </base-input>
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-hat-3"
+                              placeholder="Prenoms"
+                              name="Lastname"
+                              :rules="{required: true}"
+                              v-model="model.lastname">
+                  </base-input> 
 
                   <base-input alternative
                               class="mb-3"
@@ -47,6 +55,14 @@
                               name="Email"
                               :rules="{required: true, email: true}"
                               v-model="model.email">
+                  </base-input>
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-mobile-button"
+                              placeholder="Telephone"
+                              name="Telephone"
+                              :rules="{required: true}"
+                              v-model="model.telephone">
                   </base-input>
 
                   <base-input alternative
@@ -57,6 +73,15 @@
                               name="Password"
                               :rules="{required: true, min: 6}"
                               v-model="model.password">
+                  </base-input>
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-lock-circle-open"
+                              placeholder="Confirmé le mot de passe"
+                              type="password"
+                              name="Password_confirmation"
+                              :rules="{required: true, min: 6}"
+                              v-model="model.password_confirmation">
                   </base-input>
                   <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
@@ -70,7 +95,8 @@
                     </b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button type="submit" variant="primary" class="mt-4">S'inscrire</b-button>
+                    <b-button type="submit" variant="primary" v-if="!load" class="mt-4">S'inscrire</b-button>
+                    <b-button  variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
                 </b-form>
               </validation-observer>
@@ -82,22 +108,49 @@
   </div>
 </template>
 <script>
-
+import { Notification } from 'vue-notification';
+import router from '../../routes/router';
+import store from '../../store/index'
   export default {
     name: 'register',
+    components: {
+      Notification,  
+    },
     data() {
       return {
+        load:false,
         model: {
-          name: '',
-          email: '',
-          password: '',
-          agree: false
+            email  : "gh@mail.com",
+            password  : "Password@123",
+            password_confirmation  : "Password@123",
+            telephone  : "+229 00 00 0000",
+            lastname  : "Guest",
+            firstname  : "House"
         }
       }
     },
     methods: {
-      onSubmit() {
-        // this will be called only after form is valid. You can do an api call here to register users
+      async onCreateUser() {
+        try {
+          this.load = true;
+          const response = await store.dispatch("auth/register", this.model);
+          this.$notify({
+            title: 'Success',
+            text: 'User created successfully!',
+            type: 'success'
+          });
+          this.load = false;
+          router.push({ path: '/login' });
+          console.log('User created successfully:', response);
+        } catch (error) {
+          console.error('Error creating user:', error);
+          this.$notify({
+            title: 'Error',
+            text: 'Failed to create user. Please try again later.',
+            type: 'error'
+          });
+          this.load = false;
+        }
       }
     }
 

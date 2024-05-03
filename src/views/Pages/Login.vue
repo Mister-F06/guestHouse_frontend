@@ -31,7 +31,7 @@
               <div class="text-center text-muted mb-4">
               </div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form role="form" @submit.prevent="handleSubmit(onLogin)">
                   <base-input alternative
                               class="mb-3"
                               name="Email"
@@ -53,7 +53,8 @@
 
                   <b-form-checkbox v-model="model.rememberMe">Se souvenir de moi</b-form-checkbox>
                   <div class="text-center">
-                    <base-button type="primary" native-type="submit" class="my-4">Connexion</base-button>
+                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Connexion</base-button>
+                    <b-button  variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
                 </b-form>
               </validation-observer>
@@ -73,20 +74,49 @@
   </div>
 </template>
 <script>
+import { Notification } from 'vue-notification';
+import router from '../../routes/router';
+import store from '../../store/index'
+
   export default {
+    name: 'login',
+    components: {
+      Notification,  
+    },
     data() {
       return {
+        load:false,
         model: {
-          email: '',
-          password: '',
-          rememberMe: false
+            email  : "gh@mail.com",
+            password  : "Password@123", 
         }
-      };
+      }
     },
     methods: {
-      onSubmit() {
-        // this will be called only after form is valid. You can do api call here to login
+      async onLogin() {
+      try {
+        this.load = true
+        const response = await store.dispatch("auth/login", this.model);
+
+        this.$notify({
+          title: 'Success',
+          text: 'User login successfully!',
+          type: 'success'
+        });
+        this.load = false
+        router.push({ path: '/dashboard' })
+        console.log('User login successfully:', response);
+      } catch (error) {
+        console.error('Error log user:', error);
+        this.$notify({
+          title: 'Error',
+          text: 'Failed to log user. Please try again later.',
+          type: 'error'
+        });
+        this.load = false
       }
     }
+    }
+
   };
 </script>
