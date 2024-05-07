@@ -54,6 +54,17 @@ const routes = [
         name: 'register',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
       },
+      {
+        path: '/verify/email',
+        name: 'verifyEmail',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/VerifyEmail.vue'),
+        props: route => ({
+            expires: route.query.expires,
+            token: route.query.token,
+            signature: route.query.signature
+        })
+    },
+    
       { path: '*', component: NotFound }
     ]
   }

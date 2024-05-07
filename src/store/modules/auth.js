@@ -23,6 +23,7 @@ export default {
     },
     actions:{
       async login({dispatch}, credentials){
+        dispatch
         let response = await axios.post('/auth/login', credentials);
         return dispatch('attempt', response.data)
       },
@@ -72,5 +73,25 @@ export default {
         }
       },
 
+      async getNewLink({dispatch}, credentials){
+        dispatch
+        let response = await axios.put('/auth/resent/verify/link', credentials);
+        return response
+      },
+      async verifyEmail({ dispatch }, emailData) {
+          try {
+              // Construire l'URL avec les paramètres
+              const url = `/auth/verify/email?expires=${emailData.expires}&token=${emailData.token}&signature=${emailData.signature}`;
+              
+              // Effectuer la requête POST avec l'URL construite et les données
+              const response = await axios.post(url, {});
+      
+              return response;
+          } catch (error) {
+              // Gérer les erreurs ici
+              throw error;
+          }
+      },
+    
     }
 }

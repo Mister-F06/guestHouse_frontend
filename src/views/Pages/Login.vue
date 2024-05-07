@@ -93,25 +93,18 @@ import store from '../../store/index'
       }
     },
     methods: {
-      async onLogin() {
+      async onLogin() { 
       try {
         this.load = true
         const response = await store.dispatch("auth/login", this.model);
-
-        this.$notify({
-          title: 'Success',
-          text: 'User login successfully!',
-          type: 'success'
+        this.$toast.success("Connexion reussie", {
+            timeout: 2000
         });
         this.load = false
         router.push({ path: '/dashboard' })
-        console.log('User login successfully:', response);
       } catch (error) {
-        console.error('Error log user:', error);
-        this.$notify({
-          title: 'Error',
-          text: 'Failed to log user. Please try again later.',
-          type: 'error'
+        this.$toast.error("Adresse email ou mot de passe incorrect", {
+            timeout: 2000
         });
         this.load = false
       }

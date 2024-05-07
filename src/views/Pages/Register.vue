@@ -88,7 +88,7 @@
                   <b-row class=" my-4">
                     <b-col cols="12">
                       <base-input :rules="{ required: { allowFalse: false } }" name=Privacy Policy>
-                        <b-form-checkbox v-model="model.agree">
+                        <b-form-checkbox v-model="model.accept_terms">
                           <span class="text-muted">J'accepte les <a href="#!">Politiques de confidentiallités</a></span>
                         </b-form-checkbox>
                       </base-input>
@@ -125,7 +125,8 @@ import store from '../../store/index'
             password_confirmation  : "Password@123",
             telephone  : "+229 00 00 0000",
             lastname  : "Guest",
-            firstname  : "House"
+            firstname  : "House",
+            accept_terms  : false
         }
       }
     },
@@ -134,21 +135,15 @@ import store from '../../store/index'
         try {
           this.load = true;
           const response = await store.dispatch("auth/register", this.model);
-          this.$notify({
-            title: 'Success',
-            text: 'User created successfully!',
-            type: 'success'
-          });
+          this.$toast.success("Action reussie", {
+            timeout: 2000
+        });
           this.load = false;
           router.push({ path: '/login' });
-          console.log('User created successfully:', response);
         } catch (error) {
-          console.error('Error creating user:', error);
-          this.$notify({
-            title: 'Error',
-            text: 'Failed to create user. Please try again later.',
-            type: 'error'
-          });
+           this.$toast.error("Verifier les informations et reessayer", {
+            timeout: 2000
+        });
           this.load = false;
         }
       }
