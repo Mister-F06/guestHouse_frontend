@@ -23,7 +23,7 @@
       </div>
       <!-- Page content -->
       <b-container class="mt--8 pb-5">
-         <div class="columns is-multiline" v-if="showPage1">
+         <div class="columns is-multiline" v-if="showPage1 == true">
             <div class="column is-6">
                 <img src="../../assets/undraw_done_re_oak4.svg" alt="" width="500">
             </div>
@@ -34,7 +34,7 @@
                   </div>
             </div>
          </div>
-         <div class="columns is-multiline" v-else>
+         <div class="columns is-multiline" v-if="showPage1 == false">
             <div class="column is-6">
                   <div class="box" style="text-align: center;">
                     <p class="p_">Echec de verification de votre adresse email.</p>
@@ -64,9 +64,9 @@
         return {
           load:false,
           timeResend:0,
-          showPage1: true ,
+          showPage1: undefined ,
           credentials:{
-                token  : "n64FISyNnthm5BVc7V195MHkIwPDsWENjszLKSwP"
+                token  : ""
             }
         }
       },
@@ -83,6 +83,8 @@
                 signature: this.signature
             };
             const response = await store.dispatch("auth/verifyEmail", emailData);
+            this.showPage1 = true;
+
             this.$toast.success("Action reussie", {
               timeout: 2000
           });
@@ -98,8 +100,11 @@
         },
 
         async getNewLink(){
+          const data = {
+                token: this.token,
+            };
                await store
-                    .dispatch("auth/getNewLink",this.credentials)
+                    .dispatch("auth/getNewLink",data)
                     .then(() => {
                       this.timeResend=120
                       let inter=setInterval(()=>{
