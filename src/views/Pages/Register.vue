@@ -83,8 +83,8 @@
                               :rules="{required: true, min: 6}"
                               v-model="model.password_confirmation">
                   </base-input>
-                  <div class="text-muted font-italic"><small>password strength: <span
-                    class="text-success font-weight-700">strong</span></small></div>
+                  <div class="text-muted font-italic"><small>Efficacité du mot de passe: <span
+                    class="text-success font-weight-700">Fort</span></small></div>
                   <b-row class=" my-4">
                     <b-col cols="12">
                       <base-input :rules="{ required: { allowFalse: false } }" name=Privacy Policy>
@@ -120,7 +120,7 @@ import store from '../../store/index'
       return {
         load:false,
         model: {
-            email  : "gh@mail.com",
+            email  : "gh@gmail.com",
             password  : "Password@123",
             password_confirmation  : "Password@123",
             telephone  : "+229 00 00 0000",
@@ -135,13 +135,13 @@ import store from '../../store/index'
         try {
           this.load = true;
           const response = await store.dispatch("auth/register", this.model);
-          this.$toast.success("Action reussie", {
-            timeout: 2000
-        });
+          this.$toast.success("Veuillez accéder à votre adresse e-mail pour valider votre compte. Un lien a été envoyé.", {
+              timeout: 6000
+          });
           this.load = false;
           router.push({ path: '/login' });
         } catch (error) {
-           this.$toast.error("Verifier les informations et reessayer", {
+           this.$toast.error("Verifier les informations et réessayer", {
             timeout: 2000
         });
           this.load = false;
