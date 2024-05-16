@@ -25,7 +25,7 @@ export default {
         async login({ dispatch }, credentials) {
             dispatch
             let response = await axios.post('/auth/login', credentials);
-            return dispatch('attempt', response.data)
+            return dispatch('attempt', response.data.message.token)
         },
         async findAll() {
             let response = await axios.get('/evaluates');
@@ -55,12 +55,11 @@ export default {
                 commit('SET_CONNECTED', true)
                 commit('SET_TOKEN', data)
             }
-
-            if (!state.token) {
+            if (localStorage.getItem('token') == null) {
                 return
             }
             try {
-                let response = await axios.post('/users/me', data)
+                let response = await axios.get('/users/me')
                 commit('SET_USER', response.data.user)
 
             } catch (error) {

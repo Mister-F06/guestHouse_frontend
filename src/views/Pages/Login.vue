@@ -87,7 +87,7 @@ import store from '../../store/index'
       return {
         load:false,
         model: {
-            email  : "gh@mail.com",
+            email  : "gh12@gmail.com",
             password  : "Password@123", 
         }
       }
