@@ -25,13 +25,13 @@
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
             <b-card-header class="bg-transparent pb-5"  >
-              <div class="text-muted text-center mt-2 mb-3"><h1>Authentification</h1></div>
+              <div class="text-muted text-center mt-2 mb-3"><h1>Changer votre Mot de passe</h1></div>
             </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
               </div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(onLogin)">
+                <b-form role="form" @submit.prevent="handleSubmit(onChangePassword)">
                   <base-input alternative
                               class="mb-3"
                               name="Email"
@@ -49,6 +49,15 @@
                               type="password"
                               placeholder="Password"
                               v-model="model.password">
+                  </base-input>
+                  <base-input alternative
+                              class="mb-3"
+                              name="Password"
+                              :rules="{required: true, min: 6}"
+                              prepend-icon="ni ni-lock-circle-open"
+                              type="password"
+                              placeholder="Password"
+                              v-model="model.password_confirmation">
                   </base-input>
 
                   <b-form-checkbox v-model="model.rememberMe">Se souvenir de moi</b-form-checkbox>
@@ -89,21 +98,22 @@ import store from '../../store/index'
         model: {
             email  : "gh12@gmail.com",
             password  : "Password@123", 
+            password_confirmation  : "Password@123", 
         }
       }
     },
     methods: {
-      async onLogin() { 
+      async onChangePassword() { 
       try {
         this.load = true
-        const response = await store.dispatch("auth/login", this.model);
-        this.$toast.success("Connexion reussie", {
+        const response = await store.dispatch("auth/changePassword", this.model);
+        this.$toast.success("Mot de passe changer avec succes", {
             timeout: 2000
         });
         this.load = false
         router.push({ path: '/dashboard' })
       } catch (error) {
-        this.$toast.error("Adresse email ou mot de passe incorrect", {
+        this.$toast.error("Veuillez vérifier les informations et réessayer.", {
             timeout: 2000
         });
         this.load = false

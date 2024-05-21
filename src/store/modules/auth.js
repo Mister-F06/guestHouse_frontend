@@ -43,12 +43,22 @@ export default {
             })
         },
 
+
         async register({ dispatch }, data) {
             dispatch
             let response = await axios.post('/auth/register', data);
             return response;
         },
-
+        async askverifyEMail({ dispatch }, data) {
+            dispatch
+            let response = await axios.post('/auth/reset-password', data);
+            return response;
+        },
+        async changePassword({ dispatch }, data) {
+            dispatch
+            let response = await axios.put('/auth/reset-password', data);
+            return response;
+        },
         async attempt({ commit, state }, data) {
             if (data) {
                 localStorage.setItem('token', data);

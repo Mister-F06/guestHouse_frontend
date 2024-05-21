@@ -24,14 +24,12 @@
       <b-row class="justify-content-center">
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
-            <b-card-header class="bg-transparent pb-5"  >
-              <div class="text-muted text-center mt-2 mb-3"><h1>Authentification</h1></div>
+            <b-card-header class="bg-transparent "  >
+              <div class="text-muted text-center mt-2 mb-3"><h1>Vérifier votre adresse email</h1></div>
             </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
-              </div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(onLogin)">
+                <b-form role="form" @submit.prevent="handleSubmit(onAskVerifyEmail)">
                   <base-input alternative
                               class="mb-3"
                               name="Email"
@@ -40,20 +38,8 @@
                               placeholder="Email"
                               v-model="model.email">
                   </base-input>
-
-                  <base-input alternative
-                              class="mb-3"
-                              name="Password"
-                              :rules="{required: true, min: 6}"
-                              prepend-icon="ni ni-lock-circle-open"
-                              type="password"
-                              placeholder="Password"
-                              v-model="model.password">
-                  </base-input>
-
-                  <b-form-checkbox v-model="model.rememberMe">Se souvenir de moi</b-form-checkbox>
                   <div class="text-center">
-                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Connexion</base-button>
+                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Vérifier</base-button>
                     <b-button  variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
                 </b-form>
@@ -62,7 +48,7 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
+              <router-link to="/login" class="text-light"><small>Connexion</small></router-link>
             </b-col>
             <b-col cols="6" class="text-right">
               <router-link to="/register" class="text-light"><small>Créer un compte</small></router-link>
@@ -88,22 +74,21 @@ import store from '../../store/index'
         load:false,
         model: {
             email  : "gh12@gmail.com",
-            password  : "Password@123", 
         }
       }
     },
     methods: {
-      async onLogin() { 
+      async onAskVerifyEmail() { 
       try {
         this.load = true
-        const response = await store.dispatch("auth/login", this.model);
-        this.$toast.success("Connexion reussie", {
+        const response = await store.dispatch("auth/askverifyEMail", this.model);
+        this.$toast.success("Un lien a été envoyé a votre adresse email.", {
             timeout: 2000
         });
         this.load = false
-        router.push({ path: '/dashboard' })
+        router.push({ path: '/login' })
       } catch (error) {
-        this.$toast.error("Adresse email ou mot de passe incorrect", {
+        this.$toast.error("Adresse email incorrect", {
             timeout: 2000
         });
         this.load = false
