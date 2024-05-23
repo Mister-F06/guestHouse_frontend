@@ -62,7 +62,14 @@ const routes = [{
                 path: '/changePassword',
                 name: 'changePassword',
                 component: () =>
-                    import ( /* webpackChunkName: "demo" */ '../views/Pages/ChangePassword.vue')
+                    import ( /* webpackChunkName: "demo" */ '../views/Pages/ChangePassword.vue'),
+                props: route => ({
+                    expires: route.query.expires,
+                    token: route.query.token,
+                    signature: route.query.signature,
+                    password: "",
+                    password_confirmation: "",
+                })
             },
             {
                 path: '/register',

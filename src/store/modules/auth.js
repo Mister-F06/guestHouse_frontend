@@ -54,11 +54,6 @@ export default {
             let response = await axios.post('/auth/reset-password', data);
             return response;
         },
-        async changePassword({ dispatch }, data) {
-            dispatch
-            let response = await axios.put('/auth/reset-password', data);
-            return response;
-        },
         async attempt({ commit, state }, data) {
             if (data) {
                 localStorage.setItem('token', data);
@@ -94,6 +89,22 @@ export default {
 
                 // Effectuer la requête POST avec l'URL construite et les données
                 const response = await axios.post(url, {});
+
+                return response;
+            } catch (error) {
+                // Gérer les erreurs ici
+                throw error;
+            }
+        },
+
+        async changePassword({ dispatch }, emailData) {
+            dispatch
+            try {
+                // Construire l'URL avec les paramètres
+                const url = `/auth/reset-password?expires=${emailData.expires}&token=${emailData.token}&signature=${emailData.signature}`;
+
+                // Effectuer la requête POST avec l'URL construite et les données
+                const response = await axios.put(url, {});
 
                 return response;
             } catch (error) {

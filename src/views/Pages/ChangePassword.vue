@@ -89,6 +89,8 @@ import store from '../../store/index'
 
   export default {
     name: 'login',
+    props: ['expires', 'token', 'signature','password','password_confirmation'],
+
     components: {
       Notification,  
     },
@@ -106,7 +108,14 @@ import store from '../../store/index'
       async onChangePassword() { 
       try {
         this.load = true
-        const response = await store.dispatch("auth/changePassword", this.model);
+        const emailData = {
+                expires: this.expires,
+                token: this.token,
+                signature: this.signature,
+                password: this.model.password,
+                password_confirmation: this.model.password_confirmation
+            };
+        const response = await store.dispatch("auth/changePassword", this.emailData);
         this.$toast.success("Mot de passe changer avec succes", {
             timeout: 2000
         });
