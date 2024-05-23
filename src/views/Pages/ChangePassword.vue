@@ -34,15 +34,6 @@
                 <b-form role="form" @submit.prevent="handleSubmit(onChangePassword)">
                   <base-input alternative
                               class="mb-3"
-                              name="Email"
-                              :rules="{required: true, email: true}"
-                              prepend-icon="ni ni-email-83"
-                              placeholder="Email"
-                              v-model="model.email">
-                  </base-input>
-
-                  <base-input alternative
-                              class="mb-3"
                               name="Password"
                               :rules="{required: true, min: 6}"
                               prepend-icon="ni ni-lock-circle-open"
@@ -98,7 +89,6 @@ import store from '../../store/index'
       return {
         load:false,
         model: {
-            email  : "gh12@gmail.com",
             password  : "Password@123", 
             password_confirmation  : "Password@123", 
         }
