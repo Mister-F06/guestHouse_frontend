@@ -25,7 +25,7 @@ export default {
         async login({ dispatch }, credentials) {
             dispatch
             let response = await axios.post('/auth/login', credentials);
-            return dispatch('attempt', response.data.message.token)
+            return dispatch('attempt', response.data.token)
         },
         async findAll() {
             let response = await axios.get('/evaluates');
@@ -104,7 +104,7 @@ export default {
                 const url = `/auth/reset-password?expires=${emailData.expires}&token=${emailData.token}&signature=${emailData.signature}`;
 
                 // Effectuer la requête POST avec l'URL construite et les données
-                const response = await axios.put(url, {});
+                const response = await axios.put(url, emailData);
 
                 return response;
             } catch (error) {

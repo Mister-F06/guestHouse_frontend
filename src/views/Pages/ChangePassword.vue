@@ -53,7 +53,7 @@
 
                   <b-form-checkbox v-model="model.rememberMe">Se souvenir de moi</b-form-checkbox>
                   <div class="text-center">
-                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Connexion</base-button>
+                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Enregistrer</base-button>
                     <b-button  variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
                 </b-form>
@@ -96,28 +96,28 @@ import store from '../../store/index'
     },
     methods: {
       async onChangePassword() { 
-      try {
-        this.load = true
-        const emailData = {
-                expires: this.expires,
-                token: this.token,
-                signature: this.signature,
-                password: this.model.password,
-                password_confirmation: this.model.password_confirmation
-            };
-        const response = await store.dispatch("auth/changePassword", this.emailData);
-        this.$toast.success("Mot de passe changer avec succes", {
-            timeout: 2000
-        });
-        this.load = false
-        router.push({ path: '/dashboard' })
-      } catch (error) {
-        this.$toast.error("Veuillez vérifier les informations et réessayer.", {
-            timeout: 2000
-        });
-        this.load = false
+        try {
+          this.load = true
+          const emailData = {
+                  expires: this.expires,
+                  token: this.token,
+                  signature: this.signature,
+                  password: this.model.password,
+                  password_confirmation: this.model.password_confirmation,
+              };
+          const response = await store.dispatch("auth/changePassword", emailData);
+          this.$toast.success("Mot de passe changer avec succes", {
+              timeout: 2000
+          });
+          this.load = false
+          // router.push({ path: '/dashboard' })
+        } catch (error) {
+          this.$toast.error("Veuillez vérifier les informations et réessayer.", {
+              timeout: 2000
+          });
+          this.load = false
+        }
       }
-    }
     }
 
   };
