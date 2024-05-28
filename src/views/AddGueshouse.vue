@@ -276,6 +276,7 @@
                             <upload
                               class="upload-demo"
                               v-memo="model.cover"
+                              limit="1"
                               :auto-upload="false"
                               ref="uploadCover"
                               :file-list="fileList">
