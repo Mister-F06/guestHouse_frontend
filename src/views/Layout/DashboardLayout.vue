@@ -5,7 +5,7 @@
       <template slot="links">
         <sidebar-item
           :link="{
-            name: 'Dashboard',
+            name: 'Tableau de bord',
             path: '/dashboard',
             icon: 'ni ni-tv-2 text-primary',
           }"
@@ -14,9 +14,9 @@
 
         <sidebar-item
             :link="{
-              name: 'Icons',
-              path: '/icons',
-              icon: 'ni ni-planet text-blue'
+              name: 'Ajouter un gueshouse',
+              path: '/addGueshouse',
+              icon: 'ni ni-fat-add text-blue'
               }"
             >
         </sidebar-item>
@@ -47,14 +47,14 @@
 
         <sidebar-item
                   :link="{
-                    name: 'Login',
+                    name: 'Connexion',
                     path: '/login',
                     icon: 'ni ni-key-25 text-info'
                   }">
         </sidebar-item>
         <sidebar-item
                   :link="{
-                    name: 'Register',
+                    name: 'Inscription',
                     path: '/register',
                     icon: 'ni ni-circle-08 text-pink'
                   }">

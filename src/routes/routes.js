@@ -17,10 +17,10 @@ const routes = [{
                     import ( /* webpackChunkName: "demo" */ '../views/Dashboard.vue')
             },
             {
-                path: '/icons',
-                name: 'icons',
+                path: '/addGueshouse',
+                name: 'Gestion des Guesthouses',
                 component: () =>
-                    import ( /* webpackChunkName: "demo" */ '../views/Icons.vue')
+                    import ( /* webpackChunkName: "demo" */ '../views/AddGueshouse.vue')
             },
             {
                 path: '/profile',
