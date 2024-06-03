@@ -5,6 +5,7 @@ import store from '../src/store/index'
 import Notifications from 'vue-notification';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import axios from '../src/service/interceptor';
 
 // router setup
 import router from './routes/router';
@@ -12,6 +13,8 @@ import router from './routes/router';
 Vue.use(DashboardPlugin);
 Vue.use(Notifications);
 Vue.use(Toast);
+Vue.use(axios);
+
 /* eslint-disable no-new */
 store.dispatch("auth/attempt");
 new Vue({
