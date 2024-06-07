@@ -13,6 +13,10 @@ export default {
             let response = await axios.post('/guest_house/', formdata);
             return response
         },
+        async listguesthouse() {
+            let response = await axios.get('/guest_house/');
+            return response
+        },
 
     }
 }

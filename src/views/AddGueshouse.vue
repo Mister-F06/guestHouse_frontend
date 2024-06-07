@@ -8,80 +8,54 @@
                 <h3 class="mb-0">Liste des gueshouses</h3>
                 <b-button v-b-modal.modal-1 variant="primary">Ajouter</b-button>
             </b-card-header>
-
-            <el-table class="table-responsive table-flush"
-                    header-row-class-name="thead-light"
-                    :data="projects">
-                <el-table-column label="Project"
-                                min-width="310px"
-                                prop="name"
-                                sortable>
-                    <template v-slot="{row}">
-                        <b-media no-body class="align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                                <img alt="Image placeholder" :src="row.img">
+            <div class="table-container m-5">
+                <table class="table is-bordered   is-hoverable is-fullwidth">
+                    <tr>
+                        <th style=" text-align: left">Désignation</th>
+                        <th style=" text-align: left">Prix</th>
+                        <th style=" text-align: left">Adresse</th>
+                        <th style=" text-align: right">Status</th>
+                        <th style=" text-align: right">Action</th>
+                    </tr>
+                    <tr v-for="item in displayedGuesthouse":key="item.id">
+                        <td style=" text-align: left">{{ item.name }}</td>
+                        <td style=" text-align: left">{{ item.price }}</td>
+                        <td style=" text-align: left">{{ item.address }}</td>
+                        <td style=" text-align: right"><span class="tag is-primary is-light">Disponible</span></td>
+                        <td style=" text-align: right">
+                            <a class="button is-small" >
+                                <span class="icon is-small">
+                                <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
+                                </span>
+                                <span style="color:green">Modifier</span>
                             </a>
-                            <b-media-body>
-                                <span class="font-weight-600 name mb-0 text-sm"></span>
-                            </b-media-body>
-                        </b-media>
-                    </template>
-                </el-table-column>
-                <el-table-column label="Budget"
-                                prop="budget"
-                                min-width="140px"
-                                sortable>
-                </el-table-column>
-
-                <el-table-column label="Status"
-                                min-width="170px"
-                                prop="status"
-                                sortable>
-                    <template v-slot="{row}">
-                        <badge class="badge-dot mr-4" type="">
-                            <i :class="`bg-${row.statusType}`"></i>
-                            <span class="status"></span>
-                        </badge>
-                    </template>
-                </el-table-column>
-
-                <el-table-column label="Users" min-width="190px">
-                    <div class="avatar-group">
-                    </div>
-                </el-table-column>
-
-                <el-table-column label="Completion"
-                                prop="completion"
-                                min-width="240px"
-                                sortable>
-                    <template v-slot="{row}">
-                        <div class="d-flex align-items-center">
-                            <span class="completion mr-2">%</span>
-                            <div>
-                                <base-progress :type="row.statusType" :value="row.completion"/>
-                            </div>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column min-width="180px">
-                    <template v-slot="{row}">
-                        <el-dropdown trigger="click" class="dropdown">
-                        <span class="btn btn-sm btn-icon-only text-light">
-                        <i class="fas fa-ellipsis-v mt-2"></i>
-                        </span>
-                            <el-dropdown-menu class="dropdown-menu dropdown-menu-arrow show" slot="dropdown">
-                                <b-dropdown-item>Action</b-dropdown-item>
-                                <b-dropdown-item>Another action</b-dropdown-item>
-                                <b-dropdown-item>Something else here</b-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
-            </el-table>
-
-            <b-card-footer class="py-4 d-flex justify-content-end">
-                <base-pagination v-model="currentPage" :per-page="10" :total="50"></base-pagination>
-            </b-card-footer>
+                            <a class="button is-small ml-1" >
+                                <span class="icon is-small">
+                                <i class="fa fa-trash is-small" style="font-size: small;color:red"></i>
+                                </span>
+                                <span style="color:red">Modifier</span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <div v-if="Object.keys(displayedGuesthouse).length == 0 " class="nodata">
+                   <h2>Aucune donnée</h2>
+                </div>
+                <div class="pagination mb-3 mt-3">
+                    <a class="button is-small" @click="previousPage" >
+                    <span class="icon is-small">
+                        <i class="fa fa-angle-left mr-3" style="font-size: small"></i>
+                    </span>
+                    <span>Précedent</span>
+                    </a>
+                    <a class="button is-small" @click="nextPage" >
+                    <span>Suivant</span>
+                    <span class="icon is-small">
+                        <i class="fa fa-angle-right ml-3" style="font-size: small"></i>
+                    </span>
+                    </a>
+                </div>
+            </div>
         </b-card>
       </b-container>
       <!-- Model Form Add GuestHouse -->
@@ -107,6 +81,7 @@
                               prepend-icon="ni ni-money-coins"
                               placeholder="Prix (FCFA)"
                               type="number"
+                              min="5"
                               v-model="model.price">
                             </base-input>
                         </b-col>
@@ -136,16 +111,29 @@
                         <b-col>
                             <base-input alternative
                               class="mb-3"
+                              name="Salles de bains"
+                              required
+                              prepend-icon="fa fa-bath"
+                              placeholder="Salles de bains"
+                              type="number"
+                              min="0"
+                              v-model="model.bathrooms_nbr">
+                            </base-input>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <base-input alternative
+                              class="mb-3"
                               name="Chambre"
                               required
                               prepend-icon="ni ni-shop"
                               placeholder="Chambre"
                               type="number"
+                              min="0"
                               v-model="model.bedrooms_nbr">
                             </base-input>
                         </b-col>
-                    </b-row>
-                    <b-row>
                         <b-col>
                             <base-input alternative
                               class="mb-3"
@@ -154,10 +142,11 @@
                               prepend-icon="fa fa-bed" 
                               placeholder="Lit"
                               type="number"
-
+                              min="0"
                               v-model="model.beds_nbr">
                             </base-input>
                         </b-col>
+                        
                         <b-col>
                             <base-input alternative
                               class="mb-3"
@@ -166,109 +155,87 @@
                               prepend-icon="fa fa-toilet"
                               placeholder="Toilette"
                               type="number"
-
+                              min="0"
                               v-model="model.toilets_nbr">
                             </base-input>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row class="mb-4" >
                         <b-col>
-                            <base-input alternative
-                              class="mb-3"
-                              name="Salles de bains"
-                              required
-                              prepend-icon="fa fa-bath"
-                              placeholder="Salles de bains"
-                              type="number"
-
-                              v-model="model.bathrooms_nbr">
-                            </base-input>
+                            <label for="has_pool">Piscine</label>
+                            <b-form-checkbox
+                                v-model="model.has_pool"
+                                name="has_pool"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="fa fa-swimmer"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
+                    
                         <b-col>
-                            <base-input alternative
-                              class="mb-3"
-                              name="Piscine"
-                              required
-                              prepend-icon="fa fa-swimmer"
-                              placeholder="Piscine"
-                              type="number"
-
-                              v-model="model.has_pool">
-                            </base-input>
+                            <label for="has_pool">Climatiseur</label>
+                            <b-form-checkbox
+                                v-model="model.has_air_conditioner"
+                                name="has_air_conditioner"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-settings-gear-65"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
-                    </b-row>
-                    <b-row>
+                        
                         <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Climatiseur"
-                                        required
-                                        prepend-icon="ni ni-settings-gear-65"
-                                        placeholder="Climatiseur"
-                                        type="number"
-
-                                        v-model="model.has_air_conditioner">
-                            </base-input>
-                        </b-col>
-                        <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Parking"
-                                        required
-                                        prepend-icon="ni ni-bus-front-12"
-                                        placeholder="Parking"
-                                        type="number"
-                                        v-model="model.has_parking">
-                            </base-input>
+                            <label for="has_pool">Parking</label>
+                            <b-form-checkbox
+                                v-model="model.has_parking"
+                                name="has_parking"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-bus-front-12"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row class="mb-4" >
                         <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Cuisine"
-                                        required
-                                        prepend-icon="ni ni-settings-gear-65"
-                                        placeholder="Cuisine"
-                                        type="number"
-
-                                        v-model="model.has_kitchen">
-                            </base-input>
+                            <label for="has_pool">Cuisine</label>
+                            <b-form-checkbox
+                                v-model="model.has_kitchen"
+                                name="has_kitchen"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-settings-gear-65"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
                         <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Jacuzzi"
-                                        required
-                                        prepend-icon="fa fa-bath"
-                                         type="number"
-
-                                        placeholder="Jacuzzi"
-                                        v-model="model.has_jacuzzi">
-                            </base-input>
+                            <label for="has_pool">Jacuzzi</label>
+                            <b-form-checkbox
+                                v-model="model.has_jacuzzi"
+                                name="has_jacuzzi"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="fa fa-bath"></i> Oui/Non
+                            </b-form-checkbox>
+                        </b-col>
+                        <b-col>
+                            <label for="has_pool">Machine à laver</label>
+                            <b-form-checkbox
+                                v-model="model.has_washing_machine"
+                                name="has_washing_machine"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-ui-04"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row class="mb-4" >
                         <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Machine à laver"
-                                        required
-                                        prepend-icon="ni ni-ui-04"
-                                        placeholder="Machine à laver"
-                                        v-model="model.has_washing_machine">
-                            </base-input>
-                        </b-col>
-                        <b-col>
-                            <base-input alternative
-                                        class="mb-3"
-                                        name="Voiture"
-                                        required
-                                        prepend-icon="ni ni-delivery-fast"
-                                        placeholder="Voiture"
-                                        type="number"
-                                        v-model="model.has_car">
-                            </base-input>
+                            <label for="has_pool">Voiture</label>
+                            <b-form-checkbox
+                                v-model="model.has_car"
+                                name="has_car"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-delivery-fast"></i> Oui/Non
+                            </b-form-checkbox>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -342,33 +309,34 @@
         currentPage: 1,
         load: false, // Ajout de la variable load pour contrôler l'état de chargement
         model: {
-            name: 'text',
-            price: '5',
-            description: 'text',
-            address: '1',
-            bedrooms_nbr: '1',
-            beds_nbr: '1',
-            toilets_nbr: '1',
-            bathrooms_nbr: '1',
-            has_pool: '1',
-            has_air_conditioner: '1',
-            has_kitchen: '1',
-            has_jacuzzi: '1',
-            has_washing_machine: '1',
-            has_car: '1',
-            has_parking: '1',
-            other: '1',
+            name: '',
+            price: '',
+            description: '',
+            address: '',
+            bedrooms_nbr: '',
+            beds_nbr: '',
+            toilets_nbr: '',
+            bathrooms_nbr: '',
+            has_pool: 0,
+            has_air_conditioner: 0,
+            has_kitchen: 0,
+            has_jacuzzi: 0,
+            has_washing_machine: 0,
+            has_car: 0,
+            has_parking: 0,
             cover: '',
             pictures: [],
             videos: []
         },
         fileList: [],
+        data_guesthouse: [],
+        itemsPerPage: 5,
+        currentPage: 1,
       };
     },
     methods: {
       async addGuesthouse() {
         try {
-            console.log(this.model)
             this.load = true; // Indiquer que la soumission est en cours
             
             // Création de FormData
@@ -398,10 +366,8 @@
 
             // Envoyer la requête au magasin Vuex
             const response = await store.dispatch("guesthouse/addguesthouse", formData);
-
-            if (response.ok) {
-                // Réinitialisation du formulaire après la soumission réussie
-                this.model = {
+             // Réinitialisation du formulaire après la soumission réussie
+             this.model = {
                     name: '',
                     price: '',
                     description: '',
@@ -422,26 +388,81 @@
                     videos: []
                 };
                 // Fermeture du modal après la soumission réussie
-                this.$refs['modal-1'].hide();
                 this.$toast.success("Guesthouse ajoutée avec succès !", {
                     timeout: 2000
                 });
-            } else {
-                this.$toast.error("Erreur lors de l\'ajout de la guesthouse", {
-                    timeout: 2000
-                });
-            }
+            this.load = false; 
+            this.listGuesthouse()
+            this.$bvModal.hide('modal-1')
         } catch (error) {
-            this.$toast.error('Une erreur est survenue', {
+            console.log(error)
+            this.$toast.error('Erreur lors de l\'ajout de la guesthouse', {
                 timeout: 2000
             });
-        } finally {
-            this.load = false; // Fin du chargement, quel que soit le résultat
-        }
-    }
+            this.load = false; 
+        }  
+    },
+    async listGuesthouse() { 
+      try {
+        const response = await store.dispatch("guesthouse/listguesthouse",);
+        this.data_guesthouse = response.data
+      } catch (error) {
+        this.$toast.error("Liste introuvable", {
+            timeout: 2000
+        });
+      }
+    },
+     // Pagination
+     changePage(page) {
+          this.currentPage = page;
+        },
+        previousPage() {
+          if (this.currentPage > 1) {
+            this.currentPage--;
+          }
+        },
+        nextPage() {
+          if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+          }
+        },
 
+
+    },
+    mounted() {
+        this.listGuesthouse()
+    },
+    computed: {
+        start() {
+          return (this.currentPage - 1) * this.itemsPerPage;
+        },
+        end() {
+          return this.start + this.itemsPerPage;
+        },
+        displayedGuesthouse() {
+          return this.data_guesthouse.slice(this.start, this.end);
+        },
+        totalPages() {
+          return Math.ceil(this.data_guesthouse.length / this.itemsPerPage);
+        }
     }
   };
 </script>
 
-<style></style>
+<style scoped>
+th{
+    font-size: 15px;
+}
+td{
+    font-size: 13px;
+}
+.nodata{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  text-align: center
+}
+</style>
