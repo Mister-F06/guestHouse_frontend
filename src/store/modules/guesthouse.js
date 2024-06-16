@@ -10,11 +10,11 @@ export default {
     actions: {
         async addguesthouse({ dispatch }, formdata) {
             dispatch
-            let response = await axios.post('/guest_house/', formdata);
+            let response = await axios.post('/guest_houses/', formdata);
             return response
         },
         async listguesthouse() {
-            let response = await axios.get('/guest_house/');
+            let response = await axios.get('/guest_houses/');
             return response
         },
 

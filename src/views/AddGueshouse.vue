@@ -15,13 +15,22 @@
                         <th style=" text-align: left">Prix</th>
                         <th style=" text-align: left">Adresse</th>
                         <th style=" text-align: right">Status</th>
+                        <th style=" text-align: right">Visibilité</th>
                         <th style=" text-align: right">Action</th>
                     </tr>
                     <tr v-for="item in displayedGuesthouse":key="item.id">
                         <td style=" text-align: left">{{ item.name }}</td>
-                        <td style=" text-align: left">{{ item.price }}</td>
+                        <td style=" text-align: left">{{ item.price }}  <span>FCFA</span></td>
                         <td style=" text-align: left">{{ item.address }}</td>
-                        <td style=" text-align: right"><span class="tag is-primary is-light">Disponible</span></td>
+                        <td style=" text-align: right">
+                          <span v-if="item.status == 'validated'" class="tag is-primary is-light">Valider</span>
+                          <span v-if="item.status == 'pending_validation'" class="tag is-warning is-light">En cours de traitement</span>
+                          <span v-if="item.status == 'rejected'" class="tag is-danger is-light">Rejeter</span>
+                        </td>
+                        <td style=" text-align: right">
+                          <span v-if="item.is_enabled == true" class="tag is-primary is-light">Visible</span>
+                          <span v-if="item.is_enabled == false" class="tag is-danger is-light">Invisible</span>
+                        </td>
                         <td style=" text-align: right">
                             <a class="button is-small" >
                                 <span class="icon is-small">
@@ -29,11 +38,11 @@
                                 </span>
                                 <span style="color:green">Modifier</span>
                             </a>
-                            <a class="button is-small ml-1" >
+                            <a class="button is-small ml-1" v-b-modal.modal-2 variant="primary" @click="detailInfoAdd(item)">
                                 <span class="icon is-small">
-                                <i class="fa fa-trash is-small" style="font-size: small;color:red"></i>
+                                <i class="fa fa-eye is-small" style="font-size: small;color:blue"></i>
                                 </span>
-                                <span style="color:red">Modifier</span>
+                                <span style="color:blue">voir plus</span>
                             </a>
                         </td>
                     </tr>
@@ -175,8 +184,8 @@
                         <b-col>
                             <label for="has_pool">Climatiseur</label>
                             <b-form-checkbox
-                                v-model="model.has_air_conditioner"
-                                name="has_air_conditioner"
+                                v-model="model.has_air_conditionner"
+                                name="has_air_conditionner"
                                 value="1"
                                 unchecked-value="0">
                                 <i class="ni ni-settings-gear-65"></i> Oui/Non
@@ -281,6 +290,174 @@
                 </b-form>
         </validation-observer>
       </b-modal>
+      <!-- Modal voir plus  -->
+      <b-modal id="modal-2" title="Détail sur le gueshouse" size="lg">
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Désignation</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.name}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Prix</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.price}} <span>FCFA</span></p> 
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Description</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.description}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Adresse</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.address}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Salles de bains</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.bedrooms_nbr}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Chambre</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.beds_nbr}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Lit</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.toilets_nbr}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Toilettes</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.bathrooms_nbr}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Piscine</p>
+          </div>
+          <div class="column is-8" >
+            <p v-if="this.detailInfo.has_pool == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Climatiseur</p>
+          </div>
+          <div class="column is-8" > 
+            <p v-if="this.detailInfo.has_air_conditionner == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Parking</p>
+          </div>
+          <div class="column is-8" > 
+            <p v-if="this.detailInfo.has_parking == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Cuisine</p>
+          </div>
+          <div class="column is-8" > 
+            <p v-if="this.detailInfo.has_kitchen == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Jacuzzi</p>
+          </div>
+          <div class="column is-8" > 
+            <p v-if="this.detailInfo.has_jacuzzi == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Machine à laver</p>
+          </div>
+          <div class="column is-8" > 
+            <p v-if="this.detailInfo.has_washing_machine == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Voiture</p>
+          </div>
+          <div class="column is-8" >
+            <p v-if="this.detailInfo.has_car == true">Disponible</p>
+            <p v-else>Indisponible</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Cover</p>
+          </div>
+          <div class="column is-8" >
+            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" itemprop="thumbnail" width="200" height="500">
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Images</p>
+          </div>
+          <div class="column is-8" >
+            <div class="block text-center">
+              <el-carousel height="150px">
+                <el-carousel-item v-for="item in this.detailInfo.pictures" :key="item">
+                  <img class="small justify-center" src="" alt="">
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Video</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.name}}</p>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4" >
+            <p>Désignation</p>
+          </div>
+          <div class="column is-8" >
+            <p>{{this.detailInfo.name}}</p>
+          </div>
+        </div>
+      </b-modal>
     </div>
 </template>
   
@@ -318,7 +495,7 @@
             toilets_nbr: '',
             bathrooms_nbr: '',
             has_pool: 0,
-            has_air_conditioner: 0,
+            has_air_conditionner: 0,
             has_kitchen: 0,
             has_jacuzzi: 0,
             has_washing_machine: 0,
@@ -332,6 +509,26 @@
         data_guesthouse: [],
         itemsPerPage: 5,
         currentPage: 1,
+        detailInfo:{
+          name: '',
+            price: '',
+            description: '',
+            address: '',
+            bedrooms_nbr: '',
+            beds_nbr: '',
+            toilets_nbr: '',
+            bathrooms_nbr: '',
+            has_pool: undefined,
+            has_air_conditionner: undefined,
+            has_kitchen: undefined,
+            has_jacuzzi: undefined,
+            has_washing_machine: undefined,
+            has_car: undefined,
+            has_parking: undefined,
+            cover: '',
+            pictures: [],
+            videos: []
+        },
       };
     },
     methods: {
@@ -377,7 +574,7 @@
                     toilets_nbr: '',
                     bathrooms_nbr: '',
                     has_pool: '',
-                    has_air_conditioner: '',
+                    has_air_conditionner: '',
                     has_kitchen: '',
                     has_jacuzzi: '',
                     has_washing_machine: '',
@@ -416,17 +613,52 @@
      changePage(page) {
           this.currentPage = page;
         },
-        previousPage() {
-          if (this.currentPage > 1) {
-            this.currentPage--;
-          }
-        },
-        nextPage() {
-          if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-          }
-        },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
 
+    showMediaFromGoogle(url, type = null) {
+        // Parse l'URL et extrait ses composants
+        let parsedUrl = new URL(url);
+        let queryParams = new URLSearchParams(parsedUrl.search);
+
+        if (type === "thumbnail") {
+            return "https://drive.google.com/thumbnail?id=" + queryParams.get('id');
+        } else {
+            // Retourne le lien direct vers le fichier
+            return "https://drive.google.com/uc?id=" + queryParams.get('id');
+        }
+    },
+    // Autres méthodes...
+
+
+    detailInfoAdd(item){ 
+      this.detailInfo.name = item.name
+      this.detailInfo.price = item.price
+      this.detailInfo.description = item.description
+      this.detailInfo.address = item.address
+      this.detailInfo.bedrooms_nbr = item.bedrooms_nbr
+      this.detailInfo.beds_nbr = item.beds_nbr
+      this.detailInfo.toilets_nbr = item.toilets_nbr
+      this.detailInfo.bathrooms_nbr = item.bathrooms_nbr
+      this.detailInfo.has_pool = item.has_pool
+      this.detailInfo.has_air_conditionner = item.has_air_conditionner
+      this.detailInfo.has_kitchen = item.has_kitchen
+      this.detailInfo.has_jacuzzi = item.has_jacuzzi
+      this.detailInfo.has_washing_machine = item.has_washing_machine
+      this.detailInfo.has_car = item.has_car
+      this.detailInfo.has_parking = item.has_parking
+      this.detailInfo.cover = this.showMediaFromGoogle(item.cover);
+      this.detailInfo.pictures = item.pictures.map(picture => this.showMediaFromGoogle(picture));
+      this.detailInfo.videos = item.videos.map(video => this.showMediaFromGoogle(video, "preview"));
+    },
 
     },
     mounted() {
