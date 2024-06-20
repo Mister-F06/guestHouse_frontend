@@ -423,8 +423,10 @@
           <div class="column is-4" >
             <p>Cover</p>
           </div>
-          <div class="column is-8" >
-            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" itemprop="thumbnail" width="200" height="500">
+          <div class="column is-8">
+            <figure class="image is-128x128">
+              <img :src="this.detailInfo.cover" alt="">
+            </figure>
           </div>
         </div>
         <div class="columns is-multiline">
@@ -432,12 +434,10 @@
             <p>Images</p>
           </div>
           <div class="column is-8" >
-            <div class="block text-center">
-              <el-carousel height="150px">
-                <el-carousel-item v-for="item in this.detailInfo.pictures" :key="item">
-                  <img class="small justify-center" src="" alt="">
-                </el-carousel-item>
-              </el-carousel>
+            <div  v-for="(item, index) in detailInfo.pictures" :key="index">
+              <figure class="image is-128x128">
+                <img :src="item" alt="">
+              </figure>
             </div>
           </div>
         </div>
@@ -446,15 +446,11 @@
             <p>Video</p>
           </div>
           <div class="column is-8" >
-            <p>{{this.detailInfo.name}}</p>
-          </div>
-        </div>
-        <div class="columns is-multiline">
-          <div class="column is-4" >
-            <p>Désignation</p>
-          </div>
-          <div class="column is-8" >
-            <p>{{this.detailInfo.name}}</p>
+            <div v-for="(item, index) in detailInfo.videos" :key="index">
+              <video width="320" height="240" controls>
+                <source :src="item" type="video/webm">
+              </video>
+            </div>
           </div>
         </div>
       </b-modal>
@@ -624,17 +620,17 @@
       }
     },
 
-    showMediaFromGoogle(url, type = null) {
+    showMediaFromGoogle(url) {
         // Parse l'URL et extrait ses composants
         let parsedUrl = new URL(url);
         let queryParams = new URLSearchParams(parsedUrl.search);
-
-        if (type === "thumbnail") {
-            return "https://drive.google.com/thumbnail?id=" + queryParams.get('id');
-        } else {
-            // Retourne le lien direct vers le fichier
-            return "https://drive.google.com/uc?id=" + queryParams.get('id');
-        }
+        return "https://drive.google.com/thumbnail?id=" + queryParams.get('id');
+    },
+    showMediaFromGoogleVideo(url) {
+        // Parse l'URL et extrait ses composants
+        let parsedUrl = new URL(url);
+        let queryParams = new URLSearchParams(parsedUrl.search);
+        return "https://drive.google.com/uc?id=" + queryParams.get('id');
     },
     // Autres méthodes...
 
@@ -656,8 +652,8 @@
       this.detailInfo.has_car = item.has_car
       this.detailInfo.has_parking = item.has_parking
       this.detailInfo.cover = this.showMediaFromGoogle(item.cover);
-      this.detailInfo.pictures = item.pictures.map(picture => this.showMediaFromGoogle(picture));
-      this.detailInfo.videos = item.videos.map(video => this.showMediaFromGoogle(video, "preview"));
+      this.detailInfo.pictures = item.pictures.map(picture => this.showMediaFromGoogle(picture.original_url));
+      this.detailInfo.videos = item.videos.map(video => this.showMediaFromGoogleVideo(video.original_url));
     },
 
     },
