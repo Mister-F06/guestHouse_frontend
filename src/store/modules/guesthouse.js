@@ -15,7 +15,8 @@ export default {
         },
         async updateguesthouse({ dispatch }, formData) {
             dispatch
-            let response = await axios.put(`/guest_houses/update/${formData.id}`, formData);
+            const id = formData.get('id')
+            let response = await axios.post(`/guest_houses/update/${id}`, formData);
             return response
         },
         async listguesthouse() {

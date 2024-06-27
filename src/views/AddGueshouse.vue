@@ -6,7 +6,7 @@
         <b-card no-body>
             <b-card-header class="border-0 d-flex justify-content-between align-content-center align-items-center" >
                 <h3 class="mb-0">Liste des gueshouses</h3>
-                <b-button v-b-modal.modal-1 variant="primary">Ajouter</b-button>
+                <b-button v-b-modal.modal-1 variant="primary" @click="changingUpdateValue()">Ajouter</b-button>
             </b-card-header>
             <div class="table-container m-5">
                 <table class="table is-bordered   is-hoverable is-fullwidth">
@@ -68,7 +68,7 @@
         </b-card>
       </b-container>
       <!-- Model Form Add GuestHouse -->
-      <b-modal id="modal-1" :title="this.updated_ == false ? 'Ajouter un gueshouse' : 'Modifier le gueshouse'" size="lg">
+      <b-modal id="modal-1" :title="updated_ == false ? 'Ajouter un gueshouse' : 'Modifier le gueshouse'" size="lg">
         <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                 <b-form role="form" @submit.prevent="handleSubmit(updated_ == false ? addGuesthouse : updateGuesthouse )">
                     <b-row>
@@ -247,7 +247,7 @@
                             </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row :class="updated_ ? 'visibilityClasse' : 'texting'">
                         <b-col>
                             <upload
                               class="upload-demo"
@@ -279,7 +279,7 @@
                               :auto-upload="false"
                               :file-list="fileList">
                               <base-button size="sm" type="primary"   class="my-4">Cliquer pour envoyer les vidéos</base-button>
-                              <div slot="tip" class="el-upload__tip">Fichiers jpg/png avec une taille inférieure à 500kb</div>
+                              <div slot="tip" class="el-upload__tip">Fichiers mp4/webp avec une taille inférieure à 500kb</div>
                             </upload>
                         </b-col>
                     </b-row>
@@ -658,6 +658,7 @@
             this.load = false;
             this.listGuesthouse()
             this.$bvModal.hide('modal-1')
+            this.updated_ = false
         } catch (error) {
             console.log(error)
             this.$toast.error('Erreur lors de la modification de la guesthouse', {
@@ -728,6 +729,9 @@
       this.detailInfo.videos = item.videos.map(video => this.showMediaFromGoogleVideo(video.original_url));
     },
 
+    changingUpdateValue(){
+      this.updated_ = false
+    },
     detailInfoUpdated(item){
       this.updated_ = true
       this.model.id = item.id
@@ -784,5 +788,11 @@ td{
   justify-items: center;
   align-content: center;
   text-align: center
+}
+.visibilityClasse{
+  visibility: hidden;
+}
+.texting{
+  color: auto;
 }
 </style>
