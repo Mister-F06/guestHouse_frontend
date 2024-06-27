@@ -18,7 +18,7 @@
                         <th style=" text-align: right">Visibilité</th>
                         <th style=" text-align: right">Action</th>
                     </tr>
-                    <tr v-for="item in displayedGuesthouse":key="item.id">
+                    <tr v-for="item in displayedGuesthouse" :key="item.id">
                         <td style=" text-align: left">{{ item.name }}</td>
                         <td style=" text-align: left">{{ item.price }}  <span>FCFA</span></td>
                         <td style=" text-align: left">{{ item.address }}</td>
@@ -32,7 +32,7 @@
                           <span v-if="item.is_enabled == false" class="tag is-danger is-light">Invisible</span>
                         </td>
                         <td style=" text-align: right">
-                            <a class="button is-small" >
+                            <a class="button is-small" v-b-modal.modal-1 variant="primary" @click="detailInfoUpdated(item)">
                                 <span class="icon is-small">
                                 <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
                                 </span>
@@ -68,9 +68,9 @@
         </b-card>
       </b-container>
       <!-- Model Form Add GuestHouse -->
-      <b-modal id="modal-1" title="Ajouter un gueshouse" size="lg">
+      <b-modal id="modal-1" :title="this.updated_ == false ? 'Ajouter un gueshouse' : 'Modifier le gueshouse'" size="lg">
         <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(addGuesthouse)">
+                <b-form role="form" @submit.prevent="handleSubmit(updated_ == false ? addGuesthouse : updateGuesthouse )">
                     <b-row>
                         <b-col>
                             <base-input alternative
@@ -148,14 +148,14 @@
                               class="mb-3"
                               name="Lit"
                               required
-                              prepend-icon="fa fa-bed" 
+                              prepend-icon="fa fa-bed"
                               placeholder="Lit"
                               type="number"
                               min="0"
                               v-model="model.beds_nbr">
                             </base-input>
                         </b-col>
-                        
+
                         <b-col>
                             <base-input alternative
                               class="mb-3"
@@ -180,7 +180,7 @@
                                 <i class="fa fa-swimmer"></i> Oui/Non
                             </b-form-checkbox>
                         </b-col>
-                    
+
                         <b-col>
                             <label for="has_pool">Climatiseur</label>
                             <b-form-checkbox
@@ -191,7 +191,7 @@
                                 <i class="ni ni-settings-gear-65"></i> Oui/Non
                             </b-form-checkbox>
                         </b-col>
-                        
+
                         <b-col>
                             <label for="has_pool">Parking</label>
                             <b-form-checkbox
@@ -305,7 +305,7 @@
             <p>Prix</p>
           </div>
           <div class="column is-8" >
-            <p>{{this.detailInfo.price}} <span>FCFA</span></p> 
+            <p>{{this.detailInfo.price}} <span>FCFA</span></p>
           </div>
         </div>
         <div class="columns is-multiline">
@@ -369,7 +369,7 @@
           <div class="column is-4" >
             <p>Climatiseur</p>
           </div>
-          <div class="column is-8" > 
+          <div class="column is-8" >
             <p v-if="this.detailInfo.has_air_conditionner == true">Disponible</p>
             <p v-else>Indisponible</p>
           </div>
@@ -378,7 +378,7 @@
           <div class="column is-4" >
             <p>Parking</p>
           </div>
-          <div class="column is-8" > 
+          <div class="column is-8" >
             <p v-if="this.detailInfo.has_parking == true">Disponible</p>
             <p v-else>Indisponible</p>
           </div>
@@ -387,7 +387,7 @@
           <div class="column is-4" >
             <p>Cuisine</p>
           </div>
-          <div class="column is-8" > 
+          <div class="column is-8" >
             <p v-if="this.detailInfo.has_kitchen == true">Disponible</p>
             <p v-else>Indisponible</p>
           </div>
@@ -396,7 +396,7 @@
           <div class="column is-4" >
             <p>Jacuzzi</p>
           </div>
-          <div class="column is-8" > 
+          <div class="column is-8" >
             <p v-if="this.detailInfo.has_jacuzzi == true">Disponible</p>
             <p v-else>Indisponible</p>
           </div>
@@ -405,7 +405,7 @@
           <div class="column is-4" >
             <p>Machine à laver</p>
           </div>
-          <div class="column is-8" > 
+          <div class="column is-8" >
             <p v-if="this.detailInfo.has_washing_machine == true">Disponible</p>
             <p v-else>Indisponible</p>
           </div>
@@ -449,6 +449,8 @@
             <div v-for="(item, index) in detailInfo.videos" :key="index">
               <video width="320" height="240" controls>
                 <source :src="item" type="video/webm">
+                <source :src="item" type="video/mp4">
+                <source :src="item" type="video/ogg">
               </video>
             </div>
           </div>
@@ -456,7 +458,7 @@
       </b-modal>
     </div>
 </template>
-  
+
 <script>
   import { Table, TableColumn, DropdownMenu, DropdownItem, Dropdown, Upload, Button } from 'element-ui'
   import Vue from 'vue'
@@ -479,9 +481,10 @@
     },
     data() {
       return {
-        currentPage: 1,
         load: false, // Ajout de la variable load pour contrôler l'état de chargement
+        updated_:false,
         model: {
+            id:'',
             name: '',
             price: '',
             description: '',
@@ -531,7 +534,7 @@
       async addGuesthouse() {
         try {
             this.load = true; // Indiquer que la soumission est en cours
-            
+
             // Création de FormData
             const formData = new FormData();
             for (const key in this.model) {
@@ -584,7 +587,7 @@
                 this.$toast.success("Guesthouse ajoutée avec succès !", {
                     timeout: 2000
                 });
-            this.load = false; 
+            this.load = false;
             this.listGuesthouse()
             this.$bvModal.hide('modal-1')
         } catch (error) {
@@ -592,10 +595,79 @@
             this.$toast.error('Erreur lors de l\'ajout de la guesthouse', {
                 timeout: 2000
             });
-            this.load = false; 
-        }  
+            this.load = false;
+        }
     },
-    async listGuesthouse() { 
+      async updateGuesthouse() {
+        try {
+          console.log("Updating guesthouse with ID:", this.model.id);
+            this.load = true; // Indiquer que la soumission est en cours
+            // Création de FormData
+            const formData = new FormData();
+            formData.append('id', this.model.id);
+            for (const key in this.model) {
+                formData.append(key, this.model[key]);
+            }
+
+            // Ajouter les fichiers de couverture
+            const coverFiles = this.$refs.uploadCover.uploadFiles;
+            coverFiles.forEach((file, index) => {
+                formData.append(`cover`, file.raw);
+            });
+
+                      // Ajouter les fichiers d'images
+            const pictureFiles = this.$refs.uploadPictures.uploadFiles;
+            pictureFiles.forEach((file, index) => {
+                formData.append(`pictures[${index}]`, file.raw);
+            });
+
+            // Ajouter les fichiers de vidéos
+            const videoFiles = this.$refs.uploadVideos.uploadFiles;
+            videoFiles.forEach((file, index) => {
+                formData.append(`videos[${index}]`, file.raw);
+            });
+
+
+            // Envoyer la requête au magasin Vuex
+            const response = await store.dispatch("guesthouse/updateguesthouse", formData);
+             // Réinitialisation du formulaire après la soumission réussie
+             this.model = {
+                    name: '',
+                    price: '',
+                    description: '',
+                    address: '',
+                    bedrooms_nbr: '',
+                    beds_nbr: '',
+                    toilets_nbr: '',
+                    bathrooms_nbr: '',
+                    has_pool: '',
+                    has_air_conditionner: '',
+                    has_kitchen: '',
+                    has_jacuzzi: '',
+                    has_washing_machine: '',
+                    has_car: '',
+                    has_parking: '',
+                    cover: '',
+                    pictures: [],
+                    videos: []
+                };
+                // Fermeture du modal après la soumission réussie
+                this.$toast.success("Guesthouse modifiée avec succès !", {
+                    timeout: 2000
+                });
+            this.load = false;
+            this.listGuesthouse()
+            this.$bvModal.hide('modal-1')
+        } catch (error) {
+            console.log(error)
+            this.$toast.error('Erreur lors de la modification de la guesthouse', {
+                timeout: 2000
+            });
+            this.load = false;
+        }
+    },
+
+    async listGuesthouse() {
       try {
         const response = await store.dispatch("guesthouse/listguesthouse",);
         this.data_guesthouse = response.data
@@ -635,7 +707,7 @@
     // Autres méthodes...
 
 
-    detailInfoAdd(item){ 
+    detailInfoAdd(item){
       this.detailInfo.name = item.name
       this.detailInfo.price = item.price
       this.detailInfo.description = item.description
@@ -654,6 +726,26 @@
       this.detailInfo.cover = this.showMediaFromGoogle(item.cover);
       this.detailInfo.pictures = item.pictures.map(picture => this.showMediaFromGoogle(picture.original_url));
       this.detailInfo.videos = item.videos.map(video => this.showMediaFromGoogleVideo(video.original_url));
+    },
+
+    detailInfoUpdated(item){
+      this.updated_ = true
+      this.model.id = item.id
+      this.model.name = item.name
+      this.model.price = item.price
+      this.model.description = item.description
+      this.model.address = item.address
+      this.model.bedrooms_nbr = item.bedrooms_nbr
+      this.model.beds_nbr = item.beds_nbr
+      this.model.toilets_nbr = item.toilets_nbr
+      this.model.bathrooms_nbr = item.bathrooms_nbr
+      this.model.has_pool = item.has_pool  == true ? 1 : 0
+      this.model.has_air_conditionner = item.has_air_conditionner  == true ? 1 : 0
+      this.model.has_kitchen = item.has_kitchen  == true ? 1 : 0
+      this.model.has_jacuzzi = item.has_jacuzzi == true ? 1 : 0
+      this.model.has_washing_machine = item.has_washing_machine  == true ? 1 : 0
+      this.model.has_car = item.has_car  == true ? 1 : 0
+      this.model.has_parking = item.has_parking  == true ? 1 : 0
     },
 
     },
