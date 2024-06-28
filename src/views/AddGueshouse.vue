@@ -247,7 +247,7 @@
                             </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row :class="updated_ ? 'visibilityClasse' : 'texting'">
+                    <b-row>
                         <b-col>
                             <upload
                               class="upload-demo"
@@ -788,11 +788,5 @@ td{
   justify-items: center;
   align-content: center;
   text-align: center
-}
-.visibilityClasse{
-  visibility: hidden;
-}
-.texting{
-  color: auto;
 }
 </style>
