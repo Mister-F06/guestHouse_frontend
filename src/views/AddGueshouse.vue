@@ -1,6 +1,7 @@
 <template>
     <div>
          <!-- BootstrapVue Done -->
+      <vue-confirm-dialog></vue-confirm-dialog>
       <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"></base-header>
       <b-container fluid class="mt--7">
         <b-card no-body>
@@ -32,6 +33,12 @@
                           <span v-if="item.is_enabled == false" class="tag is-danger is-light">Invisible</span>
                         </td>
                         <td style=" text-align: right">
+                            <a class="button is-small mr-1" v-b-modal.modal-3 variant="danger"    @click="giveId(item.id)">
+                                <span class="icon is-small">
+                                <i class="fa fa-trash is-small" style="font-size: small;color:red"></i>
+                                </span>
+                                <span style="color:red">Supprimer</span>
+                            </a>
                             <a class="button is-small" v-b-modal.modal-1 variant="primary" @click="detailInfoUpdated(item)">
                                 <span class="icon is-small">
                                 <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
@@ -68,7 +75,7 @@
         </b-card>
       </b-container>
       <!-- Model Form Add GuestHouse -->
-      <b-modal id="modal-1" :title="updated_ == false ? 'Ajouter un gueshouse' : 'Modifier le gueshouse'" size="lg">
+      <b-modal id="modal-1" :title="updated_ == false ? 'Ajouter un gueshouse' : 'Modifier le gueshouse'" size="lg" hide-footer>
         <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                 <b-form role="form" @submit.prevent="handleSubmit(updated_ == false ? addGuesthouse : updateGuesthouse )">
                     <b-row>
@@ -247,7 +254,7 @@
                             </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row :class="updated_ ? 'visibilityClasse' : 'texting'">
                         <b-col>
                             <upload
                               class="upload-demo"
@@ -291,7 +298,7 @@
         </validation-observer>
       </b-modal>
       <!-- Modal voir plus  -->
-      <b-modal id="modal-2" title="Détail sur le gueshouse" size="lg">
+      <b-modal id="modal-2" title="Détail sur le gueshouse" size="lg" hide-footer>
         <div class="columns is-multiline">
           <div class="column is-4" >
             <p>Désignation</p>
@@ -456,7 +463,15 @@
           </div>
         </div>
       </b-modal>
-    </div>
+      <b-modal id="modal-3" title="Confirmation de suppression" size="sm" hide-footer>
+        <div style="text-align: center; display:flex;flex-direction:column;justify-content:center;align-content:center; align-items:center">
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.</p>
+          <img src="../assets/undraw_throw_away_re_x60k.svg" alt="" width="200px" class="mb-2">
+          <b-button variant="primary" v-if="!load"  @click="deleteguesthouse()" style="width:200px">Confirmer</b-button>
+          <b-button variant="primary" v-else  style="width:200px">chargement..</b-button>
+        </div>
+      </b-modal>
+     </div>
 </template>
 
 <script>
@@ -531,7 +546,7 @@
       };
     },
     methods: {
-      async addGuesthouse() {
+    async addGuesthouse() {
         try {
             this.load = true; // Indiquer que la soumission est en cours
 
@@ -598,7 +613,7 @@
             this.load = false;
         }
     },
-      async updateGuesthouse() {
+    async updateGuesthouse() {
         try {
           console.log("Updating guesthouse with ID:", this.model.id);
             this.load = true; // Indiquer que la soumission est en cours
@@ -626,7 +641,6 @@
             videoFiles.forEach((file, index) => {
                 formData.append(`videos[${index}]`, file.raw);
             });
-
 
             // Envoyer la requête au magasin Vuex
             const response = await store.dispatch("guesthouse/updateguesthouse", formData);
@@ -706,7 +720,29 @@
         return "https://drive.google.com/uc?id=" + queryParams.get('id');
     },
     // Autres méthodes...
-
+    giveId(id){
+        this.model.id = id
+    },
+    async deleteguesthouse() {
+        try {
+          this.load = true; // Indiquer que la soumission est en cours
+            // Envoyer la requête au magasin Vuex
+            const response = await store.dispatch("guesthouse/deleteguesthouse", this.model.id);
+                // Fermeture du modal après la soumission réussie
+                this.$toast.success("Guesthouse supprimée avec succès !", {
+                    timeout: 2000
+                });
+            this.load = false;
+            this.listGuesthouse()
+            this.$bvModal.hide('modal-3')
+        } catch (error) {
+            console.log(error)
+            this.$toast.error('Erreur lors de la suppression de la guesthouse', {
+                timeout: 2000
+            });
+            this.load = false;
+        }
+    },
 
     detailInfoAdd(item){
       this.detailInfo.name = item.name
@@ -788,5 +824,12 @@ td{
   justify-items: center;
   align-content: center;
   text-align: center
+}
+.visibilityClasse {
+  visibility: hidden;
+}
+
+.texting {
+  color: auto;
 }
 </style>

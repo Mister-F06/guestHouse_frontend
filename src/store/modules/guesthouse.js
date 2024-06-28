@@ -19,6 +19,12 @@ export default {
             let response = await axios.post(`/guest_houses/update/${id}`, formData);
             return response
         },
+        async deleteguesthouse({ dispatch }, id) {
+            dispatch
+            let response = await axios.delete(`/guest_houses/delete/${id}`);
+            return response
+        },
+
         async listguesthouse() {
             let response = await axios.get('/guest_houses/');
             return response
