@@ -254,7 +254,7 @@
                             </b-form-checkbox>
                         </b-col>
                     </b-row>
-                    <b-row :class="updated_ ? 'visibilityClasse' : 'texting'">
+                    <b-row :class="updated_ ? 'visibilityClass' : 'texting'">
                         <b-col>
                             <upload
                               class="upload-demo"
@@ -454,11 +454,7 @@
           </div>
           <div class="column is-8" >
             <div v-for="(item, index) in detailInfo.videos" :key="index">
-              <video width="320" height="240" controls>
-                <source :src="item" type="video/webm">
-                <source :src="item" type="video/mp4">
-                <source :src="item" type="video/ogg">
-              </video>
+              <iframe width="100%" height="100%" :src="item"></iframe>
             </div>
           </div>
         </div>
@@ -717,7 +713,7 @@
         // Parse l'URL et extrait ses composants
         let parsedUrl = new URL(url);
         let queryParams = new URLSearchParams(parsedUrl.search);
-        return "https://drive.google.com/uc?id=" + queryParams.get('id');
+        return "https://drive.google.com/file/d/" + queryParams.get('id') + "/preview";
     },
     // Autres méthodes...
     giveId(id){
