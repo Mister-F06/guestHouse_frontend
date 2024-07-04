@@ -62,10 +62,10 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
+              <router-link to="/auth/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/register" class="text-light"><small>Créer un compte</small></router-link>
+              <router-link to="/auth/register" class="text-light"><small>Créer un compte</small></router-link>
             </b-col>
           </b-row>
         </b-col>
@@ -81,19 +81,19 @@ import store from '../../store/index'
   export default {
     name: 'login',
     components: {
-      Notification,  
+      Notification,
     },
     data() {
       return {
         load:false,
         model: {
             email  : "admin@mail.com",
-            password  : "Password@123", 
+            password  : "Password@123",
         }
       }
     },
     methods: {
-      async onLogin() { 
+      async onLogin() {
       try {
         this.load = true
         const response = await store.dispatch("auth/login", this.model);

@@ -48,10 +48,10 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/login" class="text-light"><small>Connexion</small></router-link>
+              <router-link to="/auth/login" class="text-light"><small>Connexion</small></router-link>
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/register" class="text-light"><small>Créer un compte</small></router-link>
+              <router-link to="/auth/register" class="text-light"><small>Créer un compte</small></router-link>
             </b-col>
           </b-row>
         </b-col>
@@ -67,7 +67,7 @@ import store from '../../store/index'
   export default {
     name: 'login',
     components: {
-      Notification,  
+      Notification,
     },
     data() {
       return {
@@ -78,7 +78,7 @@ import store from '../../store/index'
       }
     },
     methods: {
-      async onAskVerifyEmail() { 
+      async onAskVerifyEmail() {
       try {
         this.load = true
         const response = await store.dispatch("auth/askverifyEMail", this.model);
@@ -86,7 +86,7 @@ import store from '../../store/index'
             timeout: 2000
         });
         this.load = false
-        router.push({ path: '/login' })
+        router.push({ path: '/auth/login' })
       } catch (error) {
         this.$toast.error("Adresse email incorrect", {
             timeout: 2000

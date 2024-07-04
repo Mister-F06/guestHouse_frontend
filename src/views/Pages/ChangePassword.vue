@@ -62,10 +62,10 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
+              <router-link to="/auth/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/register" class="text-light"><small>Créer un compte</small></router-link>
+              <router-link to="/auth/register" class="text-light"><small>Créer un compte</small></router-link>
             </b-col>
           </b-row>
         </b-col>
@@ -83,19 +83,19 @@ import store from '../../store/index'
     props: ['expires', 'token', 'signature','password','password_confirmation'],
 
     components: {
-      Notification,  
+      Notification,
     },
     data() {
       return {
         load:false,
         model: {
-            password  : "Password@123", 
-            password_confirmation  : "Password@123", 
+            password  : "Password@123",
+            password_confirmation  : "Password@123",
         }
       }
     },
     methods: {
-      async onChangePassword() { 
+      async onChangePassword() {
         try {
           this.load = true
           const emailData = {

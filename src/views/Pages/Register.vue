@@ -46,7 +46,7 @@
                               name="Lastname"
                               :rules="{required: true}"
                               v-model="model.lastname">
-                  </base-input> 
+                  </base-input>
 
                   <base-input alternative
                               class="mb-3"
@@ -114,7 +114,7 @@ import store from '../../store/index'
   export default {
     name: 'register',
     components: {
-      Notification,  
+      Notification,
     },
     data() {
       return {
@@ -139,7 +139,7 @@ import store from '../../store/index'
               timeout: 6000
           });
           this.load = false;
-          router.push({ path: '/login' });
+          router.push({ path: '/auth/login' });
         } catch (error) {
            this.$toast.error("Verifier les informations et réessayer", {
             timeout: 2000

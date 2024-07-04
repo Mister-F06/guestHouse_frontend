@@ -30,7 +30,7 @@
             <div class="column is-6">
                   <div class="box" style="text-align: center;">
                     <p class="p_">Vous avez vérifié votre compte avec succès.</p>
-                    <p>Cliquez  <router-link to="/login" class="text-light"><span style="color: blue;">ici</span></router-link> pour accéder à la page de connexion.</p>
+                    <p>Cliquez  <router-link to="/auth/login" class="text-light"><span style="color: blue;">ici</span></router-link> pour accéder à la page de connexion.</p>
                   </div>
             </div>
          </div>
@@ -39,8 +39,8 @@
                   <div class="box" style="text-align: center;">
                     <p class="p_">Echec de verification de votre adresse email.</p>
                     <b-button type="submit" variant="primary"
-                        @click="getNewLink()" 
-                        :disabled="(timeResend>0)? true : false"class="mt-4"> {{(timeResend>0)?'Regénérer dans ' + timeResend + ' s':'Regénérer un nouveau lien de vérification'}}</b-button>
+                        @click="getNewLink()"
+                        :disabled="(timeResend>0)? true : false" class="mt-4"> {{(timeResend>0)?'Regénérer dans ' + timeResend + ' s':'Regénérer un nouveau lien de vérification'}}</b-button>
                   </div>
             </div>
             <div class="column is-6">
@@ -58,7 +58,7 @@
       name: 'verifyEmail',
       props: ['expires', 'token', 'signature'],
       components: {
-        Notification,  
+        Notification,
       },
       data() {
         return {
@@ -73,7 +73,7 @@
       mounted() {
         this.verifyEmail();
     },
-      methods: { 
+      methods: {
         async verifyEmail() {
           try {
             this.load = true;
@@ -89,7 +89,7 @@
               timeout: 2000
           });
             this.load = false;
-            router.push({ path: '/login' });
+            router.push({ path: '/auth/login' });
           } catch (error) {
              this.$toast.error("Verifier les informations et reessayer", {
               timeout: 2000
@@ -114,19 +114,19 @@
                           clearInterval(inter)
                         }
                       },1000)
-                      
+
                     })
                     .catch((error)=>{
                       this.$toast.error(error.response.data.message, {
                           message:error.response.data.message,
                           timeout: 2000
                       });
-                    })  
+                    })
         },
 
-     
+
       }
-  
+
     };
   </script>
   <style scoped>
@@ -135,4 +135,3 @@
         font-weight: 500;
     }
   </style>
-  

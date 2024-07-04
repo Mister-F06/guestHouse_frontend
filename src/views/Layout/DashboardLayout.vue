@@ -15,7 +15,7 @@
         <sidebar-item
             :link="{
               name: 'Ajouter un gueshouse',
-              path: '/addGueshouse',
+              path: '/dashboard/addGueshouse',
               icon: 'ni ni-fat-add text-blue'
               }"
             >
@@ -32,7 +32,7 @@
         <sidebar-item
               :link="{
                 name: 'User Profile',
-                path: '/profile',
+                path: '/dashboard/profile',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
@@ -48,14 +48,14 @@
         <sidebar-item
                   :link="{
                     name: 'Connexion',
-                    path: '/login',
+                    path: '/auth/login',
                     icon: 'ni ni-key-25 text-info'
                   }">
         </sidebar-item>
         <sidebar-item
                   :link="{
                     name: 'Inscription',
-                    path: '/register',
+                    path: '/auth/register',
                     icon: 'ni ni-circle-08 text-pink'
                   }">
         </sidebar-item>

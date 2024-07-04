@@ -6,7 +6,22 @@ import Notifications from 'vue-notification';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import axios from '../src/service/interceptor';
+import '../src/css_mosso/css/bootstrap.min.css';
+import '../src/css_mosso/css/bootstrap-icons.css';
+import '../src/css_mosso/css/owl.carousel.min.css';
+import '../src/css_mosso/css/tooplate-moso-interior.css';
 
+// Import jQuery and Bootstrap
+import 'bootstrap';
+import 'jquery';
+import '../src/css_mosso/js/jquery.min.js';
+// import '../src/css_mosso/js/bootstrap.min.js';
+import '../src/css_mosso/js/click-scroll.js';
+import '../src/css_mosso/js/jquery.backstretch.min.js';
+import '../src/css_mosso/js/owl.carousel.min.js';
+import '../src/css_mosso/js/custom.js';
+window.$ = window.jQuery = require('jquery');
+window.bootstrap = require('bootstrap');
 // router setup
 import router from './routes/router';
 // plugin setup

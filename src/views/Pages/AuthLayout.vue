@@ -34,15 +34,15 @@
                <i class="ni ni-planet"></i>
                <span class="nav-link-inner--text">Tableau de bord</span>
            </b-nav-item>
-           <b-nav-item to="/register">
+           <b-nav-item to="/auth/register">
                <i class="ni ni-circle-08"></i>
                <span class="nav-link-inner--text">Inscription</span>
            </b-nav-item>
-           <b-nav-item to="/login">
+           <b-nav-item to="/auth/login">
                <i class="ni ni-key-25"></i>
                <span class="nav-link-inner--text">Connexion</span>
            </b-nav-item>
-           <b-nav-item to="/profile">
+           <b-nav-item to="/dashboard/profile">
                <i class="ni ni-single-02"></i>
                <span class="nav-link-inner--text">Profile</span>
            </b-nav-item>
