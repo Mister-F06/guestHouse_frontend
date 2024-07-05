@@ -1,13 +1,12 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
+    <div class="header pding bg-gradient-success py-7 py-lg-8 pt-lg-9">
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Bienvenue sur GuestHouse !</h1>
-              <p class="text-lead text-white">Découvrez un séjour inoubliable dans notre charmante guesthouse, nichée au cœur du monde.</p>
+              <h2 class="text-white">Bienvenue sur GuestHouse !</h2>
             </b-col>
           </b-row>
         </div>
@@ -25,7 +24,9 @@
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
             <b-card-header class="bg-transparent "  >
-              <div class="text-muted text-center mt-2 mb-3"><h1>Vérifier votre adresse email</h1></div>
+              <div class="text-muted text-center mt-2 mb-3"><h2>Vérifier votre adresse email</h2>
+                <p class="text-lead text-white">Découvrez un séjour inoubliable dans notre charmante guesthouse, nichée au cœur du monde.</p>
+              </div>
             </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
@@ -39,7 +40,7 @@
                               v-model="model.email">
                   </base-input>
                   <div class="text-center">
-                    <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Vérifier</base-button>
+                    <base-button type="primary" v-if="!load" native-type="submit" style="width:100% !important" class="my-4">Vérifier</base-button>
                     <b-button  variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
                 </b-form>

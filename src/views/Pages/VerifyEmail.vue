@@ -6,7 +6,7 @@
           <div class="header-body text-center mb-5">
             <b-row class="justify-content-center">
               <b-col xl="5" lg="6" md="8" class="px-5">
-                <h1 class="text-white">Vérification de votre email</h1>
+                <h2 class="text-white">Vérification de votre email</h2>
                 <p class="text-lead text-white">
                     Peu importe la raison de votre séjour, nous sommes déterminés à ce que vous vous sentiez chez vous, où que vous soyez.
                 </p>

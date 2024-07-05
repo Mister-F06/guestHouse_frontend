@@ -5,7 +5,7 @@
             <navbar-toggle-button @click.native="showSidebar">
             </navbar-toggle-button>
             <router-link class="navbar-brand" to="/">
-                <img :src="logo" class="navbar-brand-img" alt="..."style="width:200px !important; height: 70%;">
+                <img src="../../../public/img/brand/green.png" class="navbar-brand-img" alt="..." style="width:200px !important; height: 70%;">
             </router-link>
             <slot name="mobile-right">
                 <ul class="nav align-items-center d-md-none">
@@ -24,7 +24,7 @@
                         <a slot="title-container" class="nav-link" href="#" role="button">
                             <div class="media align-items-center">
                               <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="img/theme/team-1.jpg">
+                                <img alt="Image placeholder" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&s">
                               </span>
                             </div>
                         </a>
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <router-link to="/">
-                                <img :src="logo">
+                                <img src="../../../public/img/brand/green.png">
                             </router-link>
                         </div>
                         <div class="col-6 collapse-close">
@@ -116,7 +116,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/green.png',
+        default: '../../../public/img/brand/green.png',
         description: 'Sidebar app logo'
       },
       autoClose: {

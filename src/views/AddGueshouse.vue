@@ -2,12 +2,12 @@
     <div>
          <!-- BootstrapVue Done -->
       <vue-confirm-dialog></vue-confirm-dialog>
-      <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"></base-header>
-      <b-container fluid class="mt--7">
+      <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success pding"></base-header>
+      <b-container fluid class="mt--7 ">
         <b-card no-body>
             <b-card-header class="border-0 d-flex justify-content-between align-content-center align-items-center" >
-                <h3 class="mb-0">Liste des gueshouses</h3>
-                <b-button v-b-modal.modal-1 variant="primary" @click="changingUpdateValue()">Ajouter</b-button>
+                <h4 class="mb-0">Liste des gueshouses</h4>
+                <b-button v-b-modal.modal-1 variant="primary" style="width:200px !important" @click="changingUpdateValue()">Ajouter</b-button>
             </b-card-header>
             <div class="table-container m-5">
                 <table class="table is-bordered   is-hoverable is-fullwidth">
@@ -55,7 +55,7 @@
                     </tr>
                 </table>
                 <div v-if="Object.keys(displayedGuesthouse).length == 0 " class="nodata">
-                   <h2>Aucune donnée</h2>
+                   <h3>Aucune donnée</h3>
                 </div>
                 <div class="pagination mb-3 mt-3">
                     <a class="button is-small" @click="previousPage" >

@@ -9,7 +9,7 @@
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
-          <img src="img/brand/white.png" style="width:30% !important; height: 50%;">
+          <img src="../../../public/img/brand/white.png" style="width:30% !important; height: 50%;">
         </b-navbar-brand>
       </div>
 
@@ -18,7 +18,7 @@
          <b-row>
            <b-col cols="6" class="collapse-brand">
              <router-link to="/">
-               <img src="img/brand/green.png" >
+               <img src="../../../public/img/brand/green.png" >
              </router-link>
            </b-col>
            <b-col cols="6" class="collapse-close">
@@ -42,10 +42,6 @@
                <i class="ni ni-key-25"></i>
                <span class="nav-link-inner--text">Connexion</span>
            </b-nav-item>
-           <b-nav-item to="/dashboard/profile">
-               <i class="ni ni-single-02"></i>
-               <span class="nav-link-inner--text">Profile</span>
-           </b-nav-item>
        </b-navbar-nav>
      </template>
     </base-nav>
@@ -64,22 +60,22 @@
         <b-row align-v="center" class="justify-content-xl-between">
           <b-col xl="6">
             <div class="copyright text-center text-xl-left text-muted">
-              © {{year}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Guest House</a>
+              © {{year}} <a href="/" class="font-weight-bold ml-1" target="_blank">Guest House</a>
             </div>
           </b-col>
           <b-col xl="6" class="col-xl-6">
             <b-nav  class="nav-footer justify-content-center justify-content-xl-end">
-              <b-nav-item href="https://www.creative-tim.com" target="_blank" >
+              <b-nav-item href="/" target="_blank" >
                 Guest House
               </b-nav-item>
-              <b-nav-item href="https://www.creative-tim.com/presentation" target="_blank" >
-                About Us
+              <b-nav-item href="/#section_2" target="_blank" >
+                A propos
               </b-nav-item>
-              <b-nav-item href="http://blog.creative-tim.com"  target="_blank">
-                Blog
+              <b-nav-item href="/#section_3"  target="_blank">
+                Hébergement
               </b-nav-item>
-              <b-nav-item href="https://www.creative-tim.com/license" target="_blank">
-                License
+              <b-nav-item href="/auth/login" target="_blank">
+                Se connecter
               </b-nav-item>
             </b-nav>
           </b-col>

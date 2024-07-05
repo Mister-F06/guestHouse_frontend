@@ -6,8 +6,7 @@
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Bienvenue sur GuestHouse !</h1>
-              <p class="text-lead text-white">Découvrez un séjour inoubliable dans notre charmante guesthouse, nichée au cœur du monde.</p>
+              <h2 class="text-white">Bienvenue sur GuestHouse !</h2>
             </b-col>
           </b-row>
         </div>
@@ -25,7 +24,10 @@
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
             <b-card-header class="bg-transparent pb-5"  >
-              <div class="text-muted text-center mt-2 mb-3"><h1>Changer votre Mot de passe</h1></div>
+              <div class="text-muted text-center mt-2 mb-3">
+                <h2>Changer votre Mot de passe</h2>
+              <p class="text-lead text-white">Découvrez un séjour inoubliable dans notre charmante guesthouse, nichée au cœur du monde.</p>
+              </div>
             </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
@@ -62,10 +64,10 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/auth/askEmailVerify" class="text-light"><small>Mot de passe oublié?</small></router-link>
+              <router-link to="/auth/askEmailVerify" class="text-light"><small style="color:black !important">Mot de passe oublié?</small></router-link>
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/auth/register" class="text-light"><small>Créer un compte</small></router-link>
+              <router-link to="/auth/register" class="text-light"><small  style="color:black !important">Créer un compte</small></router-link>
             </b-col>
           </b-row>
         </b-col>

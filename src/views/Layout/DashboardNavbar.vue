@@ -1,12 +1,12 @@
 <template>
   <base-nav
     container-classes="container-fluid"
-    class="navbar-top navbar-expand"
+    class="navbar-top navbar-expand  pding bg-gradient-success  "
     :class="{'navbar-dark': type === 'default'}"
   >
     <a href="#" aria-current="page" class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"> {{$route.name}} </a>
     <!-- Navbar links -->
-    <b-navbar-nav class="align-items-center ml-md-auto">
+    <b-navbar-nav class="align-items-center ml-md-auto ">
       <!-- This item dont have <b-nav-item> because item have data-action/data-target on tag <a>, wich we cant add -->
       <li class="nav-item d-sm-none">
         <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
@@ -14,7 +14,7 @@
         </a>
       </li>
     </b-navbar-nav>
-    <b-navbar-nav class="align-items-center ml-auto ml-md-0">
+    <b-navbar-nav class="align-items-center ml-auto ml-md-0 ">
         <b-form class="navbar-search form-inline mr-sm-3"
             :class="{'navbar-search-dark': type === 'default', 'navbar-search-light': type === 'light'}"
             id="navbar-search-main">
@@ -36,7 +36,7 @@
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="img/theme/team-4.jpg">
+                    <img alt="Image placeholder" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&s">
                   </span>
             <b-media-body class="ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
@@ -120,3 +120,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+</style>
