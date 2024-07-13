@@ -2,13 +2,15 @@
   <div>
     <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html">O<span class="tooplate-red">FA</span><span class="tooplate-green">D</span></a>
+                <a class="navbar-brand" href="index.html">
+                 <img src="../../assets/logo.png" alt="" style="width: 100px;">
+                </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"  @click="toggleMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse" id="navbarNav"  :class="{ show: isMenuOpen }">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_1">Accueil</a>
@@ -42,7 +44,11 @@
             <div class="row">
               <div class="col-lg-8 col-12 text-center mx-auto">
                 <div class="hero-section-text">
-                  <h1 class="hero-title text-white mt-2 mb-4">Decorate a beautiful interior for your space</h1>
+                  <h1 class="hero-title text-white mt-2">Bienvenue à</h1>
+                  <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
+                  <p>
+                    Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.
+                  </p>
                   <!-- Autres éléments comme le formulaire, boutons, etc. -->
                 </div>
               </div>
@@ -55,13 +61,13 @@
                 <div class="row align-items-center">
 
                     <div class="col-lg-5 col-12">
-                        <small class="section-small-title">Our Story</small>
+                        <small class="section-small-title">OFAD GUESTHOUSE</small>
 
-                        <h2 class="mt-2 mb-4"><span class="text-muted">Introducing</span> Moso</h2>
+                        <h2 class="mt-2 mb-4"><span class="text-muted">Un Séjour </span> Inoubliable</h2>
 
-                        <h4 class="text-muted mb-3">Since 1986, We crafted interior products for better spaces</h4>
+                        <h4 class="text-muted mb-3">Découvrez l'élégance et le confort de notre établissement, situé au cœur du monde</h4>
 
-                        <p>Moso Interior is a free Bootstrap 5 HTML CSS template for your website. Tooplate is one of the best websites to download 100% free HTML Templates for web designers and developers around the world. Thank you for visiting.</p>
+                        <p>Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.</p>
                     </div>
 
                     <div class="col-lg-3 col-md-5 col-5 mx-lg-auto">
@@ -83,27 +89,23 @@
 
                     <div class="col-lg-5 col-12">
                         <div class="custom-block featured-custom-block">
-                            <h2 class="mt-2 mb-4">Opening Hours</h2>
+                            <h2 class="mt-2 mb-4">Ouvert</h2>
 
                             <div class="d-flex">
                                 <i class="featured-icon bi-clock me-3"></i>
 
                                 <div>
                                     <p class="mb-2">
-                                        Mon - Friday ~
+                                        Du - Lundi ~ Samedi
                                         <strong class="d-inline">
-                                            8:00 AM - 6:00 PM
+                                          8h - 23h
                                         </strong>
                                     </p>
-
-                                    <p class="mb-2">
-                                        Saturday ~
+                                    <p>Dimanche ~ 
                                         <strong class="d-inline">
-                                            10:00 AM - 10:00 PM
+                                           10h - 20h
                                         </strong>
                                     </p>
-
-                                    <p>Sunday ~ Closed</p>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +121,9 @@
                 <div class="row">
 
                     <div class="col-lg-12 col-12">
-                        <small class="section-small-title">Moso Design Shop</small>
+                        <small class="section-small-title">OFAD GUESTHOUSE</small>
 
-                        <h2 class="mt-2 mb-4"><span class="tooplate-red">Interior</span> Products</h2>
+                        <h2 class="mt-2 mb-4"><span class="tooplate-red">En</span> vedette</h2>
                     </div>
 
                     <div class="col-lg-6 col-12">
@@ -144,12 +146,12 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Learn more</a>
+                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>Bathroom</h4>
+                                <h4>The Gritti Palace</h4>
                             </div>
                         </div>
                     </div>
@@ -174,12 +176,12 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Learn more</a>
+                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>Dining</h4>
+                                <h4>Ryokan Sawanoya</h4>
                             </div>
                         </div>
                     </div>
@@ -204,12 +206,12 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Learn more</a>
+                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>Living Room</h4>
+                                <h4>La Maison Arabe</h4>
                             </div>
                         </div>
                     </div>
@@ -234,12 +236,12 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Learn more</a>
+                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>Chef Kitchen</h4>
+                                <h4>Cape Grace Hotel</h4>
                             </div>
                         </div>
                     </div>
@@ -264,12 +266,12 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Learn more</a>
+                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>Childrens Bedroom</h4>
+                                <h4>Darwin's Townhouse</h4>
                             </div>
                         </div>
                     </div>
@@ -322,134 +324,16 @@
                 <div class="row">
 
                     <div class="col-lg-12 col-12">
-                        <small class="section-small-title">Happy customers.</small>
+                        <small class="section-small-title">OFAD GUESTHOUSE</small>
 
-                        <h2 class="mt-2 mb-4">Reviews</h2>
+                        <h2 class="mt-2 mb-4">À propos</h2>
 
-                        <div class="owl-carousel reviews-carousel">
-                            <div class="reviews-thumb">
-                                <div class="reviews-body">
-                                    <h4>Moso Interior is the most suitable website layout.</h4>
-                                </div>
-
-                                <div class="reviews-bottom reviews-bottom-up d-flex align-items-center">
-                                    <img src="../../css_mosso/images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap w-100 ms-3">
-                                        <p class="text-white mb-0">
-                                            <strong>Sandy</strong>, <small>CEO</small>
-                                        </p>
-
-                                        <div class="reviews-icons">
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="reviews-thumb">
-                                <div class="reviews-body">
-                                    <h4>Explore more HTML Templates to download for your website.</h4>
-                                </div>
-
-                                <div class="reviews-bottom reviews-bottom-up d-flex align-items-center">
-                                    <img src="../../css_mosso/images/avatar/studio-portrait-emotional-happy-funny-smiling-boyfriend-man-with-heavy-beard-stands-with-arms-crossed-dressed-red-t-shirt-isolated-blue.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap w-100 ms-3">
-                                        <p class="text-white mb-0">
-                                            <strong>Jack</strong>, <small>Partner</small>
-                                        </p>
-
-                                        <div class="reviews-icons">
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star"></i>
-                                            <i class="bi-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="reviews-thumb">
-                                <div class="reviews-body">
-                                    <h4>Please recommend Tooplate website to your friends.</h4>
-                                </div>
-
-                                <div class="reviews-bottom reviews-bottom-up d-flex align-items-center">
-                                    <img src="../../css_mosso/images/avatar/portrait-beautiful-young-woman-standing-grey-wall.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap w-100 ms-3">
-                                        <p class="text-white mb-0">
-                                            <strong>Helen</strong>, <small>Client</small>
-                                        </p>
-
-                                        <div class="reviews-icons">
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="reviews-thumb">
-                                <div class="reviews-body">
-                                    <h4>This Bootstrap 5 layout is free to use for your website.</h4>
-                                </div>
-
-                                <div class="reviews-bottom reviews-bottom-up d-flex align-items-center">
-                                    <img src="../../css_mosso/images/avatar/portrait-young-redhead-bearded-male-wears-white-t-shirt-keeps-his-eyes-closed-smiling-feels-happy-yellow.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap w-100 ms-3">
-                                        <p class="text-white mb-0">
-                                            <strong>Bill</strong>, <small>Designer</small>
-                                        </p>
-
-                                        <div class="reviews-icons">
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star"></i>
-                                            <i class="bi-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="reviews-thumb">
-                                <div class="reviews-body">
-                                    <h4>Thank you for visiting Tooplate to download free templates.</h4>
-                                </div>
-
-                                <div class="reviews-bottom reviews-bottom-up d-flex align-items-center">
-                                    <img src="../../css_mosso/images/avatar/portrait-young-beautiful-woman-gesticulating.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <div class="d-flex align-items-center justify-content-between flex-wrap w-100 ms-3">
-                                        <p class="text-white mb-0">
-                                            <strong>Susan</strong>, <small>Boss</small>
-                                        </p>
-
-                                        <div class="reviews-icons">
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                            <i class="bi-star-fill"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-12">
-                            <p class="d-flex justify-content-center align-items-center mt-lg-5">Write some reviews on <a href="#" class="custom-btn btn ms-3"><i class="bi-facebook me-2"></i>facebook</a></p>
+                        <div class=" ">
+                            <p>
+                                Bienvenue à OFAD GUESTHOUSE, votre refuge de confort et de sérénité au cœur du monde. Nous offrons une expérience unique alliant charme local et commodités modernes. Que vous soyez en voyage d'affaires, en vacances ou à la recherche d'un endroit paisible pour vous ressourcer, notre maison d'hôtes est l'endroit idéal pour vous.
+                                Notre mission est de rendre votre séjour aussi agréable et mémorable que possible. Chaque chambre est soigneusement aménagée pour offrir le maximum de confort et de détente. Nos services personnalisés et notre équipe dévouée sont là pour répondre à tous vos besoins.
+                                Nous sommes fiers de notre accueil chaleureux et de notre engagement envers la satisfaction de nos clients. Chez OFAD GUESTHOUSE, vous êtes plus qu'un simple invité, vous êtes chez vous.
+                            </p>
                         </div>
                     </div>
 
@@ -464,9 +348,9 @@
                 <div class="row">
 
                     <div class="col-lg-12 col-12">
-                        <small class="section-small-title">Ask anything.</small>
+                        <small class="section-small-title">OFAD GUESTHOUSE</small>
 
-                        <h2 class="mb-4">Say Hello</h2>
+                        <h2 class="mb-4">Nous contacter</h2>
                     </div>
 
                     <div class="col-lg-6 col-12">
@@ -474,7 +358,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-12">
                                     <div class="input-group align-items-center">
-                                        <label for="first-name">First Name</label>
+                                        <label for="first-name">Nom</label>
 
                                         <input type="text" name="first-name" id="first-name" class="form-control" placeholder="Jack" required>
                                     </div>
@@ -482,7 +366,7 @@
 
                                 <div class="col-lg-6 col-md-6 col-12">
                                     <div class="input-group align-items-center">
-                                        <label for="last-name">Last Name</label>
+                                        <label for="last-name">Prénoms</label>
 
                                         <input type="text" name="last-name" id="last-name" class="form-control" placeholder="Doe" required>
                                     </div>
@@ -490,7 +374,7 @@
                             </div>
 
                             <div class="input-group align-items-center">
-                                <label for="email">Email Address</label>
+                                <label for="email">Adresse email</label>
 
                                   <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Jackdoe@gmail.com" required>
                             </div>
@@ -498,11 +382,11 @@
                             <div class="input-group textarea-group">
                                 <label for="message">Message</label>
 
-                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="What can we help you?"></textarea>
+                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Comment pouvons-nous vous aider ?"></textarea>
                             </div>
 
                             <div class="col-lg-3 col-md-4 col-6">
-                                <button type="submit" class="form-control">Send</button>
+                                <button type="submit" class="form-control">Envoyer</button>
                             </div>
                         </form>
                     </div>
@@ -510,35 +394,35 @@
                     <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                         <div class="custom-block">
 
-                            <h3 class="text-white mb-2">Store</h3>
+                            <h3 class="text-white mb-2">Adresse</h3>
 
                             <p class="text-white mb-2">
                                 <i class="contact-icon bi-geo-alt me-1"></i>
 
-                                102 Utah Road, Berlin, Germany
+                               Cotonou, Benin
                             </p>
 
-                            <h3 class="text-white mt-3 mb-2">Contact Info</h3>
+                            <h3 class="text-white mt-3 mb-2">Nous joindre</h3>
 
                             <div class="d-flex flex-wrap">
                                 <p class="text-white mb-2 me-4">
                                     <i class="contact-icon bi-telephone me-1"></i>
 
-                                    <a href="tel: 090-080-0760" class="text-white">
-                                        090-080-0760
+                                    <a href="tel: +2296565-6565" class="text-white">
+                                        +2296565-6565
                                     </a>
                                 </p>
 
                                 <p class="text-white">
                                     <i class="contact-icon bi-envelope me-1"></i>
 
-                                    <a href="mailto:info@company.com" class="text-white">
-                                        info@company.com
+                                    <a href="mailto:info@ofad-gueshouse.com" class="text-white">
+                                        info@ofad-gueshouse.com
                                     </a>
                                 </p>
                             </div>
 
-                            <iframe class="google-map mt-2" src="../../css_mosso/https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4800.184803804974!2d-0.10174304922518053!3d51.5087879746898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487605f6fc62fa3d%3A0xc5a39e7cf4e3a9a4!2sTate%20Modern%20Garden!5e1!3m2!1sen!2smm!4v1679331839559!5m2!1sen!2smm" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
 
@@ -554,44 +438,44 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-5 col-12 mb-3">
-                    <h3><a href="index.html" class="custom-link mb-1">Moso Interior</a></h3>
+                    <h3><a href="index.html" class="custom-link mb-1">OFAD GUESTHOUSE</a></h3>
 
-                    <p class="text-white">Since 1986, We crafted interior products for better spaces</p>
-
-                    <p class="text-white"><a href="https://www.tooplate.com" target="_parent">Web Design: Tooplate</a></p>
+                    <p class="text-white">
+                        Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.
+                    </p>
                 </div>
 
                 <div class="col-lg-3 col-md-3 col-12 ms-lg-auto mb-3">
-                    <h3 class="text-white mb-3">Store</h3>
+                    <h3 class="text-white mb-3">Adresse</h3>
 
                     <p class="text-white mt-2">
                         <i class="bi-geo-alt"></i>
-                        Berlin, Germany
+                        Cotonou, Bénin
                     </p>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12 mb-3">
-                    <h3 class="text-white mb-3">Contact Info</h3>
+                    <h3 class="text-white mb-3">Nous joindre</h3>
 
                         <p class="text-white mb-1">
                             <i class="bi-telephone me-1"></i>
 
-                            <a href="tel: 090-080-0760" class="text-white">
-                                090-080-0760
+                            <a href="tel: +2296565-6565" class="text-white">
+                                +2296565-6565
                             </a>
                         </p>
 
                         <p class="text-white mb-0">
                             <i class="bi-envelope me-1"></i>
 
-                            <a href="mailto:info@company.com" class="text-white">
-                                info@company.com
+                            <a href="mailto:info@ofad-gueshouse.com" class="text-white">
+                                info@ofad-gueshouse.com
                             </a>
                         </p>
                 </div>
 
                 <div class="col-lg-6 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto">
-                    <p class="copyright-text mb-0 me-4">Copyright © Moso Interior 2048</p>
+                    <p class="copyright-text mb-0 me-4">Copyright © OFAD GUESTHOUSE</p>
 
                     <ul class="social-icon">
                         <li class="social-icon-item">
@@ -627,6 +511,7 @@
 export default {
   data() {
     return {
+        isMenuOpen: false,
       images: [
         require('../../css_mosso/images/slideshow/white-wall-living-room-have-sofa-decoration-3d-rendering.jpg'),
         require('../../css_mosso/images/slideshow/interior-wall-mockup-with-sofa-cabinet-living-room-with-empty-white-wall-background-3d-rendering.jpg'),
@@ -641,11 +526,15 @@ export default {
     this.startSlideshow();
   },
   methods: {
+    
     startSlideshow() {
       // Démarre le diaporama avec une intervalle de temps
       this.intervalId = setInterval(() => {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, 3000); // Changement d'image toutes les 3 secondes (ajustez selon vos besoins)
+    },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
     }
   },
   computed: {
@@ -668,4 +557,57 @@ export default {
   background-position: center;
   /* Autres styles */
 }
+/* Pour l'icône hamburger */
+.navbar-toggler {
+  border: none;
+  outline: none;
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+  transition: all 0.3s;
+  position: absolute;
+  left: 0;
+}
+
+.navbar-toggler-icon::before {
+  top: -10px;
+}
+
+.navbar-toggler-icon::after {
+  top: 10px;
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon {
+  background-color: transparent;
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.collapse.show {
+  display: block !important;
+}
+
 </style>
