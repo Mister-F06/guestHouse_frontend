@@ -27,10 +27,16 @@
                           <span v-if="item.status == 'validated'" class="tag is-primary is-light">Valider</span>
                           <span v-if="item.status == 'pending_validation'" class="tag is-warning is-light">En cours de traitement</span>
                           <span v-if="item.status == 'rejected'" class="tag is-danger is-light">Rejeter</span>
+                          <a  v-b-modal.modal-5 variant="primary" @click="openStatusModal(item)">
+                            <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
+                          </a>
                         </td>
                         <td style=" text-align: right">
                           <span v-if="item.is_enabled == true" class="tag is-primary is-light">Visible</span>
                           <span v-if="item.is_enabled == false" class="tag is-danger is-light">Invisible</span>
+                          <a  v-b-modal.modal-4 variant="primary" @click="openVisiblityModal(item)">
+                            <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
+                          </a>
                         </td>
                         <td style=" text-align: right">
                             <a class="button is-small mr-1" v-b-modal.modal-3 variant="danger"    @click="giveId(item.id)">
@@ -467,6 +473,60 @@
           <b-button variant="primary" v-else  style="width:200px">chargement..</b-button>
         </div>
       </b-modal>
+      <!-- Visibility Modal -->
+      <b-modal  id="modal-4" title="Modifier la visibilité" size="sm" hide-footer>
+        <validation-observer v-slot="{handleSubmit}" ref="formValidator">
+                <b-form role="form" @submit.prevent="handleSubmit(updateVisibility)">
+                    <b-row>
+                        <b-col>
+                          <label for="has_pool">Visiblité</label>
+                            <b-form-checkbox
+                                v-model="formV.visibility"
+                                name="visibility"
+                                value="1"
+                                unchecked-value="0">
+                                <i class="ni ni-settings-gear-65"></i> Visible/Invisible
+                            </b-form-checkbox>
+                        </b-col>
+                    </b-row>
+                    <div class="text-right">
+                        <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Enregistrer</base-button>
+                        <b-button variant="primary" v-else class="mt-4">Chargement..</b-button>
+                    </div>
+                </b-form>
+        </validation-observer>
+      </b-modal>
+      <!-- Status Modal -->
+      <b-modal  id="modal-5" title="Modifier le status" size="sm" hide-footer>
+        <validation-observer v-slot="{handleSubmit}" ref="formValidator">
+                <b-form role="form" @submit.prevent="handleSubmit(updateStatus)">
+                    <b-row>
+                        <b-col>
+                          <label for="has_pool">Status</label> <br> 
+                          <div class="select">
+                            <select v-model="formS.status">
+                              <option>Sélectionner le status</option>
+                              <option value="validated" >Valider</option>
+                              <option value="pending_validation" >En cours de validation</option>
+                              <option value="rejected" >Rejeter</option>
+                            </select>
+                          </div> 
+                        </b-col> 
+                    </b-row>
+
+                    <b-row class="mt-4">
+                      <b-col>
+                          <label for="has_pool">Raison</label> <br> 
+                          <textarea class="textarea" v-model="formS.reasons" placeholder="e.g. Raison"></textarea>
+                      </b-col> 
+                    </b-row>
+                    <div class="text-right">
+                        <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Enregistrer</base-button>
+                        <b-button variant="primary" v-else class="mt-4">Chargement..</b-button>
+                    </div>
+                </b-form>
+        </validation-observer>
+      </b-modal>
      </div>
 </template>
 
@@ -494,6 +554,15 @@
       return {
         load: false, // Ajout de la variable load pour contrôler l'état de chargement
         updated_:false,
+        formV:{
+          id:'',
+          visibility :undefined,
+        },
+        formS:{
+          id:'',
+          status :'',
+          reasons :'',
+        },
         model: {
             id:'',
             name: '',
@@ -542,6 +611,7 @@
       };
     },
     methods: {
+
     async addGuesthouse() {
         try {
             this.load = true; // Indiquer que la soumission est en cours
@@ -782,6 +852,54 @@
       this.model.has_washing_machine = item.has_washing_machine  == true ? 1 : 0
       this.model.has_car = item.has_car  == true ? 1 : 0
       this.model.has_parking = item.has_parking  == true ? 1 : 0
+    },
+    openVisiblityModal(item){
+      this.formV.visibility  =  item.is_enabled  == true ? 1 : 0
+      this.formV.id = item.id
+    },
+    openStatusModal(item){
+      this.formS.status  =  item.status 
+      this.formS.id = item.id
+    },
+    async updateVisibility() {
+        try {
+            this.load = true; // Indiquer que la soumission est en cours
+            // Envoyer la requête au magasin Vuex
+            const response = await store.dispatch("guesthouse/updateVisibility", this.formV);
+                // Fermeture du modal après la soumission réussie
+                this.$toast.success("Visiblité modifiée avec succès !", {
+                    timeout: 2000
+                });
+            this.load = false;
+            this.listGuesthouse()
+            this.$bvModal.hide('modal-4')
+        } catch (error) {
+            console.log(error)
+            this.$toast.error('Erreur lors de la modification', {
+                timeout: 2000
+            });
+            this.load = false;
+        }
+    },
+    async updateStatus() {
+        try {
+            this.load = true; // Indiquer que la soumission est en cours
+            // Envoyer la requête au magasin Vuex
+            const response = await store.dispatch("guesthouse/updateStatus", this.formS);
+                // Fermeture du modal après la soumission réussie
+                this.$toast.success("Status modifié avec succès !", {
+                    timeout: 2000
+                });
+            this.load = false;
+            this.listGuesthouse()
+            this.$bvModal.hide('modal-5')
+        } catch (error) {
+            console.log(error)
+            this.$toast.error('Erreur lors de la modification', {
+                timeout: 2000
+            });
+            this.load = false;
+        }
     },
 
     },
