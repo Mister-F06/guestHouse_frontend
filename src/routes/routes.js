@@ -2,41 +2,52 @@ import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 import NotFound from '@/views/NotFoundPage.vue';
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'Accueil',
-        component: () => import('../views/Pages/LandingPage.vue'),
+        component: () =>
+            import ('../views/Pages/LandingPage.vue'),
     },
+    {
+        path: '/detail-guesthouse',
+        name: 'DetailGuesthouse',
+        component: () =>
+            import ('../views/DetailGuesthouse.vue'),
+    },
+
     {
         path: '/dashboard',
         redirect: '/dashboard/home',
         component: DashboardLayout,
-        children: [
-            {
+        children: [{
                 path: 'home',
                 name: 'dashboard',
-                component: () => import('../views/Dashboard.vue')
+                component: () =>
+                    import ('../views/Dashboard.vue')
             },
             {
                 path: 'addGueshouse',
                 name: 'Gestion des Guesthouses',
-                component: () => import('../views/AddGueshouse.vue')
+                component: () =>
+                    import ('../views/AddGueshouse.vue')
             },
             {
                 path: 'profile',
                 name: 'profile',
-                component: () => import('../views/Pages/UserProfile.vue')
+                component: () =>
+                    import ('../views/Pages/UserProfile.vue')
             },
             {
                 path: 'maps',
                 name: 'maps',
-                component: () => import('../views/GoogleMaps.vue')
+                component: () =>
+                    import ('../views/GoogleMaps.vue')
             },
             {
                 path: 'tables',
                 name: 'tables',
-                component: () => import('../views/RegularTables.vue')
+                component: () =>
+                    import ('../views/RegularTables.vue')
             }
         ],
     },
@@ -44,21 +55,23 @@ const routes = [
         path: '/auth',
         redirect: '/auth/login',
         component: AuthLayout,
-        children: [
-            {
+        children: [{
                 path: 'login',
                 name: 'login',
-                component: () => import('../views/Pages/Login.vue')
+                component: () =>
+                    import ('../views/Pages/Login.vue')
             },
             {
                 path: 'askEmailVerify',
                 name: 'askEmailVerify',
-                component: () => import('../views/Pages/AskEmailVerify.vue')
+                component: () =>
+                    import ('../views/Pages/AskEmailVerify.vue')
             },
             {
                 path: 'changePassword',
                 name: 'changePassword',
-                component: () => import('../views/Pages/ChangePassword.vue'),
+                component: () =>
+                    import ('../views/Pages/ChangePassword.vue'),
                 props: route => ({
                     expires: route.query.expires,
                     token: route.query.token,
@@ -70,12 +83,14 @@ const routes = [
             {
                 path: 'register',
                 name: 'register',
-                component: () => import('../views/Pages/Register.vue')
+                component: () =>
+                    import ('../views/Pages/Register.vue')
             },
             {
                 path: 'verify/email',
                 name: 'verifyEmail',
-                component: () => import('../views/Pages/VerifyEmail.vue'),
+                component: () =>
+                    import ('../views/Pages/VerifyEmail.vue'),
                 props: route => ({
                     expires: route.query.expires,
                     token: route.query.token,

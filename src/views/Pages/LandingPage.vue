@@ -129,7 +129,7 @@
                     <div class="col-lg-6 col-12">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
-                                <a href="shop-detail.html">
+                                <a href="/detail-guesthouse">
                                     <img src="../../css_mosso/images/shop/minimal-bathroom-interior-design-with-wooden-furniture.jpg" class="shop-image img-fluid" alt="">
                                 </a>
 
@@ -146,7 +146,7 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
@@ -159,7 +159,7 @@
                     <div class="col-lg-6 col-12">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
-                                <a href="shop-detail.html">
+                                <a href="/detail-guesthouse">
                                     <img src="../../css_mosso/images/shop/mock-up-poster-modern-dining-room-interior-design-with-white-empty-wall.jpg" class="shop-image img-fluid" alt="">
                                 </a>
 
@@ -176,7 +176,7 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
@@ -189,7 +189,7 @@
                     <div class="col-lg-4 col-12">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
-                                <a href="shop-detail.html">
+                                <a href="/detail-guesthouse">
                                     <img src="../../css_mosso/images/shop/green-sofa-white-living-room-with-blank-table-mockup.jpg" class="shop-image img-fluid" alt="">
                                 </a>
 
@@ -206,7 +206,7 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
@@ -219,7 +219,7 @@
                     <div class="col-lg-4 col-12">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
-                                <a href="shop-detail.html">
+                                <a href="/detail-guesthouse">
                                     <img src="../../css_mosso/images/shop/concept-home-cooking-with-female-chef.jpg" class="shop-image img-fluid" alt="">
                                 </a>
 
@@ -236,7 +236,7 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
@@ -249,7 +249,7 @@
                     <div class="col-lg-4 col-12">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
-                                <a href="shop-detail.html">
+                                <a href="/detail-guesthouse">
                                     <img src="../../css_mosso/images/shop/childrens-bed-nursery-cot-velvet-childrens-room.jpg" class="shop-image img-fluid" alt="">
                                 </a>
 
@@ -266,7 +266,7 @@
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="shop-detail.html" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
@@ -433,7 +433,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#36363e" fill-opacity="1" d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
     </main>
 
-    <footer class="site-footer section-padding">
+    <footer class="site-footer section-padding pb-5">
         <div class="container">
             <div class="row">
 
