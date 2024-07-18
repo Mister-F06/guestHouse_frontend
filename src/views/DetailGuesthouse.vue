@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div>
         <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
@@ -38,22 +38,22 @@
         </nav>
         <div  class="mt-5 mb-5 container" style="margin-top: 4rem !important;">
             <div class="mb-5" >
-                <p class="title">The Gritti Palace</p>  
+                <p class="title">The Gritti Palace</p>
                 <span class="tag is-info mr-1">Au bord de la plage</span>
                 <span class="tag is-success mr-1">Navette aéroport</span>
                 <span class="tag is-warning mr-1">En bord de plage</span>
-                <base-button type="primary"   native-type="submit" class="my-4">Réserver</base-button>
+                <base-button type="primary" v-b-modal.modal-6   native-type="submit" class="my-4">Réserver</base-button>
             </div>
             <div class="columns is-multiline">
                 <div class="column is-4">
-                    <img src="../assets/guesht/574135970 (1).jpg" width="500px" alt="" class="mb-1"> 
+                    <img src="../assets/guesht/574135970 (1).jpg" width="500px" alt="" class="mb-1">
                     <img src="../assets/guesht/1707318678_Magmove-700C-lancement-du-velo-electrique-de-ville-en.jpg" width="500px" alt=""> <br>
                 </div>
                 <div class="column is-4">
-                    <img src="../assets/guesht/574135975.jpg" width="500px" alt="" class="mb-1"> 
+                    <img src="../assets/guesht/574135975.jpg" width="500px" alt="" class="mb-1">
                     <img src="../assets/guesht/574135970.jpg" width="500px" alt="">
                     <div style="text-align: right;">
-                        <a  v-b-modal.modal-5 variant="primary"  > 
+                        <a  v-b-modal.modal-5 variant="primary"  >
                             <i class="fa fa-eye is-small" style="font-size: small;color:green"></i> voir plus
                         </a>
                     </div>
@@ -65,7 +65,7 @@
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente dolore fugit facere modi dignissimos maiores labore quo enim eaque consectetur consequatur id odio eius unde, reprehenderit similique nesciunt eos doloribus.
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente dolore fugit facere modi digns doloribus.
                     </p>
-                <base-button type="primary"   native-type="submit" class="my-4">Réserver</base-button>
+                <base-button type="primary" v-b-modal.modal-6   native-type="submit" class="my-4">Réserver</base-button>
                 </div>
             </div>
             <div>
@@ -475,24 +475,187 @@
                     </div>
                     </div>
                 </section>
+                <section class="section">
+                  <div class="container">
+                    <h1 class="title">Commentaires clients</h1>
+                    <div class="box">
+                      <p>Avec une note de <strong>77,0</strong></p>
+                      <p><strong>Bien</strong> · 393 expériences vécues</p>
+                      <a href="#" class="button is-link">Voir tous les commentaires</a>
+                    </div>
+
+                    <h2 class="title">Catégories :</h2>
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Personnel</strong></p>
+                            <progress class="progress is-info" value="7.7" max="10">77%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Équipements</strong></p>
+                            <progress class="progress is-info" value="7.1" max="10">71%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Propreté</strong></p>
+                            <progress class="progress is-info" value="7.7" max="10">77%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Confort</strong></p>
+                            <progress class="progress is-info" value="7.6" max="10">76%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Rapport qualité/prix</strong></p>
+                            <progress class="progress is-info" value="7.1" max="10">71%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Situation géographique</strong></p>
+                            <progress class="progress is-info" value="8.7" max="10">87%</progress>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <div class="box">
+                            <p><strong>Connexion Wi-Fi gratuite</strong></p>
+                            <progress class="progress is-info" value="8.0" max="10">80%</progress>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </section>
             </div>
         </div>
         <!-- modal img  -->
         <b-modal id="modal-5" title="Plus d'image" size="lg" hide-footer>
-            <img src="../assets/guesht/574135979.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574135990.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136037.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136130.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136150.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image"> 
+            <img src="../assets/guesht/574135979.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574135990.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136037.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136130.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136150.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image">
+            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
         </b-modal>
+        <!-- Modal  reservation  -->
+        <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
+          <section class="section">
+            <div class="container">
+              <h1 class="title">Formulaire de Réservation</h1>
+              <form @submit.prevent="submitForm">
+                <div class="field">
+                  <label class="label" for="name">Nom complet</label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="text" id="name" v-model="name" placeholder="Votre nom complet" required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                </div>
 
+                <div class="field">
+                  <label class="label" for="email">Email</label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="email" id="email" v-model="email" placeholder="Votre email" required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="phone">Téléphone</label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="tel" id="phone" v-model="phone" placeholder="Votre numéro de téléphone" required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-phone"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="checkin">Date d'arrivée</label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="date" id="checkin" v-model="checkin" required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="checkout">Date de départ</label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="date" id="checkout" v-model="checkout" required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="guests">Nombre de personnes</label>
+                  <div class="control">
+                    <div class="select">
+                      <select id="guests" v-model="guests" required>
+                        <option value="1">1 personne</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                        <option value="5">5 personnes</option>
+                        <option value="6">6 personnes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="room-type">Type de chambre</label>
+                  <div class="control">
+                    <div class="select">
+                      <select id="room-type" v-model="roomType" required>
+                        <option value="single">Chambre Simple</option>
+                        <option value="double">Chambre Double</option>
+                        <option value="suite">Suite</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="special-requests">Demandes spéciales</label>
+                  <div class="control">
+                    <textarea class="textarea" id="special-requests" v-model="specialRequests" placeholder="Vos demandes spéciales (optionnel)"></textarea>
+                  </div>
+                </div>
+
+                <div class="field is-grouped">
+                  <div class="control">
+                    <button type="submit" class="button is-link">Réserver</button>
+                  </div>
+                  <div class="control">
+                    <button type="reset" class="button is-light">Annuler</button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="box price-box">
+                <h2 class="title is-4">Prix Total : <span>{{ totalPrice.toFixed(2) }}</span> XOF</h2>
+              </div>
+            </div>
+          </section>
+        </b-modal>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#36363e" fill-opacity="1" d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
         <footer class="site-footer section-padding pb-5">
         <div class="container">
@@ -564,28 +727,83 @@
             </div>
         </div>
         </footer>
-        
+
     </div>
 </template>
-  
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   export default {
     data() {
       return {
-          isMenuOpen: false,
+        name: '',
+        email: '',
+        phone: '',
+        checkin: '',
+        checkout: '',
+        guests: 1,
+        roomType: 'single',
+        specialRequests: '',
+        totalPrice: 0,
+        isMenuOpen: false
       };
     },
     mounted() {
-    },
+        this.calculatePrice();
+      },
+      watch: {
+        checkin: 'calculatePrice',
+        checkout: 'calculatePrice',
+        guests: 'calculatePrice',
+        roomType: 'calculatePrice'
+      },
     methods: {
-      toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-      }
+      submitForm() {
+          // Afficher la popup de confirmation avec SweetAlert2
+          swal("Réservation effectuée avec succès!", {
+            icon: "success",
+            buttons: false,
+            timer: 2000,
+          });
+        },
+      calculatePrice() {
+          const checkinDate = new Date(this.checkin);
+          const checkoutDate = new Date(this.checkout);
+          const oneDay = 24 * 60 * 60 * 1000;
+          const diffDays = Math.round(Math.abs((checkoutDate - checkinDate) / oneDay));
+
+          if (isNaN(diffDays) || diffDays <= 0) {
+            this.totalPrice = 0;
+            return;
+          }
+
+          let roomPricePerDay;
+
+          switch (this.roomType) {
+            case 'single':
+              roomPricePerDay = 50;
+              break;
+            case 'double':
+              roomPricePerDay = 75;
+              break;
+            case 'suite':
+              roomPricePerDay = 120;
+              break;
+            default:
+              roomPricePerDay = 0;
+          }
+
+          this.totalPrice = diffDays * roomPricePerDay * this.guests;
+        },
+        toggleMenu() {
+          this.isMenuOpen = !this.isMenuOpen;
+        },
+        
     },
   };
 </script>
-  
-  
+
+
 <style scoped>
   .hero-section {
     height: 100vh; /* Hauteur de la section ajustée selon vos besoins */
@@ -598,7 +816,7 @@
     border: none;
     outline: none;
   }
-  
+
   .navbar-toggler-icon {
     display: inline-block;
     width: 30px;
@@ -607,7 +825,7 @@
     transition: all 0.3s;
     position: relative;
   }
-  
+
   .navbar-toggler-icon::before,
   .navbar-toggler-icon::after {
     content: '';
@@ -619,29 +837,29 @@
     position: absolute;
     left: 0;
   }
-  
+
   .navbar-toggler-icon::before {
     top: -10px;
   }
-  
+
   .navbar-toggler-icon::after {
     top: 10px;
   }
-  
+
   .navbar-toggler.collapsed .navbar-toggler-icon {
     background-color: transparent;
   }
-  
+
   .navbar-toggler.collapsed .navbar-toggler-icon::before {
     transform: rotate(45deg);
     top: 0;
   }
-  
+
   .navbar-toggler.collapsed .navbar-toggler-icon::after {
     transform: rotate(-45deg);
     top: 0;
   }
-  
+
   .collapse.show {
     display: block !important;
   }
@@ -659,6 +877,10 @@
 .card-content .columns .column i {
     margin-right: 10px;
 }
-
+.price-box {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #dbdbdb;
+      border-radius: 5px;
+    }
 </style>
-  
