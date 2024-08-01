@@ -23,14 +23,12 @@
                         <li class="nav-item dropdown">
                           <a class="nav-link click-scroll" href="#section_3">Hébergement</a>
                             <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/auth/register">S'inscire</a>
-                        </li>
-
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_5">Nous contacter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="/auth/register">Je suis gérant !</a>
                         </li>
                     </ul>
                 </div>
@@ -39,16 +37,14 @@
 
     <main>
 
-        <section class="hero-section hero-slide" :style="{ backgroundImage: backgroundImage }">
+        <section class="hero-section hero-slide sectionBgImg" :style="{ backgroundImage: backgroundImage }">
           <div class="container">
             <div class="row">
               <div class="col-lg-8 col-12 text-center mx-auto">
                 <div class="hero-section-text">
                   <h1 class="hero-title text-white mt-2">Bienvenue à</h1>
                   <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
-                  <p>
-                    Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.
-                  </p>
+                  
                   <!-- Autres éléments comme le formulaire, boutons, etc. -->
                 </div>
               </div>
@@ -126,11 +122,11 @@
                         <h2 class="mt-2 mb-4"><span class="tooplate-red">En</span> vedette</h2>
                     </div>
 
-                    <div class="col-lg-6 col-12">
+                    <div class="col-lg-6 col-12" v-for="item in displayedGuesthouse" :key="item.id">
                         <div class="shop-thumb">
                             <div class="shop-image-wrap">
                                 <a href="/detail-guesthouse">
-                                    <img src="../../css_mosso/images/shop/minimal-bathroom-interior-design-with-wooden-furniture.jpg" class="shop-image img-fluid" alt="">
+                                    <img :src="showMediaFromGoogle(item.cover)" class="shop-image img-fluid" width="600px" height="300px" alt="">
                                 </a>
 
                                 <div class="shop-icons-wrap">
@@ -141,179 +137,35 @@
                                     </div>
 
                                     <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">$3,600</span>
+                                        <span class="badge custom-badge">{{ formatNumberCustom(item.price) }} FCFA</span>
                                     </p>
                                 </div>
 
                                 <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
+                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center">Plus de détail</a>
                                 </div>
                             </div>
 
                             <div class="shop-body">
-                                <h4>The Gritti Palace</h4>
+                                <h4>{{ item.name }}</h4>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-12">
-                        <div class="shop-thumb">
-                            <div class="shop-image-wrap">
-                                <a href="/detail-guesthouse">
-                                    <img src="../../css_mosso/images/shop/mock-up-poster-modern-dining-room-interior-design-with-white-empty-wall.jpg" class="shop-image img-fluid" alt="">
-                                </a>
-
-                                <div class="shop-icons-wrap">
-                                    <div class="shop-icons d-flex flex-column align-items-center">
-                                        <a href="#" class="shop-icon bi-heart"></a>
-
-                                        <a href="#" class="shop-icon bi-bookmark"></a>
-                                    </div>
-
-                                    <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">$6,400</span>
-                                    </p>
-                                </div>
-
-                                <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
-                                </div>
-                            </div>
-
-                            <div class="shop-body">
-                                <h4>Ryokan Sawanoya</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                        <div class="shop-thumb">
-                            <div class="shop-image-wrap">
-                                <a href="/detail-guesthouse">
-                                    <img src="../../css_mosso/images/shop/green-sofa-white-living-room-with-blank-table-mockup.jpg" class="shop-image img-fluid" alt="">
-                                </a>
-
-                                <div class="shop-icons-wrap">
-                                    <div class="shop-icons d-flex flex-column align-items-center">
-                                        <a href="#" class="shop-icon bi-heart"></a>
-
-                                        <a href="#" class="shop-icon bi-bookmark"></a>
-                                    </div>
-
-                                    <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">$2,400</span>
-                                    </p>
-                                </div>
-
-                                <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
-                                </div>
-                            </div>
-
-                            <div class="shop-body">
-                                <h4>La Maison Arabe</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                        <div class="shop-thumb">
-                            <div class="shop-image-wrap">
-                                <a href="/detail-guesthouse">
-                                    <img src="../../css_mosso/images/shop/concept-home-cooking-with-female-chef.jpg" class="shop-image img-fluid" alt="">
-                                </a>
-
-                                <div class="shop-icons-wrap">
-                                    <div class="shop-icons d-flex flex-column align-items-center">
-                                        <a href="#" class="shop-icon bi-heart"></a>
-
-                                        <a href="#" class="shop-icon bi-bookmark"></a>
-                                    </div>
-
-                                    <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">$3,800</span>
-                                    </p>
-                                </div>
-
-                                <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
-                                </div>
-                            </div>
-
-                            <div class="shop-body">
-                                <h4>Cape Grace Hotel</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                        <div class="shop-thumb">
-                            <div class="shop-image-wrap">
-                                <a href="/detail-guesthouse">
-                                    <img src="../../css_mosso/images/shop/childrens-bed-nursery-cot-velvet-childrens-room.jpg" class="shop-image img-fluid" alt="">
-                                </a>
-
-                                <div class="shop-icons-wrap">
-                                    <div class="shop-icons d-flex flex-column align-items-center">
-                                        <a href="#" class="shop-icon bi-heart"></a>
-
-                                        <a href="#" class="shop-icon bi-bookmark"></a>
-                                    </div>
-
-                                    <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">$850</span>
-                                    </p>
-                                </div>
-
-                                <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center align-items-center">Plus de détail</a>
-                                </div>
-                            </div>
-
-                            <div class="shop-body">
-                                <h4>Darwin's Townhouse</h4>
-                            </div>
-                        </div>
+                    <div class="col-lg-6 col-12 loading-container" v-if="Object.keys(displayedGuesthouse).length == 0">
+                        <div class="spinner"></div>
+                        <p>Chargement des données, veuillez patienter...</p>
                     </div>
 
                     <div class="col-lg-12 col-12">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#">4</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#">5</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+                                    <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -508,49 +360,106 @@
 </template>
 
 <script>
+import store from '../../store/index'
+
 export default {
   data() {
     return {
-        isMenuOpen: false,
+      isMenuOpen: false,
       images: [
         require('../../css_mosso/images/slideshow/white-wall-living-room-have-sofa-decoration-3d-rendering.jpg'),
         require('../../css_mosso/images/slideshow/interior-wall-mockup-with-sofa-cabinet-living-room-with-empty-white-wall-background-3d-rendering.jpg'),
         require('../../css_mosso/images/slideshow/wood-sideboard-living-room-interior-with-copy-space.jpg')
       ],
       currentImageIndex: 0,
-      intervalId: null
+      intervalId: null,
+      fileList: [],
+      data_guesthouse: [],
+      itemsPerPage: 5,
+      currentPage: 1,
     };
   },
   mounted() {
-    // Initialisation du diaporama
     this.startSlideshow();
+    this.listGuesthouse();
   },
   methods: {
-    
+    showMediaFromGoogle(url) {
+      let parsedUrl = new URL(url);
+      let queryParams = new URLSearchParams(parsedUrl.search);
+      return "https://drive.google.com/thumbnail?id=" + queryParams.get('id');
+    },
+    async listGuesthouse() {
+      try {
+        const response = await store.dispatch("guesthouse/listguesthouse");
+        this.data_guesthouse = response.data;
+      } catch (error) {
+        this.$toast.error("Liste introuvable", {
+          timeout: 2000
+        });
+      }
+    },
+    changePage(page) {
+      this.currentPage = page;
+    },
     startSlideshow() {
-      // Démarre le diaporama avec une intervalle de temps
       this.intervalId = setInterval(() => {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-      }, 3000); // Changement d'image toutes les 3 secondes (ajustez selon vos besoins)
+      }, 3000);
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    formatNumberCustom(number) {
+        let numberString = number.toString();
+        return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     }
+
   },
   computed: {
     backgroundImage() {
       return `url(${this.images[this.currentImageIndex]})`;
+    },
+    start() {
+      return (this.currentPage - 1) * this.itemsPerPage;
+    },
+    end() {
+      return this.start + this.itemsPerPage;
+    },
+    displayedGuesthouse() {
+      return this.data_guesthouse.slice(this.start, this.end);
+    },
+    totalPages() {
+      return Math.ceil(this.data_guesthouse.length / this.itemsPerPage);
     }
   },
   beforeDestroy() {
-    // Nettoyer l'intervalle lorsque le composant est détruit pour éviter les fuites de mémoire
     clearInterval(this.intervalId);
   }
 };
 </script>
-
-
 <style scoped>
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 .hero-section {
   height: 100vh; /* Hauteur de la section ajustée selon vos besoins */
   background-size: cover;

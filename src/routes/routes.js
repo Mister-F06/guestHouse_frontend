@@ -11,6 +11,7 @@ const routes = [{
     {
         path: '/detail-guesthouse',
         name: 'DetailGuesthouse',
+        meta: { requiresAuth: true },
         component: () =>
             import ('../views/DetailGuesthouse.vue'),
     },
@@ -22,30 +23,40 @@ const routes = [{
         children: [{
                 path: 'home',
                 name: 'dashboard',
+                meta: { requiresAuth: true },
+
                 component: () =>
                     import ('../views/Dashboard.vue')
             },
             {
                 path: 'addGueshouse',
                 name: 'Gestion des Guesthouses',
+                meta: { requiresAuth: true },
+
                 component: () =>
                     import ('../views/AddGueshouse.vue')
             },
             {
                 path: 'profile',
                 name: 'profile',
+                meta: { requiresAuth: true },
+
                 component: () =>
                     import ('../views/Pages/UserProfile.vue')
             },
             {
                 path: 'maps',
                 name: 'maps',
+                meta: { requiresAuth: true },
+
                 component: () =>
                     import ('../views/GoogleMaps.vue')
             },
             {
                 path: 'tables',
                 name: 'tables',
+                meta: { requiresAuth: true },
+
                 component: () =>
                     import ('../views/RegularTables.vue')
             }

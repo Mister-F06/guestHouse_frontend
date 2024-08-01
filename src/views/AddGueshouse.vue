@@ -21,7 +21,7 @@
                     </tr>
                     <tr v-for="item in displayedGuesthouse" :key="item.id">
                         <td style=" text-align: left">{{ item.name }}</td>
-                        <td style=" text-align: left">{{ item.price }}  <span>FCFA</span></td>
+                        <td style=" text-align: left">{{formatNumberCustom(item.price ) }}  <span>FCFA</span></td>
                         <td style=" text-align: left">{{ item.address }}</td>
                         <td style=" text-align: right">
                           <span v-if="item.status == 'validated'" class="tag is-primary is-light">Valider</span>
@@ -679,6 +679,11 @@
             this.load = false;
         }
     },
+    formatNumberCustom(number) {
+        let numberString = number.toString();
+        return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    },
+
     async updateGuesthouse() {
         try {
           console.log("Updating guesthouse with ID:", this.model.id);

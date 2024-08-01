@@ -28,7 +28,7 @@
               <div class="text-muted text-center mt-2 mb-4">
                   <h2>S'enregistrer</h2>
                   <p class="text-lead text-white">
-                    Que vous soyez en voyage d'affaires, en escapade romantique ou en vacances en famille, nous sommes là pour rendre votre séjour aussi confortable que possible.
+                    Rejoignez-nous et transformez l'accueil en art. Devenez gérant aujourd'hui.
                    </p>
                 </div>
             </b-card-header>

@@ -24,10 +24,12 @@ window.$ = window.jQuery = require('jquery');
 window.bootstrap = require('bootstrap');
 // router setup
 import router from './routes/router';
+// import middleware from './routes/middleware';
 // plugin setup
 Vue.use(DashboardPlugin);
 Vue.use(Notifications);
 Vue.use(Toast);
+// Vue.use(middleware);
 Vue.use(axios);
 
 /* eslint-disable no-new */
