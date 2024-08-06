@@ -23,7 +23,7 @@
                         <li class="nav-item dropdown">
                           <a class="nav-link click-scroll" href="#section_3">Hébergement</a>
                             <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
-                        </li> 
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_5">Nous contacter</a>
                         </li>
@@ -44,7 +44,7 @@
                 <div class="hero-section-text">
                   <h1 class="hero-title text-white mt-2">Bienvenue à</h1>
                   <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
-                  
+
                   <!-- Autres éléments comme le formulaire, boutons, etc. -->
                 </div>
               </div>
@@ -97,7 +97,7 @@
                                           8h - 23h
                                         </strong>
                                     </p>
-                                    <p>Dimanche ~ 
+                                    <p>Dimanche ~
                                         <strong class="d-inline">
                                            10h - 20h
                                         </strong>
@@ -111,65 +111,66 @@
             </div>
         </section>
 
-
+        <!-- Liste guesthouse  -->
         <section class="shop-section section-padding" id="section_3">
-            <div class="container">
-                <div class="row">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 col-12">
+                <small class="section-small-title">OFAD GUESTHOUSE</small>
+                <h2 class="mt-2 mb-4"><span class="tooplate-red">En</span> vedette</h2>
+              </div>
 
-                    <div class="col-lg-12 col-12">
-                        <small class="section-small-title">OFAD GUESTHOUSE</small>
-
-                        <h2 class="mt-2 mb-4"><span class="tooplate-red">En</span> vedette</h2>
+              <template v-if="isLoading">
+                <div class="col-lg-6 col-12" v-for="n in 4" :key="n">
+                  <div class="shop-thumb">
+                    <div class="shop-image-wrap skeleton skeleton-image"></div>
+                    <div class="shop-body">
+                      <div class="skeleton skeleton-text"></div>
+                      <div class="skeleton skeleton-text" style="width: 60%;"></div>
                     </div>
-
-                    <div class="col-lg-6 col-12" v-for="item in displayedGuesthouse" :key="item.id">
-                        <div class="shop-thumb">
-                            <div class="shop-image-wrap">
-                                <a href="/detail-guesthouse">
-                                    <img :src="showMediaFromGoogle(item.cover)" class="shop-image img-fluid" width="600px" height="300px" alt="">
-                                </a>
-
-                                <div class="shop-icons-wrap">
-                                    <div class="shop-icons d-flex flex-column align-items-center">
-                                        <a href="#" class="shop-icon bi-heart"></a>
-
-                                        <a href="#" class="shop-icon bi-bookmark"></a>
-                                    </div>
-
-                                    <p class="shop-pricing mb-0 mt-3">
-                                        <span class="badge custom-badge">{{ formatNumberCustom(item.price) }} FCFA</span>
-                                    </p>
-                                </div>
-
-                                <div class="shop-btn-wrap">
-                                    <a href="/detail-guesthouse" class="shop-btn custom-btn btn d-flex align-items-center">Plus de détail</a>
-                                </div>
-                            </div>
-
-                            <div class="shop-body">
-                                <h4>{{ item.name }}</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-12 loading-container" v-if="Object.keys(displayedGuesthouse).length == 0">
-                        <div class="spinner"></div>
-                        <p>Chargement des données, veuillez patienter...</p>
-                    </div>
-
-                    <div class="col-lg-12 col-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
-                                    <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                  </div>
                 </div>
-            </div>
-        </section>
+              </template>
 
+              <template v-else>
+                <div class="col-lg-6 col-12" v-for="item in displayedGuesthouse" :key="item.id">
+                  <div class="shop-thumb">
+                    <div class="shop-image-wrap">
+                      <a :href="`/detail-guesthouse/${item.id}`">
+                        <img :src="showMediaFromGoogle(item.cover)" class="shop-image img-fluid" width="600px" height="300px" alt="">
+                      </a>
+                      <div class="shop-icons-wrap">
+                        <div class="shop-icons d-flex flex-column align-items-center">
+                          <a href="#" class="shop-icon bi-heart"></a>
+                          <a href="#" class="shop-icon bi-bookmark"></a>
+                        </div>
+                        <p class="shop-pricing mb-0 mt-3">
+                          <span class="badge custom-badge">{{ formatNumberCustom(item.price) }} FCFA</span>
+                        </p>
+                      </div>
+                      <div class="shop-btn-wrap">
+                        <a :href="`/detail-guesthouse/${item.id}`" class="shop-btn custom-btn btn d-flex align-items-center">Plus de détail</a>
+                      </div>
+                    </div>
+                    <div class="shop-body">
+                      <h4>{{ item.name }}</h4>
+                    </div>
+                  </div>
+                </div>
+              </template>
+
+              <div class="col-lg-12 col-12">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+                      <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section class="reviews-section section-padding pb-0" id="section_4">
             <div class="container">
@@ -366,6 +367,7 @@ export default {
   data() {
     return {
       isMenuOpen: false,
+      isLoading: true,
       images: [
         require('../../css_mosso/images/slideshow/white-wall-living-room-have-sofa-decoration-3d-rendering.jpg'),
         require('../../css_mosso/images/slideshow/interior-wall-mockup-with-sofa-cabinet-living-room-with-empty-white-wall-background-3d-rendering.jpg'),
@@ -393,6 +395,7 @@ export default {
       try {
         const response = await store.dispatch("guesthouse/listguesthouse");
         this.data_guesthouse = response.data;
+        this.isLoading = false
       } catch (error) {
         this.$toast.error("Liste introuvable", {
           timeout: 2000
@@ -517,6 +520,45 @@ export default {
 
 .collapse.show {
   display: block !important;
+}
+.skeleton {
+  background-color: #ddd !important;
+  background-image: linear-gradient(0deg, transparent, transparent 50%, #f65129 0, #f65129) !important;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.skeleton-text {
+  height: 20px;
+  width: 100%;
+}
+
+.skeleton-image {
+  height: 300px;
+  width: 600px;
 }
 
 </style>

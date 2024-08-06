@@ -23,20 +23,12 @@
 
         <sidebar-item
               :link="{
-                name: 'Maps',
-                path: '/maps',
-                icon: 'ni ni-pin-3 text-orange'
-              }">
-        </sidebar-item>
-
-        <sidebar-item
-              :link="{
-                name: 'User Profile',
+                name: 'Profile',
                 path: '/dashboard/profile',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
-
+<!--
         <sidebar-item
                 :link="{
                   name: 'Tables',
@@ -58,10 +50,10 @@
                     path: '/auth/register',
                     icon: 'ni ni-circle-08 text-pink'
                   }">
-        </sidebar-item>
+        </sidebar-item> -->
       </template>
 
-      <template slot="links-after">
+      <!-- <template slot="links-after">
         <hr class="my-3">
         <h6 class="navbar-heading p-0 text-muted">Documentation</h6>
 
@@ -81,7 +73,7 @@
               <b-nav-text class="p-0">Components</b-nav-text>
           </b-nav-item>
         </b-nav>
-      </template>
+      </template> -->
     </side-bar>
     <div class="main-content">
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>

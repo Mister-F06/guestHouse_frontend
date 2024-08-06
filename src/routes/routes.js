@@ -9,7 +9,7 @@ const routes = [{
             import ('../views/Pages/LandingPage.vue'),
     },
     {
-        path: '/detail-guesthouse',
+        path: '/detail-guesthouse/:id',
         name: 'DetailGuesthouse',
         meta: { requiresAuth: true },
         component: () =>

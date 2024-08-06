@@ -17,7 +17,10 @@
                         <th style=" text-align: left">Adresse</th>
                         <th style=" text-align: right">Status</th>
                         <th style=" text-align: right">Visibilité</th>
-                        <th style=" text-align: right">Action</th>
+                        <th style=" text-align: right">
+                          <i class="fas fa-spinner spin" v-if="load"></i>
+                          Action
+                        </th>
                     </tr>
                     <tr v-for="item in displayedGuesthouse" :key="item.id">
                         <td style=" text-align: left">{{ item.name }}</td>
@@ -502,7 +505,7 @@
                 <b-form role="form" @submit.prevent="handleSubmit(updateStatus)">
                     <b-row>
                         <b-col>
-                          <label for="has_pool">Status</label> <br> 
+                          <label for="has_pool">Status</label> <br>
                           <div class="select">
                             <select v-model="formS.status">
                               <option>Sélectionner le status</option>
@@ -510,15 +513,15 @@
                               <option value="pending_validation" >En cours de validation</option>
                               <option value="rejected" >Rejeter</option>
                             </select>
-                          </div> 
-                        </b-col> 
+                          </div>
+                        </b-col>
                     </b-row>
 
                     <b-row class="mt-4">
                       <b-col>
-                          <label for="has_pool">Raison</label> <br> 
+                          <label for="has_pool">Raison</label> <br>
                           <textarea class="textarea" v-model="formS.reasons" placeholder="e.g. Raison"></textarea>
-                      </b-col> 
+                      </b-col>
                     </b-row>
                     <div class="text-right">
                         <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Enregistrer</base-button>
@@ -863,7 +866,7 @@
       this.formV.id = item.id
     },
     openStatusModal(item){
-      this.formS.status  =  item.status 
+      this.formS.status  =  item.status
       this.formS.id = item.id
     },
     async updateVisibility() {
@@ -951,4 +954,13 @@ td{
 .texting {
   color: auto;
 }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 2s linear infinite;
+}
+
 </style>

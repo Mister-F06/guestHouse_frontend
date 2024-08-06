@@ -1,40 +1,38 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">
-                 <img src="../assets/logo.png" alt="" style="width: 100px;">
-                </a>
+              <div class="container">
+                  <a class="navbar-brand" href="index.html">
+                  <img src="../assets/logo.png" alt="" style="width: 100px;">
+                  </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"  @click="toggleMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"  @click="toggleMenu" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav"  :class="{ show: isMenuOpen }">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/">Accueil</a>
-                        </li>
+                  <div class="collapse navbar-collapse" id="navbarNav"  :class="{ show: isMenuOpen }">
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link click-scroll" href="/#section_1">Accueil</a>
+                          </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/#section_2">A propos</a>
-                        </li>
+                          <li class="nav-item">
+                              <a class="nav-link click-scroll" href="/#section_2">A propos</a>
+                          </li>
 
-                        <li class="nav-item dropdown">
-                          <a class="nav-link click-scroll" href="/#section_3">Hébergement</a>
-                            <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/auth/register">S'inscire</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/#section_5">Nous contacter</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link click-scroll" href="/#section_3">Hébergement</a>
+                              <!-- <a class="nav-link dropdown-toggle click-scroll" href="/#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link click-scroll" href="/#section_5">Nous contacter</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link click-scroll" href="/auth/register">Je suis gérant !</a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
         </nav>
         <div  class="mt-5 mb-5 container" style="margin-top: 4rem !important;">
             <div class="mb-5" >
@@ -42,7 +40,6 @@
                 <span class="tag is-info mr-1">Au bord de la plage</span>
                 <span class="tag is-success mr-1">Navette aéroport</span>
                 <span class="tag is-warning mr-1">En bord de plage</span>
-                <base-button type="primary" v-b-modal.modal-6   native-type="submit" class="my-4">Réserver</base-button>
             </div>
             <div class="columns is-multiline">
                 <div class="column is-4">
@@ -798,7 +795,7 @@
         toggleMenu() {
           this.isMenuOpen = !this.isMenuOpen;
         },
-        
+
     },
   };
 </script>
