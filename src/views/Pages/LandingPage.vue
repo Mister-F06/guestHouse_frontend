@@ -136,7 +136,7 @@
                 <div class="col-lg-6 col-12" v-for="item in displayedGuesthouse" :key="item.id">
                   <div class="shop-thumb">
                     <div class="shop-image-wrap">
-                      <a :href="`/detail-guesthouse/${item.id}`">
+                      <a :href="`/detail-guesthouse/${item.slug}`">
                         <img :src="showMediaFromGoogle(item.cover)" class="shop-image img-fluid" width="600px" height="300px" alt="">
                       </a>
                       <div class="shop-icons-wrap">
@@ -149,7 +149,7 @@
                         </p>
                       </div>
                       <div class="shop-btn-wrap">
-                        <a :href="`/detail-guesthouse/${item.id}`" class="shop-btn custom-btn btn d-flex align-items-center">Plus de détail</a>
+                        <a :href="`/detail-guesthouse/${item.slug}`" class="shop-btn custom-btn btn d-flex align-items-center">Plus de détail</a>
                       </div>
                     </div>
                     <div class="shop-body">
@@ -397,9 +397,7 @@ export default {
         this.data_guesthouse = response.data;
         this.isLoading = false
       } catch (error) {
-        this.$toast.error("Liste introuvable", {
-          timeout: 2000
-        });
+       console.log(error);
       }
     },
     changePage(page) {
@@ -523,11 +521,12 @@ export default {
 }
 .skeleton {
   background-color: #ddd !important;
-  background-image: linear-gradient(0deg, transparent, transparent 50%, #f65129 0, #f65129) !important;
-  border-radius: 4px;
+  background-image: linear-gradient(0deg, transparent, transparent 50%, #ddd 0, #ddd) !important;
+  border-radius: 15px;
   margin-bottom: 10px;
   position: relative;
   overflow: hidden;
+  width: 500px !important;
 }
 
 .skeleton::before {
@@ -537,7 +536,7 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  width: 500px !important;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
   animation: loading 1.5s infinite;
 }

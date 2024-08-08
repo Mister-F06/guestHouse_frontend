@@ -34,6 +34,11 @@ export default {
             let response = await axios.delete(`/guest_houses/managers/delete/${id}`);
             return response
         },
+        async detailguesthousebyslug({ dispatch }, slug) {
+            dispatch
+            let response = await axios.get(`/guest_houses/${slug}`);
+            return response
+        },
 
         async listguesthouse() {
             let response = await axios.get('/guest_houses');

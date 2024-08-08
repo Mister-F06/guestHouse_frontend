@@ -35,37 +35,58 @@
               </div>
         </nav>
         <div  class="mt-5 mb-5 container" style="margin-top: 4rem !important;">
-            <div class="mb-5" >
-                <p class="title">The Gritti Palace</p>
-                <span class="tag is-info mr-1">Au bord de la plage</span>
-                <span class="tag is-success mr-1">Navette aéroport</span>
-                <span class="tag is-warning mr-1">En bord de plage</span>
+            <div v-if="isLoading" class="skeleton-loader mb-3" style="width: 100%; height: 40px;border-radius: 10px;"></div>
+            <div class="mb-5" v-else >
+                <p class="title">{{data_guesthouse.name}}</p>
+                <span class="tag is-info mr-1">Conviviale </span>
+                <span class="tag is-success mr-1">Confortable </span>
+                <span class="tag is-warning mr-1">Intime </span>
             </div>
+
             <div class="columns is-multiline">
                 <div class="column is-4">
-                    <img src="../assets/guesht/574135970 (1).jpg" width="500px" alt="" class="mb-1">
-                    <img src="../assets/guesht/1707318678_Magmove-700C-lancement-du-velo-electrique-de-ville-en.jpg" width="500px" alt=""> <br>
+                  <div v-if="isLoading">
+                    <!-- Skeleton loader for images -->
+                    <div class="skeleton-loader" style="width: 500px; height: 250px; margin-bottom: 10px;"></div>
+                    <div class="skeleton-loader" style="width: 500px; height: 250px;"></div>
+                  </div>
+                  <div v-else>
+                    <img :src="pictures[0]" width="500px" alt="" class="mb-1">
+                    <img :src="pictures[1]" width="500px" alt="">
+                  </div>
                 </div>
                 <div class="column is-4">
-                    <img src="../assets/guesht/574135975.jpg" width="500px" alt="" class="mb-1">
-                    <img src="../assets/guesht/574135970.jpg" width="500px" alt="">
+                  <div v-if="isLoading">
+                    <!-- Skeleton loader for images -->
+                    <div class="skeleton-loader" style="width: 500px; height: 250px; margin-bottom: 10px;"></div>
+                    <div class="skeleton-loader" style="width: 500px; height: 250px;"></div>
+                  </div>
+                  <div v-else>
+                    <img :src="pictures[2]" width="500px" alt="" class="mb-1">
+                    <img :src="pictures[3]" width="500px" alt="">
                     <div style="text-align: right;">
-                        <a  v-b-modal.modal-5 variant="primary"  >
-                            <i class="fa fa-eye is-small" style="font-size: small;color:green"></i> voir plus
-                        </a>
+                      <a v-b-modal.modal-5 variant="primary">
+                        <i class="fa fa-eye is-small" style="font-size: small;color:green"></i> voir plus
+                      </a>
                     </div>
+                  </div>
                 </div>
                 <div class="column is-4">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    <p style="text-align: center;" >
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente dolore fugit facere modi dignissimos maiores labore quo enim eaque consectetur consequatur id odio eius unde, reprehenderit similique nesciunt eos doloribus.
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente dolore fugit facere modi dignissimos maiores labore quo enim eaque consectetur consequatur id odio eius unde, reprehenderit similique nesciunt eos doloribus.
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente dolore fugit facere modi digns doloribus.
-                    </p>
-                <base-button type="primary" v-b-modal.modal-6   native-type="submit" class="my-4">Réserver</base-button>
+                  <div v-if="isLoading">
+                    <!-- Skeleton loader for map -->
+                    <div class="skeleton-loader" style="width: 100%; height: 220px;"></div>
+                    <!-- Skeleton loader for description -->
+                    <div class="skeleton-loader" style="width: 100%; height: 50px; margin: 10px 0;"></div>
+                    <div class="skeleton-loader" style="width: 150px; height: 40px; margin: 20px auto;"></div>
+                  </div>
+                  <div v-else>
+                    <iframe src="https://www.google.com/maps/embed?..." width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <p style="text-align: center;">{{ data_guesthouse.description }}</p>
+                    <base-button type="primary" v-b-modal.modal-6 native-type="submit" class="my-4">Réserver</base-button>
+                  </div>
                 </div>
             </div>
-            <div>
+            <div v-if='!isLoading'>
                 <div class="card">
                     <div class="card-content">
                         <div class="media">
@@ -84,7 +105,7 @@
                                 <div class="column is-4">
                                     <i class="fas fa-ruler-combined"></i> 186 m² superficie
                                 </div>
-                                <div class="column is-4">
+                                <div class="column is-4" v-if=" data_guesthouse.has_kitchen == true">
                                     <i class="fas fa-utensils"></i> Cuisine
                                 </div>
                                 <div class="column is-4">
@@ -96,13 +117,13 @@
                                 <div class="column is-4">
                                     <i class="fas fa-paw"></i> Animaux domestiques admis
                                 </div>
-                                <div class="column is-4">
+                                <div class="column is-4"  v-if=" data_guesthouse.has_pool == true">
                                     <i class="fas fa-swimming-pool"></i> Piscine
                                 </div>
-                                <div class="column is-4">
+                                <div class="column is-4"  v-if=" data_guesthouse.has_washing_machine == true">
                                     <i class="fas fa-bath"></i> Lave-linge
                                 </div>
-                                <div class="column is-4">
+                                <div class="column is-4" >
                                     <i class="fas fa-wifi"></i> Connexion Wi-Fi gratuite
                                 </div>
                                 <div class="column is-4">
@@ -120,7 +141,7 @@
                                 <div class="column is-4">
                                     <i class="fas fa-water"></i> Front de mer
                                 </div>
-                                <div class="column is-4">
+                                <div class="column is-4"  v-if=" data_guesthouse.has_parking == true">
                                     <i class="fas fa-parking"></i> Parking gratuit
                                 </div>
                                 <div class="column is-4">
@@ -134,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div v-if='!isLoading'>
                 <section class="section">
                     <div class="container">
                     <h1 class="title">Ses points forts</h1>
@@ -222,13 +243,13 @@
                             <p>Sèche-linge</p>
                         </div>
                         </div>
-                        <div class="column is-one-quarter">
+                        <div class="column is-one-quarter"  v-if=" data_guesthouse.has_kitchen == true">
                         <div class="box">
                             <i class="fas fa-utensils fa-2x"></i>
                             <p>Cuisine</p>
                         </div>
                         </div>
-                        <div class="column is-one-quarter">
+                        <div class="column is-one-quarter" v-if=" data_guesthouse.has_washing_machine == true">
                         <div class="box">
                             <i class="fas fa-tshirt fa-2x"></i>
                             <p>Lave-linge</p>
@@ -262,7 +283,7 @@
 
                     <h2 class="title">Salle de bains</h2>
                     <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
+                        <div class="column is-one-quarter" >
                         <div class="box">
                             <i class="fas fa-toilet-paper fa-2x"></i>
                             <p>Papier toilette</p>
@@ -474,12 +495,12 @@
                 </section>
                 <section class="section">
                   <div class="container">
-                    <h1 class="title">Commentaires clients</h1>
+                    <!-- <h1 class="title">Commentaires clients</h1>
                     <div class="box">
                       <p>Avec une note de <strong>77,0</strong></p>
                       <p><strong>Bien</strong> · 393 expériences vécues</p>
                       <a href="#" class="button is-link">Voir tous les commentaires</a>
-                    </div>
+                    </div> -->
 
                     <h2 class="title">Catégories :</h2>
                     <div class="columns is-multiline">
@@ -532,18 +553,12 @@
         </div>
         <!-- modal img  -->
         <b-modal id="modal-5" title="Plus d'image" size="lg" hide-footer>
-            <img src="../assets/guesht/574135979.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574135990.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136037.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136130.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136150.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574135997.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136096.jpg" width="100%" alt="" class="mb-1 zoom-image">
-            <img src="../assets/guesht/574136089.jpg" width="100%" alt="" class="mb-1 zoom-image">
+          <div  v-for="(item, index) in pictures" :key="index">
+            <img :src="item" width="100%" alt="" class="mb-1 zoom-image">
+          </div>
+          <div v-for="(item, index) in videos" :key="index">
+              <iframe width="100%" height="100%" :src="item"></iframe>
+          </div>
         </b-modal>
         <!-- Modal  reservation  -->
         <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
@@ -730,6 +745,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+  import store from '../store/index'
+  import router from '../routes/router.js'
   export default {
     data() {
       return {
@@ -742,11 +759,17 @@
         roomType: 'single',
         specialRequests: '',
         totalPrice: 0,
-        isMenuOpen: false
+        isMenuOpen: false,
+        data_guesthouse:[],
+        cover: '',
+        pictures: [],
+        videos: [],
+        isLoading: true,
       };
     },
     mounted() {
-        this.calculatePrice();
+        this.calculatePrice();  
+        this.listGuesthouseBySlug()
       },
       watch: {
         checkin: 'calculatePrice',
@@ -755,6 +778,30 @@
         roomType: 'calculatePrice'
       },
     methods: {
+     async listGuesthouseBySlug() {
+      try {
+        const response = await store.dispatch("guesthouse/detailguesthousebyslug", router.currentRoute.params.id);
+        this.data_guesthouse = response.data;
+        this.pictures = this.data_guesthouse.pictures.map(picture => this.showMediaFromGoogle(picture.original_url));
+        this.videos = this.data_guesthouse.videos.map(video => this.showMediaFromGoogleVideo(video.original_url));
+        this.isLoading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  
+    showMediaFromGoogle(url) {
+        // Parse l'URL et extrait ses composants
+        let parsedUrl = new URL(url);
+        let queryParams = new URLSearchParams(parsedUrl.search);
+        return "https://drive.google.com/thumbnail?id=" + queryParams.get('id');
+    },
+    showMediaFromGoogleVideo(url) {
+        // Parse l'URL et extrait ses composants
+        let parsedUrl = new URL(url);
+        let queryParams = new URLSearchParams(parsedUrl.search);
+        return "https://drive.google.com/file/d/" + queryParams.get('id') + "/preview";
+    },
       submitForm() {
           // Afficher la popup de confirmation avec SweetAlert2
           swal("Réservation effectuée avec succès!", {
@@ -802,6 +849,25 @@
 
 
 <style scoped>
+.skeleton-loader {
+  background-color: #eee;
+  animation: pulse 1.5s infinite ease-in-out;
+  width:400px !important;
+  margin-right:5rem !important;
+
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
   .hero-section {
     height: 100vh; /* Hauteur de la section ajustée selon vos besoins */
     background-size: cover;
