@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
               <div class="container">
-                  <a class="navbar-brand" href="index.html">
+                  <a class="navbar-brand" href="/">
                   <img src="../assets/logo.png" alt="" style="width: 100px;">
                   </a>
 
@@ -37,7 +37,8 @@
         <div  class="mt-5 mb-5 container" style="margin-top: 4rem !important;">
             <div v-if="isLoading" class="skeleton-loader mb-3" style="width: 100%; height: 40px;border-radius: 10px;"></div>
             <div class="mb-5" v-else >
-                <p class="title">{{data_guesthouse.name}}</p>
+                <p class="title ">{{this.data_guesthouse.name}}</p> 
+                <span class="tag  is-danger mr-1 text-white" >{{ formatNumberCustom(this.data_guesthouse.price) }} FCFA / 24h</span>
                 <span class="tag is-info mr-1">Conviviale </span>
                 <span class="tag is-success mr-1">Confortable </span>
                 <span class="tag is-warning mr-1">Intime </span>
@@ -81,7 +82,13 @@
                   </div>
                   <div v-else>
                     <iframe src="https://www.google.com/maps/embed?..." width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    <p style="text-align: center;">{{ data_guesthouse.description }}</p>
+                    <div>
+                      <p style="text-align: center;">
+                        {{ truncatedDescription }}
+                        <span v-if="isTruncated">...</span>
+                      </p>
+                      <button @click="toggleDescription">{{ isTruncated ? 'Voir plus' : 'Voir moins' }}</button>
+                    </div>
                     <base-button type="primary" v-b-modal.modal-6 native-type="submit" class="my-4">Réserver</base-button>
                   </div>
                 </div>
@@ -105,7 +112,7 @@
                                 <div class="column is-4">
                                     <i class="fas fa-ruler-combined"></i> 186 m² superficie
                                 </div>
-                                <div class="column is-4" v-if=" data_guesthouse.has_kitchen == true">
+                                <div class="column is-4" v-if=" this.data_guesthouse.has_kitchen == true">
                                     <i class="fas fa-utensils"></i> Cuisine
                                 </div>
                                 <div class="column is-4">
@@ -564,104 +571,201 @@
         <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
           <section class="section">
             <div class="container">
-              <h1 class="title">Formulaire de Réservation</h1>
-              <form @submit.prevent="submitForm">
-                <div class="field">
-                  <label class="label" for="name">Nom complet</label>
-                  <div class="control has-icons-left">
-                    <input class="input" type="text" id="name" v-model="name" placeholder="Votre nom complet" required>
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                  </div>
-                </div>
+              <h1 class="title">Informations personnelles</h1>
+              <b-form role="form" @submit.prevent="reserver()">
+                  <b-row>
+                      <b-col>
+                        <label class="label" for="payment_type">Nom</label>
 
-                <div class="field">
-                  <label class="label" for="email">Email</label>
-                  <div class="control has-icons-left">
-                    <input class="input" type="email" id="email" v-model="email" placeholder="Votre email" required>
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-envelope"></i>
-                    </span>
-                  </div>
-                </div>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Nom"
+                            required
+                            prepend-icon="fas fa-user"
+                            placeholder="Nom"
+                            v-model="forms.lastname">
+                          </base-input>
+                      </b-col>
+                      <b-col>
+                        <label class="label" for="payment_type">Prénom</label>
 
-                <div class="field">
-                  <label class="label" for="phone">Téléphone</label>
-                  <div class="control has-icons-left">
-                    <input class="input" type="tel" id="phone" v-model="phone" placeholder="Votre numéro de téléphone" required>
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-phone"></i>
-                    </span>
-                  </div>
-                </div>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Prénom"
+                            required
+                            prepend-icon="fas fa-user"
+                            placeholder="Prénom"
+                            v-model="forms.firstname">
+                          </base-input>
+                      </b-col>
+                  </b-row>
+                  <b-row>
+                      <b-col>
+                        <label class="label" for="payment_type">Email</label>
 
-                <div class="field">
-                  <label class="label" for="checkin">Date d'arrivée</label>
-                  <div class="control has-icons-left">
-                    <input class="input" type="date" id="checkin" v-model="checkin" required>
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-calendar-alt"></i>
-                    </span>
-                  </div>
-                </div>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Email"
+                            required
+                            prepend-icon="fas fa-envelope"
+                            placeholder="Email"
+                            type="email"
+                            v-model="forms.email">
+                          </base-input>
+                      </b-col>
+                      <b-col>
+                        <label class="label" for="payment_type">Téléphone</label>
 
-                <div class="field">
-                  <label class="label" for="checkout">Date de départ</label>
-                  <div class="control has-icons-left">
-                    <input class="input" type="date" id="checkout" v-model="checkout" required>
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-calendar-alt"></i>
-                    </span>
-                  </div>
-                </div>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Téléphone"
+                            required
+                            prepend-icon="fas fa-phone"
+                            placeholder="Téléphone"
+                            v-model="forms.telephone"
+                            @input="formatPhoneNumber"
+                            :class="{'is-invalid': !validPhoneNumber}">
+                        </base-input>
+                      </b-col>
+                  </b-row>
+                  <b-row>
+                      <b-col>
+                        <label class="label" for="payment_type">Date d'arrivée</label>
 
-                <div class="field">
-                  <label class="label" for="guests">Nombre de personnes</label>
-                  <div class="control">
-                    <div class="select">
-                      <select id="guests" v-model="guests" required>
-                        <option value="1">1 personne</option>
-                        <option value="2">2 personnes</option>
-                        <option value="3">3 personnes</option>
-                        <option value="4">4 personnes</option>
-                        <option value="5">5 personnes</option>
-                        <option value="6">6 personnes</option>
-                      </select>
-                    </div>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Date d'arrivée"
+                            required
+                            prepend-icon="fas fa-calendar-alt"
+                            placeholder="Date d'arrivée"
+                            type="datetime-local"
+                            v-model="checkin">
+                          </base-input>
+                      </b-col>
+                      <b-col>
+                        <label class="label" for="payment_type">Date de départ</label>
+                        <base-input alternative
+                            class="mb-3"
+                            name="Date de départ"
+                            required
+                            prepend-icon="fas fa-calendar-alt"
+                            placeholder="Date de départ"
+                            type="datetime-local"
+                            v-model="checkout">
+                          </base-input>
+                      </b-col>
+                  </b-row>
+                 <h1 class="title">Informations de paiement</h1>
+                  <b-row>
+                      <b-col class="mb-5">
+                         <!-- Type de paiement -->
+                          <div class="field">
+                            <label class="label" for="payment_type">Type de paiement</label>
+                            <div class="control">
+                              <div class="select">
+                                <select id="payment_type" v-model="forms.payment_type" @change="resetPaymentDetails" required>
+                                  <option value="momo">Mobile Money</option>
+                                  <option value="card">Carte Bancaire</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                      </b-col> 
+                  </b-row>
+                  <b-row   v-if="forms.payment_type === 'momo'"> 
+                      <b-col>
+                            <div class="control">
+                              <label class="label" for="payment_type">Opérateur</label>
+                              <div class="select">
+                                <select id="payment_type" v-model="forms.operator"   required>
+                                  <option value="mtn">MTN</option>
+                                  <option value="moov">MOOV</option>
+                                </select>
+                              </div>
+                            </div>
+                      </b-col> 
+                      <b-col>
+                        <label class="label" for="payment_type">Numéro Mobile Money</label>
+                        <base-input alternative
+                              class="mb-3"
+                              name="Numéro Mobile Money"
+                              required
+                              prepend-icon="fas fa-mobile-alt"
+                              placeholder="Numéro Mobile Money"
+                              v-model="forms.payment_number"
+                              @input="formatPaymentNumber"
+                            :class="{'is-invalid': !validPaymentNumber}">
+                            </base-input>
+                      </b-col> 
+                    
+                  </b-row>
+                  <div v-else-if="forms.payment_type === 'card'">
+                    <b-row>
+                        <b-col>
+                          <base-input alternative
+                                class="mb-3"
+                                name="Numéro de carte"
+                                required
+                                prepend-icon="fas fa-credit-card"
+                                placeholder="Numéro de carte"
+                                v-model="forms.card_number"
+                                v-mask="'#### #### #### ####'"
+                                :class="{'is-invalid': !validCardNumber}"
+                                @input="validateCardNumber">
+                              </base-input>
+                        </b-col> 
+                    </b-row>
+                    <b-row >
+                      <b-col>
+                          <div class="field">
+                            <label class="label" for="card_expiry">Mois d'expiration</label>
+                            <div class="control">
+                              <div class="select">
+                                <select v-model="forms.card_expiry_month" required class="mb-2">
+                                  <option value="" disabled selected>Mois</option>
+                                  <option v-for="month in 12" :key="month" :value="month">{{ month }}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                      </b-col> 
+                      <b-col>
+                          <div class="field">
+                            <label class="label" for="card_expiry">Année d'expiration</label>
+                            <div class="control">
+                              <div class="select">
+                                <select v-model="forms.card_expiry_year" required>
+                                  <option value="" disabled selected>Année</option>
+                                  <option v-for="year in expiryYears" :key="year" :value="year">{{ year }}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                      </b-col> 
+                      <b-col>
+                        <div class="field">
+                          <label class="label" for="card_cvc">Code CVC</label>
+                          <base-input alternative
+                              class="mb-3"
+                              name="CVC"
+                              required
+                              prepend-icon="fas fa-lock"
+                              placeholder="CVC"
+                              v-model="forms.card_cvc"
+                              maxlength="3"
+                              :class="{'is-invalid': !validCVC}"
+                              @input="validateCVC">
+                          </base-input>
+                        </div>
+                      </b-col> 
+                    </b-row>
                   </div>
-                </div>
-
-                <div class="field">
-                  <label class="label" for="room-type">Type de chambre</label>
-                  <div class="control">
-                    <div class="select">
-                      <select id="room-type" v-model="roomType" required>
-                        <option value="single">Chambre Simple</option>
-                        <option value="double">Chambre Double</option>
-                        <option value="suite">Suite</option>
-                      </select>
-                    </div>
+                  <div class="text-right mt-3">
+                      <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Réserver</base-button>
+                      <b-button variant="primary" v-else class="mt-4">Chargement..</b-button>
                   </div>
-                </div>
-
-                <div class="field">
-                  <label class="label" for="special-requests">Demandes spéciales</label>
-                  <div class="control">
-                    <textarea class="textarea" id="special-requests" v-model="specialRequests" placeholder="Vos demandes spéciales (optionnel)"></textarea>
-                  </div>
-                </div>
-
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button type="submit" class="button is-link">Réserver</button>
-                  </div>
-                  <div class="control">
-                    <button type="reset" class="button is-light">Annuler</button>
-                  </div>
-                </div>
-              </form>
-
+              </b-form> 
+              <!-- Affichage du prix total -->
               <div class="box price-box">
                 <h2 class="title is-4">Prix Total : <span>{{ totalPrice.toFixed(2) }}</span> XOF</h2>
               </div>
@@ -750,22 +854,54 @@
   export default {
     data() {
       return {
-        name: '',
-        email: '',
-        phone: '',
+        forms:{
+          lastname: '',
+          firstname: '',
+          name: '',
+          email: '',
+          telephone: '+22967037806',
+          guest_house_id: '',
+          delay: '',
+          start_date: '',
+          end_date: '',
+          payment_type: 'momo',
+          payment_number: '+22964000001',
+          operator: 'mtn',
+          card_number: '',
+          card_expiry_year: '',
+          card_expiry_month: '',
+          card_cvc: '',
+        }, 
+        validCardNumber: true,
+        validCVC: true,
+        validPhoneNumber: true,
+        validPaymentNumber: true,
         checkin: '',
         checkout: '',
         guests: 1,
         roomType: 'single',
         specialRequests: '',
+
         totalPrice: 0,
         isMenuOpen: false,
         data_guesthouse:[],
+        expiryYears:["2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"],
         cover: '',
         pictures: [],
         videos: [],
         isLoading: true,
+        isTruncated: true,
+        maxLength: 100 ,
+        load:false,
       };
+    },
+    computed: {
+      truncatedDescription() {
+        if (this.isTruncated && this.data_guesthouse.description.length > this.maxLength) {
+          return this.data_guesthouse.description.slice(0, this.maxLength);
+        }
+        return this.data_guesthouse.description;
+      }
     },
     mounted() {
         this.calculatePrice();  
@@ -778,6 +914,32 @@
         roomType: 'calculatePrice'
       },
     methods: {
+      formatNumberCustom(number) {
+        let numberString = number.toString();
+        return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      },
+      validateCardNumber() {
+        const regex = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/;
+        this.validCardNumber = regex.test(this.forms.card_number);
+      },
+      validateCVC() {
+        const regex = /^\d{3}$/;
+        this.validCVC = regex.test(this.forms.card_cvc);
+      },
+      formatPhoneNumber() {
+        if (!this.forms.telephone.startsWith('+229')) {
+          this.forms.telephone = '+229';
+        }
+        const regex = /^\+229\s\d{8}$/;
+        this.validPhoneNumber = regex.test(this.forms.telephone);
+      },
+      formatPaymentNumber() {
+        if (!this.forms.payment_number.startsWith('+229')) {
+          this.forms.payment_number = '+229';
+        }
+        const regex = /^\+229\s\d{8}$/;
+        this.validPaymentNumber = regex.test(this.forms.telephone);
+      },                                                                                                                                                                                                                                                                                                                                                                  
      async listGuesthouseBySlug() {
       try {
         const response = await store.dispatch("guesthouse/detailguesthousebyslug", router.currentRoute.params.id);
@@ -788,6 +950,29 @@
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async reserver() {
+        try {
+          this.forms.guest_house_id = this.data_guesthouse.id
+            this.load = true; 
+            const response = await store.dispatch("guesthouse/createReservation", this.forms);
+                this.$toast.success("Réservation éffectuée avec succès !", {
+                    timeout: 2000
+                });
+            this.load = false;
+            this.listGuesthouseBySlug()
+            this.$bvModal.hide('modal-6')
+        } catch (error) {
+            console.log(error)
+            this.$toast.error('Erreur lors de la réservation', {
+                timeout: 2000
+            });
+            this.load = false;
+        }
+    },
+    toggleDescription() {
+      this.isTruncated = !this.isTruncated;
     },
   
     showMediaFromGoogle(url) {
@@ -810,7 +995,9 @@
             timer: 2000,
           });
         },
-      calculatePrice() {
+      calculatePrice() { 
+         this.forms.start_date = this.checkin,
+         this.forms.end_date = this.checkout
           const checkinDate = new Date(this.checkin);
           const checkoutDate = new Date(this.checkout);
           const oneDay = 24 * 60 * 60 * 1000;
@@ -821,23 +1008,8 @@
             return;
           }
 
-          let roomPricePerDay;
-
-          switch (this.roomType) {
-            case 'single':
-              roomPricePerDay = 50;
-              break;
-            case 'double':
-              roomPricePerDay = 75;
-              break;
-            case 'suite':
-              roomPricePerDay = 120;
-              break;
-            default:
-              roomPricePerDay = 0;
-          }
-
-          this.totalPrice = diffDays * roomPricePerDay * this.guests;
+           this.forms.delay = diffDays,
+          this.totalPrice = diffDays  * this.data_guesthouse.price;
         },
         toggleMenu() {
           this.isMenuOpen = !this.isMenuOpen;
@@ -946,4 +1118,11 @@
       border: 1px solid #dbdbdb;
       border-radius: 5px;
     }
+button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-align: center;
+}
 </style>

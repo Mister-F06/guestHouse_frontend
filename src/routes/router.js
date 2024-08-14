@@ -23,7 +23,7 @@ const router = new VueRouter({
 // Middleware for authentication
 router.beforeEach((to, from, next) => {
     const isAuthenticated = !!localStorage.getItem('token');
-    console.log(to.matched.some(record => record.meta.requiresAuth))
+    console.log(to.matched.some(record => record.meta.requiresAuth));
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!isAuthenticated) {
@@ -33,8 +33,13 @@ router.beforeEach((to, from, next) => {
         } else {
             next();
         }
+    } else if (isAuthenticated && to.path === '/auth/register') {
+        // Rediriger vers le dashboard si l'utilisateur est connecté et tente d'accéder à la page register
+        next({
+            path: '/dashboard/home',
+        });
     } else {
-        next(); // make sure to always call next()!
+        next(); // Assurez-vous d'appeler toujours next()
     }
 });
 

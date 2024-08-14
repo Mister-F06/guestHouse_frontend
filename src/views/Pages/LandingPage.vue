@@ -137,7 +137,7 @@
                   <div class="shop-thumb">
                     <div class="shop-image-wrap">
                       <a :href="`/detail-guesthouse/${item.slug}`">
-                        <img :src="showMediaFromGoogle(item.cover)" class="shop-image img-fluid" width="600px" height="300px" alt="">
+                        <img :src="showMediaFromGoogle(item.cover.original_url)" class="shop-image img-fluid" width="600px" height="300px" alt="">
                       </a>
                       <div class="shop-icons-wrap">
                         <div class="shop-icons d-flex flex-column align-items-center">
