@@ -13,7 +13,7 @@
           <p>Aucune réservation trouvée ou erreur lors de la vérification.</p>
         </div>
       </div>
-      <div class="mt-5">
+      <div class="mt-3">
         <a href="/">Faites plus de réservation</a>
       </div>
     </div>
