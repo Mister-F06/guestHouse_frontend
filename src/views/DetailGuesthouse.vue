@@ -778,7 +778,7 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-5 col-12 mb-3">
-                    <h3><a href="index.html" class="custom-link mb-1">OFAD GUESTHOUSE</a></h3>
+                    <h3><a href="/" class="custom-link mb-1">OFAD GUESTHOUSE</a></h3>
 
                     <p class="text-white">
                         Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.
@@ -865,7 +865,7 @@
           start_date: '',
           end_date: '',
           payment_type: 'momo',
-          payment_number: '+22964000001',
+          payment_number: '64000001',
           operator: 'mtn',
           card_number: '',
           card_expiry_year: '',
@@ -934,11 +934,7 @@
         this.validPhoneNumber = regex.test(this.forms.telephone);
       },
       formatPaymentNumber() {
-        if (!this.forms.payment_number.startsWith('+229')) {
-          this.forms.payment_number = '+229';
-        }
-        const regex = /^\+229\s\d{8}$/;
-        this.validPaymentNumber = regex.test(this.forms.telephone);
+        this.validPaymentNumber = regexWithoutPrefix.test(this.forms.payment_number);
       },                                                                                                                                                                                                                                                                                                                                                                  
      async listGuesthouseBySlug() {
       try {

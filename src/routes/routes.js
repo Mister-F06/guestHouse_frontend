@@ -111,6 +111,12 @@ const routes = [{
         ]
     },
     {
+        path: '/reservations/:uid',
+        name: 'verifyReservation',
+        component: () =>
+            import ('../views/VerifyReservations.vue'),
+    },
+    {
         path: '*',
         component: NotFound
     }

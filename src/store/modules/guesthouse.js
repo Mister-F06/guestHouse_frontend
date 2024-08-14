@@ -39,6 +39,18 @@ export default {
             let response = await axios.get(`/guest_houses/${slug}`);
             return response
         },
+        async verifyReservation({ dispatch }, uid) {
+            try {
+                // Assuming baseURL is already configured in axios
+                const response = await axios.get(`/reservations/${uid}`, {
+                    responseType: 'blob', // To handle binary data like images
+                });
+                return response;
+            } catch (error) {
+                console.error('Error verifying reservation:', error);
+                throw error;
+            }
+        },
 
         async listguesthouse() {
             let response = await axios.get('/guest_houses');

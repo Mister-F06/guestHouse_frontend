@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                  <img src="../../assets/logo.png" alt="" style="width: 100px;">
                 </a>
 
@@ -291,7 +291,7 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-5 col-12 mb-3">
-                    <h3><a href="index.html" class="custom-link mb-1">OFAD GUESTHOUSE</a></h3>
+                    <h3><a href="/" class="custom-link mb-1">OFAD GUESTHOUSE</a></h3>
 
                     <p class="text-white">
                         Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle. Chaque détail est pensé pour votre bien-être.
