@@ -17,7 +17,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_2">A propos</a>
+                            <a class="nav-link click-scroll" href="#section_4">A propos</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_5">Nous contacter</a>
                         </li>
-                        <li class="nav-item">
+                        <li class=" gerant">
                             <a class="nav-link click-scroll" href="/auth/register">Je suis gérant !</a>
                         </li>
                     </ul>
@@ -36,16 +36,36 @@
     </nav>
 
     <main>
-
         <section class="hero-section hero-slide sectionBgImg" :style="{ backgroundImage: backgroundImage }">
           <div class="container">
             <div class="row">
               <div class="col-lg-8 col-12 text-center mx-auto">
                 <div class="hero-section-text">
                   <h1 class="hero-title text-white mt-2">Bienvenue à</h1>
-                  <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
-
+                  <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1> 
                   <!-- Autres éléments comme le formulaire, boutons, etc. -->
+                  <!-- Champ de recherche -->
+                  <div class="search-container">
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Rechercher..."
+                      @input="onSearchInput"
+                    />
+                    <button class="search-button">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+
+                  <!-- Liste des résultats -->
+                  <div class="search-results mt-4">
+                    <ul v-if="data_guesthouse_search.length">
+                      <li v-for="guesthouse in data_guesthouse_search" :key="guesthouse.id">
+                        {{ guesthouse.name }}
+                      </li>
+                    </ul>
+                    <p v-else>Aucun guesthouse trouvé.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -78,46 +98,13 @@
             </div>
         </section>
 
-
-        <section class="featured-section section-padding">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-5 col-12">
-                        <div class="custom-block featured-custom-block">
-                            <h2 class="mt-2 mb-4">Ouvert</h2>
-
-                            <div class="d-flex">
-                                <i class="featured-icon bi-clock me-3"></i>
-
-                                <div>
-                                    <p class="mb-2">
-                                        Du - Lundi ~ Samedi
-                                        <strong class="d-inline">
-                                          8h - 23h
-                                        </strong>
-                                    </p>
-                                    <p>Dimanche ~
-                                        <strong class="d-inline">
-                                           10h - 20h
-                                        </strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
         <!-- Liste guesthouse  -->
         <section class="shop-section section-padding" id="section_3">
           <div class="container">
             <div class="row">
               <div class="col-lg-12 col-12">
                 <small class="section-small-title">OFAD GUESTHOUSE</small>
-                <h2 class="mt-2 mb-4"><span class="tooplate-red">En</span> vedette</h2>
+                <h2 class="mt-2 mb-4">Maison d'<span class="tooplate-red">hôtes</span></h2>
               </div>
 
               <template v-if="isLoading">
@@ -133,7 +120,7 @@
               </template>
 
               <template v-else>
-                <div class="col-lg-6 col-12" v-for="item in displayedGuesthouse" :key="item.id">
+                <div class="col-lg-4 col-12" v-for="item in displayedGuesthouse" :key="item.id">
                   <div class="shop-thumb">
                     <div class="shop-image-wrap">
                       <a :href="`/detail-guesthouse/${item.slug}`">
@@ -141,8 +128,11 @@
                       </a>
                       <div class="shop-icons-wrap">
                         <div class="shop-icons d-flex flex-column align-items-center">
-                          <a href="#" class="shop-icon bi-heart"></a>
-                          <a href="#" class="shop-icon bi-bookmark"></a>
+                          <!-- <a href="#" class="shop-icon bi-heart"></a>
+                          <a href="#" class="shop-icon bi-bookmark"></a> -->
+                          <a href="/">
+                             <img src="../../assets/logo.png" alt="" style="width: 50px;">
+                          </a>
                         </div>
                         <p class="shop-pricing mb-0 mt-3">
                           <span class="badge custom-badge">{{ formatNumberCustom(item.price) }} FCFA</span>
@@ -246,15 +236,9 @@
 
                     <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                         <div class="custom-block">
-
-                            <h3 class="text-white mb-2">Adresse</h3>
-
-                            <p class="text-white mb-2">
-                                <i class="contact-icon bi-geo-alt me-1"></i>
-
-                               Cotonou, Benin
-                            </p>
-
+                          <p style="color:white">
+                            Bienvenue à OFAD GUESTHOUSE, votre havre de confort et de sérénité. Située en plein cœur du monde, notre maison d'hôtes allie charme authentique et équipements modernes pour vous offrir une expérience inoubliable.
+                          </p>
                             <h3 class="text-white mt-3 mb-2">Nous joindre</h3>
 
                             <div class="d-flex flex-wrap">
@@ -274,8 +258,32 @@
                                     </a>
                                 </p>
                             </div>
+                            <div class="col-lg-6 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto">
+                                <ul class="social-icon">
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link social-icon-twitter bi-twitter"></a>
+                                    </li>
 
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link social-icon-facebook bi-facebook"></a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link social-icon-instagram bi-instagram"></a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link social-icon-pinterest bi-pinterest"></a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link social-icon-whatsapp bi-whatsapp"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                         
+
+                            <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
                         </div>
                     </div>
 
@@ -377,15 +385,36 @@ export default {
       intervalId: null,
       fileList: [],
       data_guesthouse: [],
-      itemsPerPage: 5,
+      data_guesthouse_search: [],
+      itemsPerPage: 6,
       currentPage: 1,
     };
   },
   mounted() {
     this.startSlideshow();
     this.listGuesthouse();
+    this.listGuesthouseSearch();
   },
   methods: {
+    onSearchInput(event) {
+      const keyword = event.target.value;
+      this.listGuesthouseSearch(keyword);
+    },
+
+    async listGuesthouseSearch(keyword = '') {
+      try {
+        const response = await store.dispatch("guesthouse/listguesthouse");
+        if (keyword) {
+          this.data_guesthouse_search = response.data.filter(guesthouse =>
+            guesthouse.name.toLowerCase().includes(keyword.toLowerCase())
+          );
+        } 
+        this.isLoading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     showMediaFromGoogle(url) {
       let parsedUrl = new URL(url);
       let queryParams = new URLSearchParams(parsedUrl.search);
@@ -558,6 +587,76 @@ export default {
 .skeleton-image {
   height: 300px;
   width: 600px;
+}
+.gerant{
+  background: #ffd74f;
+  border-radius: 50px !important;
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #007bff; /* Couleur de la bordure lorsque l'input est sélectionné */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Ombre portée */
+}
+
+.search-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-left: -5px; /* Pour que le bouton soit attaché à l'input */
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+}
+
+.search-button i {
+  margin-right: 5px;
+}
+
+.search-button:hover {
+  background-color: #0056b3; /* Couleur de fond du bouton au survol */
+}
+.search-results {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-results ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.search-results li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.search-results li:last-child {
+  border-bottom: none;
+}
+
+.search-results p {
+  color: #999;
 }
 
 </style>

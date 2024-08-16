@@ -17,7 +17,7 @@
                           </li>
 
                           <li class="nav-item">
-                              <a class="nav-link click-scroll" href="/#section_2">A propos</a>
+                              <a class="nav-link click-scroll" href="/#section_4">A propos</a>
                           </li>
 
                           <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
                           <li class="nav-item">
                               <a class="nav-link click-scroll" href="/#section_5">Nous contacter</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item gerant">
                               <a class="nav-link click-scroll" href="/auth/register">Je suis gérant !</a>
                           </li>
                       </ul>
@@ -42,6 +42,14 @@
                 <span class="tag is-info mr-1">Conviviale </span>
                 <span class="tag is-success mr-1">Confortable </span>
                 <span class="tag is-warning mr-1">Intime </span>
+            </div>
+            <div>
+              <strong>Description</strong>
+              <p style="text-align: center;">
+                {{ truncatedDescription }}
+                <span v-if="isTruncated">...</span>
+              </p>
+              <button @click="toggleDescription">{{ isTruncated ? 'Voir plus' : 'Voir moins' }}</button>
             </div>
 
             <div class="columns is-multiline">
@@ -82,13 +90,8 @@
                   </div>
                   <div v-else>
                     <iframe src="https://www.google.com/maps/embed?..." width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    <div>
-                      <p style="text-align: center;">
-                        {{ truncatedDescription }}
-                        <span v-if="isTruncated">...</span>
-                      </p>
-                      <button @click="toggleDescription">{{ isTruncated ? 'Voir plus' : 'Voir moins' }}</button>
-                    </div>
+                    <p>{{this.data_guesthouse.address}}</p>
+                  
                     <base-button type="primary" v-b-modal.modal-6 native-type="submit" class="my-4">Réserver</base-button>
                   </div>
                 </div>
@@ -109,6 +112,15 @@
 
                         <div class="content">
                             <div class="columns is-multiline">
+                                <div class="column is-4" >
+                                  <span>{{this.data_guesthouse.beds_nbr}}</span> Chambres
+                                </div>
+                                <div class="column is-4" >
+                                  <span>{{this.data_guesthouse.toilets_nbr}}</span> Lits
+                                </div>
+                                <div class="column is-4" >
+                                  <span>{{this.data_guesthouse.bathrooms_nbr}}</span> Toilettes
+                                </div>
                                 <div class="column is-4">
                                     <i class="fas fa-ruler-combined"></i> 186 m² superficie
                                 </div>
@@ -162,54 +174,47 @@
                     </div>
                 </div>
             </div>
-            <div v-if='!isLoading'>
+            <!-- <div>
                 <section class="section">
                     <div class="container">
                     <h1 class="title">Ses points forts</h1>
                     <div class="columns is-multiline">
-                        <!-- Piscine extérieure -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-swimming-pool fa-2x"></i>
                             <p>Piscine extérieure</p>
                         </div>
                         </div>
-                        <!-- Connexion Wi-Fi gratuite -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-wifi fa-2x"></i>
                             <p>Connexion Wi-Fi gratuite</p>
                         </div>
                         </div>
-                        <!-- Navette aéroport (gratuite) -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-shuttle-van fa-2x"></i>
                             <p>Navette aéroport (gratuite)</p>
                         </div>
                         </div>
-                        <!-- Front de mer -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-water fa-2x"></i>
                             <p>Front de mer</p>
                         </div>
                         </div>
-                        <!-- Parking gratuit -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-parking fa-2x"></i>
                             <p>Parking gratuit</p>
                         </div>
                         </div>
-                        <!-- Chambres non-fumeurs -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-smoking-ban fa-2x"></i>
                             <p>Chambres non-fumeurs</p>
                         </div>
                         </div>
-                        <!-- Bar -->
                         <div class="column is-one-quarter">
                         <div class="box">
                             <i class="fas fa-glass-martini-alt fa-2x"></i>
@@ -502,13 +507,6 @@
                 </section>
                 <section class="section">
                   <div class="container">
-                    <!-- <h1 class="title">Commentaires clients</h1>
-                    <div class="box">
-                      <p>Avec une note de <strong>77,0</strong></p>
-                      <p><strong>Bien</strong> · 393 expériences vécues</p>
-                      <a href="#" class="button is-link">Voir tous les commentaires</a>
-                    </div> -->
-
                     <h2 class="title">Catégories :</h2>
                     <div class="columns is-multiline">
                         <div class="column is-6">
@@ -556,7 +554,7 @@
                     </div>
                   </div>
                 </section>
-            </div>
+            </div> -->
         </div>
         <!-- modal img  -->
         <b-modal id="modal-5" title="Plus d'image" size="lg" hide-footer>
@@ -1120,5 +1118,9 @@ button {
   color: #007bff;
   cursor: pointer;
   text-align: center;
+}
+.gerant{
+  background: #ffd74f;
+  border-radius: 50px !important;
 }
 </style>
