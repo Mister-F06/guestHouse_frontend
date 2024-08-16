@@ -58,13 +58,13 @@
                   </div>
 
                   <!-- Liste des résultats -->
-                  <div class="search-results mt-4">
-                    <ul v-if="data_guesthouse_search.length">
+                  <div class="search-results mt-4" v-if="data_guesthouse_search.length">
+                    <ul >
                       <li v-for="guesthouse in data_guesthouse_search" :key="guesthouse.id">
-                        {{ guesthouse.name }}
+                        <a :href="`/detail-guesthouse/${guesthouse.slug}`">{{ guesthouse.name }}</a>
                       </li>
                     </ul>
-                    <p v-else>Aucun guesthouse trouvé.</p>
+                    <!-- <p v-else>Aucun guesthouse trouvé.</p> -->
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
           </div>
         </section>
 
-        <section class="about-section section-padding" id="section_2">
+        <section class="about-section section-padding mt-4" id="section_2">
             <div class="container">
                 <div class="row align-items-center">
 
@@ -388,6 +388,7 @@ export default {
       data_guesthouse_search: [],
       itemsPerPage: 6,
       currentPage: 1,
+      searchTimeout: null 
     };
   },
   mounted() {
@@ -397,8 +398,16 @@ export default {
   },
   methods: {
     onSearchInput(event) {
-      const keyword = event.target.value;
-      this.listGuesthouseSearch(keyword);
+      this.searchKeyword = event.target.value;
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
+      }
+
+      // On configure un nouveau timeout pour lancer la recherche après 500ms
+      this.searchTimeout = setTimeout(() => {
+        this.listGuesthouseSearch(this.searchKeyword);
+      }, 500);
+
     },
 
     async listGuesthouseSearch(keyword = '') {

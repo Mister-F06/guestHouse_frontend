@@ -15,8 +15,8 @@
                         <th style=" text-align: left">Désignation</th>
                         <th style=" text-align: left">Prix</th>
                         <th style=" text-align: left">Adresse</th>
-                        <th style=" text-align: right">Status</th>
-                        <th style=" text-align: right">Visibilité</th>
+                        <th style=" text-align: right" v-if='role_id && role_id === 1' >Status</th>
+                        <th style=" text-align: right"  v-if='role_id && role_id === 2' >Visibilité</th>
                         <th style=" text-align: right">
                           <i class="fas fa-spinner spin" v-if="load"></i>
                           Action
@@ -26,7 +26,7 @@
                         <td style=" text-align: left">{{ item.name }}</td>
                         <td style=" text-align: left">{{formatNumberCustom(item.price ) }}  <span>FCFA</span></td>
                         <td style=" text-align: left">{{ item.address }}</td>
-                        <td style=" text-align: right">
+                        <td style=" text-align: right"  v-if='role_id && role_id === 1' >
                           <span v-if="item.status == 'validated'" class="tag is-primary is-light">Valider</span>
                           <span v-if="item.status == 'pending_validation'" class="tag is-warning is-light">En cours de traitement</span>
                           <span v-if="item.status == 'rejected'" class="tag is-danger is-light">Rejeter</span>
@@ -34,7 +34,7 @@
                             <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
                           </a>
                         </td>
-                        <td style=" text-align: right">
+                        <td style=" text-align: right"  v-if='role_id && role_id === 2' >
                           <span v-if="item.is_enabled == true" class="tag is-primary is-light">Visible</span>
                           <span v-if="item.is_enabled == false" class="tag is-danger is-light">Invisible</span>
                           <a  v-b-modal.modal-4 variant="primary" @click="openVisiblityModal(item)">
@@ -42,13 +42,13 @@
                           </a>
                         </td>
                         <td style=" text-align: right">
-                            <a class="button is-small mr-1" v-b-modal.modal-3 variant="danger"    @click="giveId(item.id)">
+                            <a  v-if='role_id && role_id === 2' class="button is-small mr-1" v-b-modal.modal-3 variant="danger"    @click="giveId(item.id)">
                                 <span class="icon is-small">
                                 <i class="fa fa-trash is-small" style="font-size: small;color:red"></i>
                                 </span>
                                 <span style="color:red">Supprimer</span>
                             </a>
-                            <a class="button is-small" v-b-modal.modal-1 variant="primary" @click="detailInfoUpdated(item)">
+                            <a  v-if='role_id && role_id === 2' class="button is-small" v-b-modal.modal-1 variant="primary" @click="detailInfoUpdated(item)">
                                 <span class="icon is-small">
                                 <i class="fa fa-edit is-small" style="font-size: small;color:green"></i>
                                 </span>
@@ -610,8 +610,9 @@
             cover: '',
             pictures: [],
             videos: []
-        },
+        }, 
       };
+      role_id:undefined
     },
     methods: {
 
@@ -766,6 +767,14 @@
         });
       }
     },
+    async meUser() {
+      try {
+        const response = await store.dispatch("guesthouse/me"); 
+        this.role_id = response.data.role_id 
+      } catch (error) {
+          console.log(error)
+      }
+    },
      // Pagination
      changePage(page) {
           this.currentPage = page;
@@ -912,7 +921,8 @@
 
     },
     mounted() {
-        this.listGuesthouse()
+      this.meUser()
+      this.listGuesthouse()
     },
     computed: {
         start() {
@@ -924,9 +934,10 @@
         displayedGuesthouse() {
           return this.data_guesthouse.slice(this.start, this.end);
         },
-        totalPages() {
+        totalPages() { 
           return Math.ceil(this.data_guesthouse.length / this.itemsPerPage);
-        }
+        },
+
     }
   };
 </script>

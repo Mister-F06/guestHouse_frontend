@@ -61,5 +61,9 @@ export default {
             let response = await axios.post('/reservations/', data);
             return response
         },
+        async me() {
+            let response = await axios.get('/users/me');
+            return response
+        },
     }
 }
