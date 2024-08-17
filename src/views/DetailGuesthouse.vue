@@ -570,7 +570,7 @@
           <section class="section">
             <div class="container">
               <h1 class="title">Informations personnelles</h1>
-              <b-form role="form" @submit.prevent="reserver()">
+              <b-form role="form" @submit.prevent="open()">
                   <b-row>
                       <b-col>
                         <label class="label" for="payment_type">Nom</label>
@@ -653,10 +653,9 @@
                           </base-input>
                       </b-col>
                   </b-row>
-                 <h1 class="title">Informations de paiement</h1>
+                 <!-- <h1 class="title">Informations de paiement</h1>
                   <b-row>
                       <b-col class="mb-5">
-                         <!-- Type de paiement -->
                           <div class="field">
                             <label class="label" for="payment_type">Type de paiement</label>
                             <div class="control">
@@ -757,7 +756,7 @@
                         </div>
                       </b-col> 
                     </b-row>
-                  </div>
+                  </div> -->
                   <div class="text-right mt-3">
                       <base-button type="primary" v-if="!load" native-type="submit" class="my-4">Réserver</base-button>
                       <b-button variant="primary" v-else class="mt-4">Chargement..</b-button>
@@ -849,6 +848,11 @@
 <script>
   import store from '../store/index'
   import router from '../routes/router.js'
+  import {
+  openKkiapayWidget,
+  addKkiapayListener,
+  removeKkiapayListener,
+} from "kkiapay";
   export default {
     data() {
       return {
@@ -869,6 +873,7 @@
           card_expiry_year: '',
           card_expiry_month: '',
           card_cvc: '',
+          transaction_id:'',
         }, 
         validCardNumber: true,
         validCVC: true,
@@ -904,6 +909,8 @@
     mounted() {
         this.calculatePrice();  
         this.listGuesthouseBySlug()
+        addKkiapayListener('success', this.successHandler);
+   
       },
       watch: {
         checkin: 'calculatePrice',
@@ -965,6 +972,19 @@
             this.load = false;
         }
     },
+    
+   open() {
+        openKkiapayWidget({
+            amount: this.totalPrice,
+            api_key: "043ca220968611ed84eb8bf4616359f3",
+            sandbox: true,
+            phone: "97000000",
+        });
+    },
+    successHandler(response) {
+      this.forms.transaction_id = response.transactionId
+      this.reserver()
+   },
     toggleDescription() {
       this.isTruncated = !this.isTruncated;
     },
