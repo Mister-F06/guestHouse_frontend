@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col-lg-8 col-12 text-center mx-auto">
               <div class="hero-section-text">
-                <h1 class="hero-title text-white mt-2">Bienvenue à</h1>
+                <h1 class="hero-title text-white">Bienvenue à</h1>
                 <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
                 <!-- Autres éléments comme le formulaire, boutons, etc. -->
                 <!-- Champ de recherche -->
@@ -190,7 +190,7 @@
                       </div>
                       <p class="shop-pricing mb-0 mt-3">
                         <span class="badge custom-badge"
-                          >{{ formatNumberCustom(item.price) }} FCFA</span
+                          >{{ formatNumberCustom(item.price) }} FCFA / 24h</span
                         >
                       </p>
                     </div>
@@ -366,7 +366,7 @@
                   </p>
                 </div>
                 <div
-                  class="col-lg-6 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto"
+                  class="col-lg-12 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto"
                 >
                   <ul class="social-icon">
                     <li class="social-icon-item">
@@ -764,12 +764,12 @@ export default {
 }
 
 .search-input:focus {
-  border-color: #007bff; /* Couleur de la bordure lorsque l'input est sélectionné */
+  border-color: #ffd74f; /* Couleur de la bordure lorsque l'input est sélectionné */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Ombre portée */
 }
 
 .search-button {
-  background-color: #007bff;
+  background-color: #ffd74f;
   border: none;
   border-radius: 25px;
   padding: 10px 20px;
@@ -784,7 +784,7 @@ export default {
 }
 
 .search-button:hover {
-  background-color: #0056b3; /* Couleur de fond du bouton au survol */
+  background-color: #ffd74f; /* Couleur de fond du bouton au survol */
 }
 .search-results {
   background-color: rgba(255, 255, 255, 0.9);

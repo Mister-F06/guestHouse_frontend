@@ -11,7 +11,7 @@ const routes = [{
     {
         path: '/detail-guesthouse/:id',
         name: 'DetailGuesthouse',
-        meta: { requiresAuth: true },
+        // meta: { requiresAuth: true },
         component: () =>
             import ('../views/DetailGuesthouse.vue'),
     },
