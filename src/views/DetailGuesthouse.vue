@@ -614,6 +614,14 @@
     <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
       <section class="section">
         <div class="container">
+          <div class="agenda-card">
+            <h3>Agenda des réservations</h3>
+            <vue-cal
+              :events="events"
+              :disable-views="['years', 'months']"
+              style="height: 400px"
+            />
+          </div>
           <h1 class="title">Informations personnelles</h1>
           <b-form role="form" @submit.prevent="reserver()">
             <b-row>
@@ -718,12 +726,7 @@
                   <label class="label" for="payment_type">Type de paiement</label>
                   <div class="control">
                     <div class="select">
-                      <select
-                        id="payment_type"
-                        v-model="forms.payment_type"
-                        @change="resetPaymentDetails"
-                        required
-                      >
+                      <select id="payment_type" v-model="forms.payment_type" required>
                         <option value="momo">Mobile Money</option>
                         <option value="card">Carte Bancaire</option>
                       </select>
@@ -934,8 +937,14 @@
 <script>
 import store from "../store/index";
 import router from "../routes/router.js";
+import VueCal from "vue-cal";
+import "vue-cal/dist/vuecal.css"; // Import the styles
+
 import { openKkiapayWidget, addKkiapayListener, removeKkiapayListener } from "kkiapay";
 export default {
+  components: {
+    VueCal,
+  },
   data() {
     return {
       forms: {
@@ -956,6 +965,7 @@ export default {
         card_expiry_month: "",
         card_cvc: "",
       },
+      busyDates: ["2024-08-14", "2024-08-15", "2024-08-16"],
       validCardNumber: true,
       validCVC: true,
       validPhoneNumber: true,
@@ -997,13 +1007,32 @@ export default {
     };
   },
   computed: {
+    events() {
+      // Convert busyDates to events for VueCal
+      return this.busyDates.map((date) => ({
+        start: date,
+        end: date,
+        title: "Occupé",
+        class: "busy-day", // You can style this class in your CSS
+      }));
+    },
     truncatedDescription() {
-      if (this.isTruncated && this.data_guesthouse.description.length > this.maxLength) {
+      // Check if data_guesthouse and description are defined
+      if (
+        this.isTruncated &&
+        this.data_guesthouse &&
+        this.data_guesthouse.description &&
+        this.data_guesthouse.description.length > this.maxLength
+      ) {
         return this.data_guesthouse.description.slice(0, this.maxLength);
       }
-      return this.data_guesthouse.description;
+      // Return description if it's defined, otherwise return an empty string or handle it as needed
+      return this.data_guesthouse && this.data_guesthouse.description
+        ? this.data_guesthouse.description
+        : "";
     },
   },
+
   mounted() {
     this.calculatePrice();
     this.listGuesthouseBySlug();
@@ -1229,5 +1258,19 @@ button {
 .gerant {
   background: #ffd74f;
   border-radius: 50px !important;
+}
+
+.agenda-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.busy-day {
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 4px;
 }
 </style>

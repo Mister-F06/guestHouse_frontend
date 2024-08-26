@@ -31,10 +31,10 @@
 
     <b-container fluid class="mt--9">
       <b-row>
-        <b-col xl="4" class="order-xl-2 mb-5">
+        <b-col xl="5" class="order-xl-2 mb-5">
           <user-card></user-card>
         </b-col>
-        <b-col xl="8" class="order-xl-1">
+        <b-col xl="7" class="order-xl-1">
           <edit-profile-form></edit-profile-form>
         </b-col>
       </b-row>
