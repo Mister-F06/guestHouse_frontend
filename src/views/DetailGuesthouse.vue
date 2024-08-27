@@ -614,15 +614,41 @@
     <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
       <section class="section">
         <div class="container">
-          <div class="agenda-card">
-            <h3>Agenda des réservations</h3>
-            <vue-cal
-              :events="events"
-              :disable-views="['years', 'months']"
-              style="height: 400px"
-            />
+          <h1 class="title">Dates occupées</h1>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="button is-small" @click="previousMonth">
+                <span class="icon">
+                  <i class="fas fa-chevron-left"></i>
+                </span>
+              </button>
+              <div class="month-year">{{ monthName }} {{ currentYear }}</div>
+              <button class="button is-small" @click="nextMonth">
+                <span class="icon">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </button>
+            </div>
+            <div class="calendar">
+              <div class="calendar-row calendar-days">
+                <div class="calendar-cell" v-for="day in daysOfWeek" :key="day">
+                  {{ day }}
+                </div>
+              </div>
+              <div class="calendar-row" v-for="week in weeks" :key="week[0].date">
+                <div
+                  class="calendar-cell"
+                  v-for="day in week"
+                  :key="day.date"
+                  :class="{ 'is-occupied': isOccupied(day.date) }"
+                >
+                  {{ day.date.getDate() }}
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 class="title">Informations personnelles</h1>
+          <h1 class="title mt-5">Informations personnelles</h1>
           <b-form role="form" @submit.prevent="reserver()">
             <b-row>
               <b-col>
@@ -832,7 +858,25 @@
                 </b-col>
               </b-row>
             </div>
-            <div class="text-right mt-3">
+            <b-row>
+              <b-col>
+                <b-form-checkbox v-model="forms.isChecked" required>
+                  J'accepte les
+                  <b-link
+                    href="https://docs.google.com/document/d/102WviTGqM5YBIZaEHHq_S1nY7_FxyWsvf3DxZQHN0KM/edit?usp=sharing"
+                    target="_blank"
+                    >conditions générales d'utilisation</b-link
+                  >
+                  et la
+                  <b-link
+                    href="https://docs.google.com/document/d/102WviTGqM5YBIZaEHHq_S1nY7_FxyWsvf3DxZQHN0KM/edit?usp=sharing"
+                    target="_blank"
+                    >politique de confidentialité</b-link
+                  >.
+                </b-form-checkbox>
+              </b-col>
+            </b-row>
+            <div class="text-right mt-3" v-if="this.forms.isChecked == 1">
               <base-button type="primary" v-if="!load" native-type="submit" class="my-4"
                 >Réserver</base-button
               >
@@ -937,17 +981,12 @@
 <script>
 import store from "../store/index";
 import router from "../routes/router.js";
-import VueCal from "vue-cal";
-import "vue-cal/dist/vuecal.css"; // Import the styles
-
 import { openKkiapayWidget, addKkiapayListener, removeKkiapayListener } from "kkiapay";
 export default {
-  components: {
-    VueCal,
-  },
   data() {
     return {
       forms: {
+        isChecked: 0,
         lastname: "",
         firstname: "",
         name: "",
@@ -965,7 +1004,10 @@ export default {
         card_expiry_month: "",
         card_cvc: "",
       },
-      busyDates: ["2024-08-14", "2024-08-15", "2024-08-16"],
+      currentMonth: new Date().getMonth(),
+      currentYear: new Date().getFullYear(),
+      daysOfWeek: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+      occupiedDates: undefined,
       validCardNumber: true,
       validCVC: true,
       validPhoneNumber: true,
@@ -1007,14 +1049,31 @@ export default {
     };
   },
   computed: {
-    events() {
-      // Convert busyDates to events for VueCal
-      return this.busyDates.map((date) => ({
-        start: date,
-        end: date,
-        title: "Occupé",
-        class: "busy-day", // You can style this class in your CSS
-      }));
+    monthName() {
+      return new Date(this.currentYear, this.currentMonth).toLocaleString("default", {
+        month: "long",
+      });
+    },
+    weeks() {
+      const start = new Date(this.currentYear, this.currentMonth, 1);
+      const end = new Date(this.currentYear, this.currentMonth + 1, 0);
+      const days = [];
+      for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
+        days.push(new Date(day));
+      }
+
+      const weeks = [];
+      let week = [];
+
+      days.forEach((day) => {
+        week.push({ date: new Date(day) });
+        if (day.getDay() === 6 || day === days[days.length - 1]) {
+          weeks.push(week);
+          week = [];
+        }
+      });
+
+      return weeks;
     },
     truncatedDescription() {
       // Check if data_guesthouse and description are defined
@@ -1043,7 +1102,34 @@ export default {
     guests: "calculatePrice",
     roomType: "calculatePrice",
   },
+
   methods: {
+    isOccupied(date) {
+      if (this.occupiedDates) {
+        return this.occupiedDates.some((d) => d.toDateString() === date.toDateString());
+      }
+    },
+    previousMonth() {
+      if (this.currentMonth === 0) {
+        this.currentMonth = 11;
+        this.currentYear--;
+      } else {
+        this.currentMonth--;
+      }
+    },
+    nextMonth() {
+      if (this.currentMonth === 11) {
+        this.currentMonth = 0;
+        this.currentYear++;
+      } else {
+        this.currentMonth++;
+      }
+    },
+    formatDate(date) {
+      // Format the date as desired (e.g., "14 August 2024")
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date(date).toLocaleDateString(undefined, options);
+    },
     formatNumberCustom(number) {
       let numberString = number.toString();
       return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -1078,6 +1164,9 @@ export default {
         );
         this.videos = this.data_guesthouse.videos.map((video) =>
           this.showMediaFromGoogleVideo(video.original_url)
+        );
+        this.occupiedDates = this.data_guesthouse.busy_dates.map(
+          (date) => new Date(date)
         );
         this.isLoading = false;
       } catch (error) {
@@ -1259,18 +1348,77 @@ button {
   background: #ffd74f;
   border-radius: 50px !important;
 }
-
-.agenda-card {
+.date-overview {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.busy-day {
+.date-overview h3 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.dates-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.date-item {
   background-color: #ff4d4f;
   color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  text-align: center;
+  flex: 1 1 calc(50% - 10px); /* Two items per row, with spacing */
+}
+.calendar-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.month-year {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-cell {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #dbdbdb;
   border-radius: 4px;
-  padding: 2px 4px;
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.calendar-cell.is-occupied {
+  background-color: #ffdddd;
+  color: #ff0000;
+}
+
+.calendar-days .calendar-cell {
+  background-color: transparent;
+  color: #363636;
+  font-weight: normal;
 }
 </style>

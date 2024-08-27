@@ -36,16 +36,13 @@
             </b-form-group>
           </b-col>
           <b-col lg="6">
-            <b-form-group
-              label="Confirmez le nouveau mot de passe"
-              label-for="confirm-password"
-            >
+            <b-form-group label="Confirmez le mot de passe" label-for="confirm-password">
               <b-form-input
                 id="confirm-password"
                 type="password"
                 v-model="form.confirmPassword"
                 required
-                placeholder="Confirmez le nouveau mot de passe"
+                placeholder="Confirmez le mot de passe"
               ></b-form-input>
             </b-form-group>
           </b-col>
