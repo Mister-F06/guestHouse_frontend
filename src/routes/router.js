@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next();
         }
-    } else if (isAuthenticated && to.path === '/auth/register') {
+    } else if ((isAuthenticated && to.path === '/auth/register') || (isAuthenticated && to.path === '/auth/login')) {
         // Rediriger vers le dashboard si l'utilisateur est connecté et tente d'accéder à la page register
         next({
             path: '/dashboard/home',

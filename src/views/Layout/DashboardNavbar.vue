@@ -88,7 +88,7 @@
             <span>Support</span>
           </b-dropdown-item> -->
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#!">
+          <b-dropdown-item @click="logout()">
             <i class="ni ni-user-run"></i>
             <span>Déconnecter</span>
           </b-dropdown-item>
@@ -101,6 +101,7 @@
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
 import store from "../../store/index";
+import router from "../../routes/router";
 export default {
   components: {
     CollapseTransition,
@@ -146,6 +147,14 @@ export default {
         const response = await store.dispatch("guesthouse/me");
         this.userdata = response.data;
         console.log(this.userdata);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async logout() {
+      try {
+        const response = await store.dispatch("auth/logout");
+        router.push({ path: "/auth/login" });
       } catch (error) {
         console.log(error);
       }

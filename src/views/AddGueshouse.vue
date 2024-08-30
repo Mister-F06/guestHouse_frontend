@@ -758,8 +758,8 @@ export default {
         pictures: [],
         videos: [],
       },
+      role_id: undefined,
     };
-    role_id: undefined;
   },
   methods: {
     async addGuesthouse() {
@@ -902,10 +902,16 @@ export default {
       }
     },
 
-    async listGuesthouse() {
+    async listGuesthouse(roleId) {
       try {
-        const response = await store.dispatch("guesthouse/listguesthouse");
-        this.data_guesthouse = response.data;
+        if (roleId && roleId === 1) {
+          const response = await store.dispatch("guesthouse/listguesthouseAdmin");
+          this.data_guesthouse = response.data;
+        }
+        if (roleId && roleId === 2) {
+          const response = await store.dispatch("guesthouse/listguesthouseManagers");
+          this.data_guesthouse = response.data;
+        }
       } catch (error) {
         this.$toast.error("Liste introuvable", {
           timeout: 2000,
@@ -916,6 +922,7 @@ export default {
       try {
         const response = await store.dispatch("guesthouse/me");
         this.role_id = response.data.role_id;
+        this.listGuesthouse(this.role_id);
       } catch (error) {
         console.log(error);
       }

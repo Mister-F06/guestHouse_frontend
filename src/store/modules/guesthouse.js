@@ -56,6 +56,14 @@ export default {
             let response = await axios.get('/guest_houses');
             return response
         },
+        async listguesthouseManagers() {
+            let response = await axios.get('/guest_houses/managers');
+            return response
+        },
+        async listguesthouseAdmin() {
+            let response = await axios.get('/guest_houses/admins/list');
+            return response
+        },
         async createReservation({ dispatch }, data) {
             dispatch
             let response = await axios.post('/reservations/', data);

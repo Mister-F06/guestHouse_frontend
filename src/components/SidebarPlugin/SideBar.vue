@@ -59,7 +59,7 @@
               <span>Support</span>
             </router-link> -->
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a @click="logout()" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Déconnecter</span>
             </a>
@@ -119,7 +119,8 @@
 </template>
 <script>
 import NavbarToggleButton from "@/components/NavbarToggleButton";
-
+import store from "../../store/index";
+import router from "../../routes/router";
 export default {
   name: "sidebar",
   components: {
@@ -153,6 +154,14 @@ export default {
   beforeDestroy() {
     if (this.$sidebar.showSidebar) {
       this.$sidebar.showSidebar = false;
+    }
+  },
+  async logout() {
+    try {
+      const response = await store.dispatch("auth/logout");
+      router.push({ path: "/auth/login" });
+    } catch (error) {
+      console.log(error);
     }
   },
 };

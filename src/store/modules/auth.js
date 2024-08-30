@@ -33,7 +33,7 @@ export default {
         },
 
         logout({ commit }) {
-            return axios.get('/auth/logout').then(() => {
+            return axios.delete('/auth/logout').then(() => {
                 commit('SET_TOKEN', null)
 
                 commit('SET_USER', null)
@@ -80,6 +80,11 @@ export default {
         async getNewLink({ dispatch }, credentials) {
             dispatch
             let response = await axios.put('/auth/resent/verify/link', credentials);
+            return response
+        },
+        async updatepassword({ dispatch }, credentials) {
+            dispatch
+            let response = await axios.put('/users/update/password', credentials);
             return response
         },
         async verifyEmail({ dispatch }, emailData) {
