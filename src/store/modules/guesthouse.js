@@ -73,5 +73,10 @@ export default {
             let response = await axios.get('/users/me');
             return response
         },
+        async guesthouseSearch({ dispatch }, data) {
+            dispatch
+            let response = await axios.post('/guest_houses/search', data);
+            return response
+        },
     }
 }

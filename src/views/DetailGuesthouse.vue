@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
       <div class="container">
         <a class="navbar-brand" href="/">
-          <img src="../assets/logo.png" alt="" style="width: 100px" />
+          <img src="../assets/logo.png" alt="" style="width: 60px" />
         </a>
 
         <button
@@ -26,22 +26,19 @@
         >
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link click-scroll" href="/#section_1">Accueil</a>
+              <a class="nav-link click-scroll" href="/">Accueil</a>
             </li>
-
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/#section_4">A propos</a>
-            </li>
-
             <li class="nav-item dropdown">
-              <a class="nav-link click-scroll" href="/#section_3">Hébergement</a>
-              <!-- <a class="nav-link dropdown-toggle click-scroll" href="/#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
+              <a class="nav-link click-scroll" href="/hebergement">Hébergement</a>
+              <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
             </li>
             <li class="nav-item">
               <a class="nav-link click-scroll" href="/#section_5">Nous contacter</a>
             </li>
-            <li class="nav-item gerant">
-              <a class="nav-link click-scroll" href="/auth/register">Je suis gérant !</a>
+            <li>
+              <a class="nav-link click-scroll gerant" href="/auth/register"
+                >Je suis gérant !</a
+              >
             </li>
           </ul>
         </div>
@@ -144,6 +141,7 @@
           </div>
         </div>
       </div>
+
       <div v-if="!isLoading">
         <div class="card">
           <div class="card-content">
@@ -161,455 +159,173 @@
             <div class="content">
               <div class="columns is-multiline">
                 <div class="column is-4">
+                  <i class="fas fa-bed"></i>
                   <span>{{ this.data_guesthouse.beds_nbr }}</span> Chambres
                 </div>
                 <div class="column is-4">
+                  <i class="fas fa-user"></i>
                   <span>{{ this.data_guesthouse.toilets_nbr }}</span> Lits
                 </div>
                 <div class="column is-4">
+                  <i class="fas fa-bath"></i>
                   <span>{{ this.data_guesthouse.bathrooms_nbr }}</span> Toilettes
                 </div>
-                <div class="column is-4">
-                  <i class="fas fa-ruler-combined"></i> 186 m² superficie
-                </div>
-                <div class="column is-4" v-if="this.data_guesthouse.has_kitchen == true">
-                  <i class="fas fa-utensils"></i> Cuisine
-                </div>
-                <div class="column is-4"><i class="fas fa-eye"></i> Vue</div>
-                <div class="column is-4"><i class="fas fa-tree"></i> Jardin</div>
-                <div class="column is-4">
-                  <i class="fas fa-paw"></i> Animaux domestiques admis
-                </div>
-                <div class="column is-4" v-if="data_guesthouse.has_pool == true">
-                  <i class="fas fa-swimming-pool"></i> Piscine
-                </div>
+                <!-- Cuisine -->
                 <div
                   class="column is-4"
-                  v-if="data_guesthouse.has_washing_machine == true"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_kitchen,
+                    'has-text-danger': !data_guesthouse.has_kitchen,
+                  }"
+                >
+                  <i class="fas fa-utensils"></i> Cuisine
+                </div>
+
+                <!-- Vue -->
+                <div class="column is-4"><i class="fas fa-eye"></i> Vue</div>
+
+                <!-- Jardin -->
+                <div class="column is-4"><i class="fas fa-tree"></i> Jardin</div>
+
+                <!-- Piscine -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_pool,
+                    'has-text-danger': !data_guesthouse.has_pool,
+                  }"
+                >
+                  <i class="fas fa-swimming-pool"></i> Piscine
+                </div>
+
+                <!-- Lave-linge -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_washing_machine,
+                    'has-text-danger': !data_guesthouse.has_washing_machine,
+                  }"
                 >
                   <i class="fas fa-bath"></i> Lave-linge
                 </div>
+
+                <!-- Connexion Wi-Fi gratuite (suppression du doublon) -->
                 <div class="column is-4">
                   <i class="fas fa-wifi"></i> Connexion Wi-Fi gratuite
                 </div>
+
+                <!-- Terrasse -->
                 <div class="column is-4">
                   <i class="fas fa-umbrella-beach"></i> Terrasse
                 </div>
-                <div class="column is-4">
-                  <i class="fas fa-swimmer"></i> Piscine extérieure
-                </div>
-                <div class="column is-4">
-                  <i class="fas fa-wifi"></i> Connexion Wi-Fi gratuite
-                </div>
-                <div class="column is-4">
-                  <i class="fas fa-shuttle-van"></i> Navette aéroport (gratuite)
-                </div>
-                <div class="column is-4"><i class="fas fa-water"></i> Front de mer</div>
-                <div class="column is-4" v-if="data_guesthouse.has_parking == true">
+
+                <!-- Parking -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_parking,
+                    'has-text-danger': !data_guesthouse.has_parking,
+                  }"
+                >
                   <i class="fas fa-parking"></i> Parking gratuit
                 </div>
-                <div class="column is-4">
-                  <i class="fas fa-ban"></i> Chambres non-fumeurs
-                </div>
+
+                <!-- Bar -->
                 <div class="column is-4">
                   <i class="fas fa-glass-martini-alt"></i> Bar
+                </div>
+
+                <!-- Air Conditionné -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_air_conditionner,
+                    'has-text-danger': !data_guesthouse.has_air_conditionner,
+                  }"
+                >
+                  <i class="fas fa-snowflake"></i> Climatisation
+                </div>
+
+                <!-- Jacuzzi -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_jacuzzi,
+                    'has-text-danger': !data_guesthouse.has_jacuzzi,
+                  }"
+                >
+                  <i class="fas fa-hot-tub"></i> Jacuzzi
+                </div>
+
+                <!-- Voiture -->
+                <div
+                  class="column is-4"
+                  :class="{
+                    'has-text-success': data_guesthouse.has_car,
+                    'has-text-danger': !data_guesthouse.has_car,
+                  }"
+                >
+                  <i class="fas fa-car"></i> Voiture disponible
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- <div>
-                <section class="section">
-                    <div class="container">
-                    <h1 class="title">Ses points forts</h1>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-swimming-pool fa-2x"></i>
-                            <p>Piscine extérieure</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-wifi fa-2x"></i>
-                            <p>Connexion Wi-Fi gratuite</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-shuttle-van fa-2x"></i>
-                            <p>Navette aéroport (gratuite)</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-water fa-2x"></i>
-                            <p>Front de mer</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-parking fa-2x"></i>
-                            <p>Parking gratuit</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-smoking-ban fa-2x"></i>
-                            <p>Chambres non-fumeurs</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-glass-martini-alt fa-2x"></i>
-                            <p>Bar</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Parking</h2>
-                    <div class="box">
-                        <i class="fas fa-parking fa-2x"></i>
-                        <p>Un parking gratuit et privé est disponible sur place (sans réservation préalable).</p>
-                    </div>
-
-                    <h2 class="title">Internet</h2>
-                    <div class="box">
-                        <i class="fas fa-wifi fa-2x"></i>
-                        <p>Une connexion Wi-Fi est disponible dans tout l'établissement gratuitement.</p>
-                    </div>
-
-                    <h2 class="title">Cuisine</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-baby fa-2x"></i>
-                            <p>Chaise haute pour enfants</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-fire fa-2x"></i>
-                            <p>Plaque de cuisson</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-tshirt fa-2x"></i>
-                            <p>Sèche-linge</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter"  v-if=" data_guesthouse.has_kitchen == true">
-                        <div class="box">
-                            <i class="fas fa-utensils fa-2x"></i>
-                            <p>Cuisine</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter" v-if=" data_guesthouse.has_washing_machine == true">
-                        <div class="box">
-                            <i class="fas fa-tshirt fa-2x"></i>
-                            <p>Lave-linge</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-washer fa-2x"></i>
-                            <p>Lave-vaisselle</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-microchip fa-2x"></i>
-                            <p>Micro-ondes</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-icicles fa-2x"></i>
-                            <p>Réfrigérateur</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Chambre</h2>
-                    <div class="box">
-                        <i class="fas fa-bed fa-2x"></i>
-                        <p>Linge de maison</p>
-                    </div>
-
-                    <h2 class="title">Salle de bains</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter" >
-                        <div class="box">
-                            <i class="fas fa-toilet-paper fa-2x"></i>
-                            <p>Papier toilette</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-towel fa-2x"></i>
-                            <p>Serviettes</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-wind fa-2x"></i>
-                            <p>Sèche-cheveux</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Coin salon</h2>
-                    <div class="box">
-                        <i class="fas fa-couch fa-2x"></i>
-                        <p>Bureau</p>
-                    </div>
-
-                    <h2 class="title">High-tech</h2>
-                    <div class="box">
-                        <i class="fas fa-tv fa-2x"></i>
-                        <p>Console de jeux</p>
-                    </div>
-                    <div class="box">
-                        <i class="fas fa-tv fa-2x"></i>
-                        <p>Télévision à écran plat</p>
-                    </div>
-
-                    <h2 class="title">Équipements en chambre</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-door-open fa-2x"></i>
-                            <p>Entrée privée</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-temperature-high fa-2x"></i>
-                            <p>Chauffage</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-iron fa-2x"></i>
-                            <p>Fer à repasser</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-hot-tub fa-2x"></i>
-                            <p>Bain à remous</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Animaux domestiques</h2>
-                    <div class="box">
-                        <i class="fas fa-paw fa-2x"></i>
-                        <p>Les animaux de compagnie sont admis (sans supplément).</p>
-                    </div>
-
-                    <h2 class="title">En extérieur</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-water fa-2x"></i>
-                            <p>Front de mer</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-swimmer fa-2x"></i>
-                            <p>Piscine privée</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-umbrella-beach fa-2x"></i>
-                            <p>Balcon</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-tree fa-2x"></i>
-                            <p>Terrasse</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-seedling fa-2x"></i>
-                            <p>Jardin</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Piscine extérieure</h2>
-                    <div class="box">
-                        <i class="fas fa-swimming-pool fa-2x"></i>
-                        <p>Gratuit !</p>
-                        <p>Ouverte toute l'année</p>
-                        <p>Tous les âges sont les bienvenus</p>
-                        <p>Piscine sur le toit</p>
-                        <p>Piscine à débordement</p>
-                        <p>Piscine avec vue</p>
-                    </div>
-
-                    <h2 class="title">Bien-être</h2>
-                    <div class="box">
-                        <i class="fas fa-hot-tub fa-2x"></i>
-                        <p>Bain à remous/jacuzzi</p>
-                    </div>
-
-                    <h2 class="title">Restauration</h2>
-                    <div class="box">
-                        <i class="fas fa-glass-martini-alt fa-2x"></i>
-                        <p>Bar</p>
-                        <p>Plateau / bouilloire</p>
-                    </div>
-
-                    <h2 class="title">Activités</h2>
-                    <div class="box">
-                        <i class="fas fa-paint-brush fa-2x"></i>
-                        <p>Galeries d'art temporaires</p>
-                        <p>Plage</p>
-                    </div>
-
-                    <h2 class="title">Extérieur/Vues</h2>
-                    <div class="box">
-                        <i class="fas fa-eye fa-2x"></i>
-                        <p>Vue</p>
-                    </div>
-
-                    <h2 class="title">Transports</h2>
-                    <div class="box">
-                        <i class="fas fa-shuttle-van fa-2x"></i>
-                        <p>Navette aéroport</p>
-                    </div>
-
-                    <h2 class="title">Divertissements et services aux familles</h2>
-                    <div class="box">
-                        <i class="fas fa-plug fa-2x"></i>
-                        <p>Cache-prises pour enfants</p>
-                    </div>
-
-                    <h2 class="title">Divers</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-wind fa-2x"></i>
-                            <p>Climatisation</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-smoking-ban fa-2x"></i>
-                            <p>Établissement entièrement non-fumeurs</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-elevator fa-2x"></i>
-                            <p>Ascenseur</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-quarter">
-                        <div class="box">
-                            <i class="fas fa-bed fa-2x"></i>
-                            <p>Chambres non-fumeurs</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Sécurité</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-one-third">
-                        <div class="box">
-                            <i class="fas fa-bell fa-2x"></i>
-                            <p>Alarme de sécurité</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-third">
-                        <div class="box">
-                            <i class="fas fa-id-card fa-2x"></i>
-                            <p>Cartes d'accès</p>
-                        </div>
-                        </div>
-                        <div class="column is-one-third">
-                        <div class="box">
-                            <i class="fas fa-key fa-2x"></i>
-                            <p>Clés d'accès</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <h2 class="title">Langues parlées</h2>
-                    <div class="box">
-                        <i class="fas fa-language fa-2x"></i>
-                        <p>Anglais</p>
-                    </div>
-                    </div>
-                </section>
-                <section class="section">
-                  <div class="container">
-                    <h2 class="title">Catégories :</h2>
-                    <div class="columns is-multiline">
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Personnel</strong></p>
-                            <progress class="progress is-info" value="7.7" max="10">77%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Équipements</strong></p>
-                            <progress class="progress is-info" value="7.1" max="10">71%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Propreté</strong></p>
-                            <progress class="progress is-info" value="7.7" max="10">77%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Confort</strong></p>
-                            <progress class="progress is-info" value="7.6" max="10">76%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Rapport qualité/prix</strong></p>
-                            <progress class="progress is-info" value="7.1" max="10">71%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Situation géographique</strong></p>
-                            <progress class="progress is-info" value="8.7" max="10">87%</progress>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <div class="box">
-                            <p><strong>Connexion Wi-Fi gratuite</strong></p>
-                            <progress class="progress is-info" value="8.0" max="10">80%</progress>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </section>
-            </div> -->
     </div>
     <!-- modal img  -->
-    <b-modal id="modal-5" title="Plus d'image" size="lg" hide-footer>
-      <div v-for="(item, index) in pictures" :key="index">
-        <img :src="item" width="100%" alt="" class="mb-1 zoom-image" />
+    <!-- Modal en plein écran -->
+    <b-modal
+      id="modal-5"
+      title="Plus d'image"
+      hide-footer
+      :no-close-on-backdrop="true"
+      :no-close-on-esc="true"
+      class="fullscreen-modal"
+      size="lg"
+      @show="makeModalFullscreen"
+    >
+      <!-- Conteneur pour les images avec défilement horizontal -->
+      <div
+        class="image-slider d-flex"
+        style="overflow-x: scroll; white-space: nowrap; height: 80%"
+      >
+        <div
+          v-for="(item, index) in pictures"
+          :key="index"
+          class="image-item"
+          style="flex: 0 0 auto"
+        >
+          <img
+            :src="item"
+            alt=""
+            class="mb-1 zoom-image"
+            style="width: 100%; height: 100%; padding: 1rem"
+          />
+        </div>
       </div>
-      <div v-for="(item, index) in videos" :key="index">
-        <iframe width="100%" height="100%" :src="item"></iframe>
+
+      <!-- Conteneur pour les vidéos avec défilement horizontal -->
+      <div
+        class="video-slider d-flex"
+        style="overflow-x: scroll; white-space: nowrap; margin-top: 20px; height: 20%"
+      >
+        <div
+          v-for="(item, index) in videos"
+          :key="index"
+          class="video-item"
+          style="flex: 0 0 auto"
+        >
+          <iframe
+            width="300"
+            height="200"
+            :src="item"
+            style="margin-right: 10px"
+          ></iframe>
+        </div>
       </div>
     </b-modal>
+
     <!-- Modal  reservation  -->
     <b-modal id="modal-6" title="Réserver Ici" size="lg" hide-footer>
       <section class="section">
@@ -1420,5 +1136,30 @@ button {
   background-color: transparent;
   color: #363636;
   font-weight: normal;
+}
+.fullscreen-modal {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.fullscreen-modal .modal-dialog {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+}
+
+.fullscreen-modal .modal-content {
+  height: 100vh;
+}
+
+.fullscreen-modal .modal-body {
+  padding: 0;
+  height: 100%;
 }
 </style>

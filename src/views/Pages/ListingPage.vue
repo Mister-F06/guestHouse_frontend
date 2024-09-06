@@ -26,14 +26,14 @@
         >
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link click-scroll" href="#section_1">Accueil</a>
+              <a class="nav-link click-scroll" href="/#section_1">Accueil</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link click-scroll" href="/hebergement">Hébergement</a>
+              <a class="nav-link click-scroll" href="">Hébergement</a>
               <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
             </li>
             <li class="nav-item">
-              <a class="nav-link click-scroll" href="#section_5">Nous contacter</a>
+              <a class="nav-link click-scroll" href="/#section_5">Nous contacter</a>
             </li>
             <li>
               <a class="nav-link click-scroll gerant" href="/auth/register"
@@ -54,32 +54,44 @@
           <div class="row">
             <div class="col-lg-8 col-12 text-center mx-auto">
               <div class="hero-section-text" style="margin-top: -4rem">
-                <h1 class="hero-title text-white">Bienvenue à</h1>
-                <h1 class="hero-title text-white mb-4">OFAD GUESTHOUSE</h1>
+                <h1 class="hero-title text-white">Réservez votre prochain séjour ici</h1>
                 <!-- Autres éléments comme le formulaire, boutons, etc. -->
                 <!-- Champ de recherche -->
                 <div class="search-container">
                   <input
                     type="text"
+                    v-model="searchKeyword"
                     class="search-input"
-                    placeholder="Rechercher..."
+                    placeholder="Mot clé..."
                     @input="onSearchInput"
                   />
-                  <button class="search-button">
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Ville..."
+                    v-model="searchCity"
+                    @input="onSearchInput"
+                  />
+                  <input
+                    type="number"
+                    class="search-input"
+                    placeholder="Montant..."
+                    v-model="searchAmount"
+                    @input="onSearchInput"
+                  />
+                  <button
+                    class="search-button"
+                    @click="listGuesthouseSearch()"
+                    v-if="!this.loader"
+                  >
                     <i class="fa fa-search"></i>
+                    <span class="search-text">Rechercher</span>
                   </button>
-                </div>
 
-                <!-- Liste des résultats -->
-                <div class="search-results mt-4" v-if="data_guesthouse_search.length">
-                  <ul>
-                    <li v-for="guesthouse in data_guesthouse_search" :key="guesthouse.id">
-                      <a :href="`/detail-guesthouse/${guesthouse.slug}`">{{
-                        guesthouse.name
-                      }}</a>
-                    </li>
-                  </ul>
-                  <!-- <p v-else>Aucun guesthouse trouvé.</p> -->
+                  <button class="search-button button is-loading" v-if="this.loader">
+                    <i class="fa fa-search"></i>
+                    <span class="search-text">...</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -87,45 +99,95 @@
         </div>
       </section>
 
-      <!-- <section class="about-section section-padding mt-4" id="section_2">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-5 col-12">
-              <small class="section-small-title">OFAD GUESTHOUSE</small>
+      <div class="container mt-5">
+        <button class="filter-button" v-b-modal.modal-6 native-type="submit">
+          <i class="fa fa-filter"></i> Filtrer
+        </button>
 
-              <h2 class="mt-2 mb-4">
-                <span class="text-muted">Un Séjour </span> Inoubliable
-              </h2>
-
-              <h4 class="text-muted mb-3">
-                Découvrez l'élégance et le confort de notre établissement, situé au cœur
-                du monde
-              </h4>
-
-              <p>
-                Profitez de nos chambres luxueuses et de notre hospitalité exceptionnelle.
-                Chaque détail est pensé pour votre bien-être.
-              </p>
-            </div>
-
-            <div class="col-lg-3 col-md-5 col-5 mx-lg-auto">
-              <img
-                src="../../css_mosso/images/sharing-design-ideas-with-family.jpg"
-                class="about-image about-image-small img-fluid"
-                alt=""
+        <!-- Modal de filtre -->
+        <b-modal id="modal-6" title="Filtres" size="lg" hide-footer>
+          <div class="filter-modal-content">
+            <div class="filter-section">
+              <h5>Nombre de chambres</h5>
+              <input
+                type="number"
+                v-model.number="filters.bedrooms_nbr"
+                placeholder="Entrez le nombre de chambres"
+                min="0"
               />
             </div>
 
-            <div class="col-lg-4 col-md-7 col-7">
-              <img
-                src="../../css_mosso/images/living-room-interior-wall-mockup-warm-tones-with-leather-sofa-which-is-kitchen-3d-rendering.jpg"
-                class="about-image img-fluid"
-                alt=""
+            <div class="filter-section">
+              <h5>Nombre de lits</h5>
+              <input
+                type="number"
+                v-model.number="filters.beds_nbr"
+                placeholder="Entrez le nombre de lits"
+                min="0"
               />
+            </div>
+
+            <div class="filter-section">
+              <h5>Nombre de toilettes</h5>
+              <input
+                type="number"
+                v-model.number="filters.toilets_nbr"
+                placeholder="Entrez le nombre de toilettes"
+                min="0"
+              />
+            </div>
+
+            <div class="filter-section">
+              <h5>Nombre de salles de bain</h5>
+              <input
+                type="number"
+                v-model.number="filters.bathrooms_nbr"
+                placeholder="Entrez le nombre de salles de bain"
+                min="0"
+              />
+            </div>
+
+            <div class="filter-section">
+              <h5>Équipements</h5>
+              <label>
+                <input type="checkbox" v-model="filters.has_kitchen" />
+                Cuisine
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_pool" />
+                Piscine
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_air_conditionner" />
+                Air conditionné
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_jacuzzi" />
+                Jacuzzi
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_washing_machine" />
+                Machine à laver
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_parking" />
+                Parking
+              </label>
+              <label>
+                <input type="checkbox" v-model="filters.has_car" />
+                Voiture
+              </label>
+            </div>
+
+            <!-- Bouton Appliquer -->
+            <div class="filter-actions">
+              <button class="btn btn-primary" @click="searchGuesthouse">
+                Appliquer les filtres
+              </button>
             </div>
           </div>
-        </div>
-      </section> -->
+        </b-modal>
+      </div>
 
       <!-- Liste guesthouse  -->
       <section class="shop-section section-padding" id="section_3">
@@ -150,8 +212,65 @@
 
             <template v-else>
               <div
+                v-if="data_guesthouse_search.length === 0"
                 class="col-lg-4 col-12"
                 v-for="item in displayedGuesthouse"
+                :key="item.id"
+              >
+                <div class="shop-thumb">
+                  <div class="shop-image-wrap">
+                    <a :href="`/detail-guesthouse/${item.slug}`">
+                      <div
+                        class="shop-image img-fluid"
+                        :style="{
+                          backgroundImage: `url(${showMediaFromGoogle(
+                            item.cover.original_url
+                          )})`,
+                          width: '600px',
+                          height: '300px',
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }"
+                      ></div>
+                      <!-- <img
+                        :src="showMediaFromGoogle(item.cover.original_url)"
+                        class="shop-image img-fluid"
+                        width="600px"
+                        height="300px"
+                        alt=""
+                      /> -->
+                    </a>
+                    <div class="shop-icons-wrap">
+                      <div class="shop-icons d-flex flex-column align-items-center">
+                        <!-- <a href="#" class="shop-icon bi-heart"></a>
+                          <a href="#" class="shop-icon bi-bookmark"></a> -->
+                        <a href="/">
+                          <img src="../../assets/logo.png" alt="" style="width: 50px" />
+                        </a>
+                      </div>
+                      <p class="shop-pricing mb-0 mt-3">
+                        <span class="badge custom-badge"
+                          >{{ formatNumberCustom(item.price) }} FCFA / 24h</span
+                        >
+                      </p>
+                    </div>
+                    <div class="shop-btn-wrap">
+                      <a
+                        :href="`/detail-guesthouse/${item.slug}`"
+                        class="shop-btn custom-btn btn d-flex align-items-center"
+                        >Plus de détail</a
+                      >
+                    </div>
+                  </div>
+                  <div class="shop-body">
+                    <h4>{{ item.name }}</h4>
+                  </div>
+                </div>
+              </div>
+              <div
+                v-if="data_guesthouse_search.length != 0"
+                class="col-lg-4 col-12"
+                v-for="item in data_guesthouse_search"
                 :key="item.id"
               >
                 <div class="shop-thumb">
@@ -225,198 +344,6 @@
           </div>
         </div>
       </section>
-
-      <!-- <section class="reviews-section section-padding pb-0" id="section_4">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 col-12">
-              <small class="section-small-title">OFAD GUESTHOUSE</small>
-
-              <h2 class="mt-2 mb-4">À propos</h2>
-
-              <div class=" ">
-                <p>
-                  Bienvenue à OFAD GUESTHOUSE, votre refuge de confort et de sérénité au
-                  cœur du monde. Nous offrons une expérience unique alliant charme local
-                  et commodités modernes. Que vous soyez en voyage d'affaires, en vacances
-                  ou à la recherche d'un endroit paisible pour vous ressourcer, notre
-                  maison d'hôtes est l'endroit idéal pour vous. Notre mission est de
-                  rendre votre séjour aussi agréable et mémorable que possible. Chaque
-                  chambre est soigneusement aménagée pour offrir le maximum de confort et
-                  de détente. Nos services personnalisés et notre équipe dévouée sont là
-                  pour répondre à tous vos besoins. Nous sommes fiers de notre accueil
-                  chaleureux et de notre engagement envers la satisfaction de nos clients.
-                  Chez OFAD GUESTHOUSE, vous êtes plus qu'un simple invité, vous êtes chez
-                  vous.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
-      <section class="contact-section" id="section_5">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#f9f9f9"
-            fill-opacity="1"
-            d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"
-          ></path>
-        </svg>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 col-12">
-              <small class="section-small-title">OFAD GUESTHOUSE</small>
-
-              <h2 class="mb-4">Nous contacter</h2>
-            </div>
-
-            <div class="col-lg-6 col-12">
-              <form class="custom-form contact-form" action="#" method="post" role="form">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <div class="input-group align-items-center">
-                      <label for="first-name">Nom</label>
-
-                      <input
-                        type="text"
-                        name="first-name"
-                        id="first-name"
-                        class="form-control"
-                        placeholder="Jack"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <div class="input-group align-items-center">
-                      <label for="last-name">Prénoms</label>
-
-                      <input
-                        type="text"
-                        name="last-name"
-                        id="last-name"
-                        class="form-control"
-                        placeholder="Doe"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="input-group align-items-center">
-                  <label for="email">Adresse email</label>
-
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    pattern="[^ @]*@[^ @]*"
-                    class="form-control"
-                    placeholder="Jackdoe@gmail.com"
-                    required
-                  />
-                </div>
-
-                <div class="input-group textarea-group">
-                  <label for="message">Message</label>
-
-                  <textarea
-                    name="message"
-                    rows="6"
-                    class="form-control"
-                    id="message"
-                    placeholder="Comment pouvons-nous vous aider ?"
-                  ></textarea>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6">
-                  <button type="submit" class="form-control">Envoyer</button>
-                </div>
-              </form>
-            </div>
-
-            <div class="col-lg-6 col-12 mt-5 mt-lg-0">
-              <div class="custom-block">
-                <p style="color: black">
-                  Bienvenue à OFAD GUESTHOUSE, votre havre de confort et de sérénité.
-                  Située en plein cœur du monde, notre maison d'hôtes allie charme
-                  authentique et équipements modernes pour vous offrir une expérience
-                  inoubliable.
-                </p>
-                <h3 class="text-black mt-3 mb-2">Nous joindre</h3>
-
-                <div class="d-flex flex-wrap">
-                  <p class="text-black mb-2 me-4">
-                    <i class="contact-icon bi-telephone me-1"></i>
-
-                    <a href="tel: +2296565-6565" class="text-black"> +2296565-6565 </a>
-                  </p>
-
-                  <p class="text-white">
-                    <i class="contact-icon bi-envelope me-1"></i>
-
-                    <a href="mailto:info@ofad-gueshouse.com" class="text-black">
-                      info@ofad-gueshouse.com
-                    </a>
-                  </p>
-                </div>
-                <div
-                  class="col-lg-12 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto"
-                >
-                  <ul class="social-icon">
-                    <li class="social-icon-item">
-                      <a
-                        href="#"
-                        class="social-icon-link social-icon-twitter bi-twitter"
-                      ></a>
-                    </li>
-
-                    <li class="social-icon-item">
-                      <a
-                        href="#"
-                        class="social-icon-link social-icon-facebook bi-facebook"
-                      ></a>
-                    </li>
-
-                    <li class="social-icon-item">
-                      <a
-                        href="#"
-                        class="social-icon-link social-icon-instagram bi-instagram"
-                      ></a>
-                    </li>
-
-                    <li class="social-icon-item">
-                      <a
-                        href="#"
-                        class="social-icon-link social-icon-pinterest bi-pinterest"
-                      ></a>
-                    </li>
-
-                    <li class="social-icon-item">
-                      <a
-                        href="#"
-                        class="social-icon-link social-icon-whatsapp bi-whatsapp"
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#36363e"
-          fill-opacity="1"
-          d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
-        ></path>
-      </svg>
     </main>
 
     <footer class="site-footer section-padding pb-5">
@@ -503,6 +430,9 @@ import store from "../../store/index";
 export default {
   data() {
     return {
+      searchCity: "",
+      searchAmount: "",
+      searchKeyword: "",
       isMenuOpen: false,
       isLoading: true,
       images: [
@@ -518,40 +448,69 @@ export default {
       itemsPerPage: 9,
       currentPage: 1,
       searchTimeout: null,
+      loader: false,
+      showFilterModal: false,
+      filters: {
+        bedrooms_nbr: null,
+        beds_nbr: null,
+        toilets_nbr: null,
+        bathrooms_nbr: null,
+        has_kitchen: 0,
+        has_pool: 0,
+        has_air_conditionner: 0,
+        has_jacuzzi: 0,
+        has_washing_machine: 0,
+        has_parking: 0,
+        has_car: 0,
+      },
     };
   },
   mounted() {
     this.startSlideshow();
     this.listGuesthouse();
-    this.listGuesthouseSearch();
   },
   methods: {
-    onSearchInput(event) {
-      this.searchKeyword = event.target.value;
-      if (this.searchTimeout) {
-        clearTimeout(this.searchTimeout);
-      }
-
-      // On configure un nouveau timeout pour lancer la recherche après 500ms
-      this.searchTimeout = setTimeout(() => {
-        this.listGuesthouseSearch(this.searchKeyword);
-      }, 500);
+    closeFilterModal() {
+      this.showFilterModal = false;
     },
-
-    async listGuesthouseSearch(keyword = "") {
+    async listGuesthouseSearch() {
       try {
+        this.loader = true;
         const response = await store.dispatch("guesthouse/listguesthouse");
-        if (keyword) {
-          this.data_guesthouse_search = response.data.filter((guesthouse) =>
-            guesthouse.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-        }
+        this.data_guesthouse_search = response.data.filter((guesthouse) => {
+          const matchesCity = this.searchCity
+            ? guesthouse.address.toLowerCase().includes(this.searchCity.toLowerCase())
+            : true;
+          const matchesAmount = this.searchAmount
+            ? guesthouse.price <= parseFloat(this.searchAmount)
+            : true;
+          const matchesKeyword = this.searchKeyword
+            ? guesthouse.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+            : true;
+
+          return matchesCity && matchesAmount && matchesKeyword;
+        });
+        this.loader = false;
+
+        this.isLoading = false;
+      } catch (error) {
+        console.log(error);
+        this.loader = false;
+      }
+    },
+    async searchGuesthouse() {
+      try {
+        const response = await store.dispatch(
+          "guesthouse/guesthouseSearch",
+          this.filters
+        );
+        this.data_guesthouse_search = response.data;
+        this.$bvModal.hide("modal-6");
         this.isLoading = false;
       } catch (error) {
         console.log(error);
       }
     },
-
     showMediaFromGoogle(url) {
       let parsedUrl = new URL(url);
       let queryParams = new URLSearchParams(parsedUrl.search);
@@ -817,13 +776,22 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 10px; /* Espacement entre les éléments */
+  /* flex-wrap: wrap; */
 }
-
+@media screen and (max-width: 992px) {
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Espacement entre les éléments */
+    flex-wrap: wrap;
+  }
+}
 .search-input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 500px;
+  width: 200px;
 }
 
 .search-button {
@@ -843,5 +811,52 @@ export default {
 
 .search-button:hover {
   background-color: #ffd74f;
+}
+</style>
+
+<style scoped>
+.filter-button {
+  background-color: #ffd74f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.filter-button i {
+  margin-right: 8px;
+}
+
+.filter-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filter-section {
+  margin-bottom: 1rem;
+}
+
+.filter-section h5 {
+  margin-bottom: 0.5rem;
+}
+
+.filter-section input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.filter-actions {
+  text-align: right;
 }
 </style>
