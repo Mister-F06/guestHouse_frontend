@@ -483,8 +483,9 @@
                   <label class="label" for="payment_type">Opérateur</label>
                   <div class="select">
                     <select id="payment_type" v-model="forms.operator" required>
-                      <option value="mtn">MTN</option>
+                      <option value="mtn_open">MTN</option>
                       <option value="moov">MOOV</option>
+                      <option value="sbin">CELTIS</option>
                     </select>
                   </div>
                 </div>
@@ -714,7 +715,7 @@ export default {
         end_date: "",
         payment_type: "momo",
         payment_number: "64000001",
-        operator: "mtn",
+        operator: "mtn_open",
         card_number: "",
         card_expiry_year: "",
         card_expiry_month: "",

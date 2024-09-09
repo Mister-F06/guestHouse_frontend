@@ -181,8 +181,19 @@
 
             <!-- Bouton Appliquer -->
             <div class="filter-actions">
-              <button class="btn btn-primary" @click="searchGuesthouse">
+              <button
+                class="btn btn-primary"
+                @click="searchGuesthouse"
+                v-if="!this.loader"
+              >
                 Appliquer les filtres
+              </button>
+              <button
+                class="btn btn-primary"
+                @click="searchGuesthouse"
+                v-if="this.loader"
+              >
+               Chargement...
               </button>
             </div>
           </div>
@@ -500,12 +511,17 @@ export default {
     },
     async searchGuesthouse() {
       try {
+        this.loader = true;
+
         const response = await store.dispatch(
           "guesthouse/guesthouseSearch",
           this.filters
         );
+        this.loader = false;
+
         this.data_guesthouse_search = response.data;
         this.$bvModal.hide("modal-6");
+        this.loader = false;
         this.isLoading = false;
       } catch (error) {
         console.log(error);

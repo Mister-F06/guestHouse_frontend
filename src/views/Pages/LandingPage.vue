@@ -209,16 +209,11 @@
             <div class="col-lg-12 col-12">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                  <li
-                    class="page-item"
-                    v-for="page in totalPages"
-                    :key="page"
-                    :class="{ active: currentPage === page }"
-                  >
-                    <a class="page-link" href="#" @click.prevent="changePage(page)">{{
-                      page
-                    }}</a>
-                  </li>
+                  <a href="/hebergement">
+                    <button class="filter-button">
+                      Voir plus <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                  </a>
                 </ul>
               </nav>
             </div>
@@ -843,5 +838,19 @@ export default {
 
 .search-button:hover {
   background-color: #ffd74f;
+}
+.filter-button {
+  background-color: #ffd74f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.filter-button i {
+  margin-right: 8px;
 }
 </style>
