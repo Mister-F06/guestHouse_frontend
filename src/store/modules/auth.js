@@ -66,6 +66,7 @@ export default {
             try {
                 let response = await axios.get('/users/me')
                 commit('SET_USER', response.data.user)
+                return response;
 
             } catch (error) {
 

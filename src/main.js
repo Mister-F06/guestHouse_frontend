@@ -33,9 +33,36 @@ Vue.use(Toast);
 Vue.use(axios);
 
 /* eslint-disable no-new */
-store.dispatch("auth/attempt");
-new Vue({
-    render: h => h(App),
-    router,
-    store
-}).$mount('#app');
+// store.dispatch("auth/attempt");
+// new Vue({
+//     render: h => h(App),
+//     router,
+//     store
+// }).$mount('#app');
+
+/* eslint-disable no-new */
+(async() => {
+    try {
+        // On attend que l'auth/attempt s'exécute
+        const response = await store.dispatch("auth/attempt");
+        // Si la réponse n'est pas un statut 200 ou si une autre condition échoue
+        if (response.status !== 200) {
+            // Appel de la déconnexion
+            localStorage.clear();
+            // Redirection vers la page de login
+            router.push({ path: "/auth/login" });
+        }
+    } catch (error) {
+        // Si une erreur survient pendant auth/attempt
+        console.error("Erreur pendant l'authentification:", error);
+        localStorage.clear();
+
+    }
+
+    // Ensuite, on monte l'application Vue
+    new Vue({
+        render: h => h(App),
+        router,
+        store
+    }).$mount("#app");
+})();
