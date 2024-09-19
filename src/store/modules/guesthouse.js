@@ -78,5 +78,9 @@ export default {
             let response = await axios.post('/guest_houses/search', data);
             return response
         },
+        async statsManagers() {
+            let response = await axios.get('/dashboard/managers');
+            return response
+        },
     }
 }

@@ -5,23 +5,23 @@
       <b-row>
         <b-col xl="3" md="6">
           <stats-card
-            title="Total trafic"
+            title="Guesthouse rejetée"
             type="gradient-red"
-            sub-title="350,897"
+            :sub-title="statsManagers.guest_house_rejected"
             icon="ni ni-active-40"
             class="mb-4"
           >
             <template slot="footer">
-              <span class="text-success mr-2">3.48%</span>
+              <span class="text-success mr-2">2%</span>
               <span class="text-nowrap">depuis le mois dernier</span>
             </template>
           </stats-card>
         </b-col>
         <b-col xl="3" md="6">
           <stats-card
-            title="Total trafic"
+            title="Totale guesthouse "
             type="gradient-orange"
-            sub-title="2,356"
+            :sub-title="statsManagers.guest_houses_number"
             icon="ni ni-chart-pie-35"
             class="mb-4"
           >
@@ -33,9 +33,9 @@
         </b-col>
         <b-col xl="3" md="6">
           <stats-card
-            title="Guesthouses"
+            title="Nombre clique"
             type="gradient-green"
-            sub-title="924"
+            :sub-title="statsManagers.guest_house_with_max_views.views"
             icon="ni ni-money-coins"
             class="mb-4"
           >
@@ -47,9 +47,9 @@
         </b-col>
         <b-col xl="3" md="6">
           <stats-card
-            title="Performance"
+            title="Revenue annuel "
             type="gradient-info"
-            sub-title="49,65%"
+            :sub-title="statsManagers.yearly_income"
             icon="ni ni-chart-bar-32"
             class="mb-4"
           >
@@ -108,8 +108,8 @@
           <card header-classes="bg-transparent">
             <b-row align-v="center" slot="header">
               <b-col>
-                <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                <h5 class="h3 mb-0">Total orders</h5>
+                <h6 class="text-uppercase text-muted ls-1 mb-1">Vue d'ensembles</h6>
+                <h5 class="h3 mb-0">Revenus Mensuels</h5>
               </b-col>
             </b-row>
 
@@ -121,14 +121,14 @@
       <!-- End charts-->
 
       <!--Tables-->
-      <b-row class="mt-5">
+      <!-- <b-row class="mt-5">
         <b-col xl="8" class="mb-5 mb-xl-0">
           <page-visits-table></page-visits-table>
         </b-col>
         <b-col xl="4" class="mb-5 mb-xl-0">
           <social-trafic-table></social-trafic-table>
         </b-col>
-      </b-row>
+      </b-row> -->
       <!--End tables-->
     </b-container>
   </div>
@@ -146,7 +146,7 @@ import StatsCard from "@/components/Cards/StatsCard";
 // Tables
 import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
 import PageVisitsTable from "./Dashboard/PageVisitsTable";
-
+import store from "../store/index";
 export default {
   components: {
     LineChart,
@@ -158,30 +158,28 @@ export default {
   },
   data() {
     return {
+      statsManagers: {},
       bigLineChart: {
-        allData: [
-          [0, 20, 10, 30, 15, 40, 20, 60, 60],
-          [0, 20, 5, 25, 10, 30, 15, 40, 40],
-        ],
+        allData: [],
         activeIndex: 0,
         chartData: {
           datasets: [
             {
-              label: "Performance",
-              data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
+              label: "Réservations",
+              data: [],
             },
           ],
-          labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          labels: [],
         },
         extraOptions: chartConfigs.blueChartOptions,
       },
       redBarChart: {
         chartData: {
-          labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          labels: [],
           datasets: [
             {
-              label: "Sales",
-              data: [25, 20, 30, 22, 17, 29],
+              label: "Revenus",
+              data: [],
             },
           ],
         },
@@ -190,21 +188,49 @@ export default {
     };
   },
   methods: {
+    async loadstatsManagers() {
+      try {
+        const response = await store.dispatch("guesthouse/statsManagers");
+        this.statsManagers = response.data;
+
+        // Mise à jour des données du graphique des réservations
+        const reservationsData = response.data.reservations_per_month.map(
+          (item) => item.number
+        );
+        const reservationLabels = response.data.reservations_per_month.map(
+          (item) => item.month
+        );
+
+        this.bigLineChart.chartData.datasets[0].data = reservationsData;
+        this.bigLineChart.chartData.labels = reservationLabels;
+        this.bigLineChart.allData = [reservationsData]; // Si vous souhaitez gérer plusieurs séries
+
+        // Mise à jour des données du graphique des revenus
+        const incomeData = response.data.income_per_month.map((item) => item.income);
+        const incomeLabels = response.data.income_per_month.map((item) => item.month);
+
+        this.redBarChart.chartData.datasets[0].data = incomeData;
+        this.redBarChart.chartData.labels = incomeLabels;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     initBigChart(index) {
       let chartData = {
         datasets: [
           {
-            label: "Performance",
+            label: "Réservations",
             data: this.bigLineChart.allData[index],
           },
         ],
-        labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: this.bigLineChart.chartData.labels,
       };
       this.bigLineChart.chartData = chartData;
       this.bigLineChart.activeIndex = index;
     },
   },
   mounted() {
+    this.loadstatsManagers();
     this.initBigChart(0);
   },
 };
