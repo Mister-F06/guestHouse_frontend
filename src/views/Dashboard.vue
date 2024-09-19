@@ -1,6 +1,9 @@
 <template>
   <div>
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+    <base-header
+      v-if="role_id && role_id === 2"
+      class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
+    >
       <!-- Card stats -->
       <b-row>
         <b-col xl="6" md="6">
@@ -61,6 +64,70 @@
         </b-col>
       </b-row>
     </base-header>
+    <base-header
+      v-if="role_id && role_id === 1"
+      class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
+    >
+      <!-- Card stats -->
+      <b-row>
+        <b-col xl="6" md="6">
+          <stats-card
+            title="Guesthouse rejetée"
+            type="gradient-red"
+            :sub-title="statsAdmin.guest_houses_rejected"
+            icon="ni ni-active-40"
+            class="mb-4"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">2%</span>
+              <span class="text-nowrap">depuis le mois dernier</span>
+            </template>
+          </stats-card>
+        </b-col>
+        <b-col xl="6" md="6">
+          <stats-card
+            title="Totale guesthouse "
+            type="gradient-orange"
+            :sub-title="statsAdmin.guest_houses_submitted"
+            icon="ni ni-chart-pie-35"
+            class="mb-4"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">12.18%</span>
+              <span class="text-nowrap">depuis le mois dernier</span>
+            </template>
+          </stats-card>
+        </b-col>
+        <b-col xl="6" md="6">
+          <stats-card
+            title="Guesthouse validée"
+            type="gradient-green"
+            :sub-title="statsAdmin.guest_houses_validated"
+            icon="ni ni-money-coins"
+            class="mb-4"
+          >
+            <template slot="footer">
+              <span class="text-danger mr-2">5.72%</span>
+              <span class="text-nowrap">depuis le mois dernier</span>
+            </template>
+          </stats-card>
+        </b-col>
+        <b-col xl="6" md="6">
+          <stats-card
+            title="Totale réservation"
+            type="gradient-info"
+            :sub-title="statsAdmin.reservations_nbr"
+            icon="ni ni-chart-bar-32"
+            class="mb-4"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">54.8%</span>
+              <span class="text-nowrap">depuis le mois dernier</span>
+            </template>
+          </stats-card>
+        </b-col>
+      </b-row>
+    </base-header>
 
     <!--Charts-->
     <b-container fluid class="mt--7">
@@ -104,7 +171,7 @@
           </card>
         </b-col>
 
-        <b-col xl="4" class="mb-5 mb-xl-0">
+        <b-col xl="4" class="mb-5 mb-xl-0" v-if="role_id && role_id === 2">
           <card header-classes="bg-transparent">
             <b-row align-v="center" slot="header">
               <b-col>
@@ -114,6 +181,19 @@
             </b-row>
 
             <bar-chart :height="350" ref="barChart" :chart-data="redBarChart.chartData">
+            </bar-chart>
+          </card>
+        </b-col>
+        <b-col xl="4" class="mb-5 mb-xl-0" v-if="role_id && role_id === 1">
+          <card header-classes="bg-transparent">
+            <b-row align-v="center" slot="header">
+              <b-col>
+                <h6 class="text-uppercase text-muted ls-1 mb-1">Vue d'ensembles</h6>
+                <h5 class="h3 mb-0">Totale Guesthouse / Mois</h5>
+              </b-col>
+            </b-row>
+
+            <bar-chart :height="350" ref="barChart" :chart-data="redBarChart_.chartData">
             </bar-chart>
           </card>
         </b-col>
@@ -158,7 +238,10 @@ export default {
   },
   data() {
     return {
+      role_id: undefined,
+
       statsManagers: {},
+      statsAdmin: {},
       bigLineChart: {
         allData: [],
         activeIndex: 0,
@@ -185,32 +268,77 @@ export default {
         },
         extraOptions: chartConfigs.blueChartOptions,
       },
+
+      redBarChart_: {
+        chartData: {
+          labels: [],
+          datasets: [
+            {
+              label: "Guesthouse",
+              data: [],
+            },
+          ],
+        },
+        extraOptions: chartConfigs.blueChartOptions,
+      },
     };
   },
   methods: {
-    async loadstatsManagers() {
+    async loadstatsAdmin(roleId) {
       try {
-        const response = await store.dispatch("guesthouse/statsManagers");
-        this.statsManagers = response.data;
+        if (roleId && roleId === 1) {
+          const response = await store.dispatch("guesthouse/statsAdmin");
+          this.statsAdmin = response.data;
+          // Mise à jour des données du graphique des réservations
+          const reservationsData = response.data.reservations_per_month.map(
+            (item) => item.number
+          );
+          const reservationLabels = response.data.reservations_per_month.map(
+            (item) => item.month
+          );
 
-        // Mise à jour des données du graphique des réservations
-        const reservationsData = response.data.reservations_per_month.map(
-          (item) => item.number
-        );
-        const reservationLabels = response.data.reservations_per_month.map(
-          (item) => item.month
-        );
+          this.bigLineChart.chartData.datasets[0].data = reservationsData;
+          this.bigLineChart.chartData.labels = reservationLabels;
+          this.bigLineChart.allData = [reservationsData]; // Si vous souhaitez gérer plusieurs séries
 
-        this.bigLineChart.chartData.datasets[0].data = reservationsData;
-        this.bigLineChart.chartData.labels = reservationLabels;
-        this.bigLineChart.allData = [reservationsData]; // Si vous souhaitez gérer plusieurs séries
+          // Mise à jour des données du graphique des revenus
+          const incomeData = response.data.guest_houses_per_month.map(
+            (item) => item.number
+          );
+          const incomeLabels = response.data.guest_houses_per_month.map(
+            (item) => item.month
+          );
 
-        // Mise à jour des données du graphique des revenus
-        const incomeData = response.data.income_per_month.map((item) => item.income);
-        const incomeLabels = response.data.income_per_month.map((item) => item.month);
+          this.redBarChart_.chartData.datasets[0].data = incomeData;
+          this.redBarChart_.chartData.labels = incomeLabels;
 
-        this.redBarChart.chartData.datasets[0].data = incomeData;
-        this.redBarChart.chartData.labels = incomeLabels;
+          // Forcer la mise à jour du graphique
+          this.$refs.barChart.$data._chart.update();
+          this.$refs.bigChart.$data._chart.update();
+        }
+        if (roleId && roleId === 2) {
+          const response = await store.dispatch("guesthouse/statsManagers");
+          this.statsManagers = response.data;
+
+          // Mise à jour des données du graphique des réservations
+          const reservationsData = response.data.reservations_per_month.map(
+            (item) => item.number
+          );
+          const reservationLabels = response.data.reservations_per_month.map(
+            (item) => item.month
+          );
+
+          this.bigLineChart.chartData.datasets[0].data = reservationsData;
+          this.bigLineChart.chartData.labels = reservationLabels;
+          this.bigLineChart.allData = [reservationsData]; // Si vous souhaitez gérer plusieurs séries
+
+          // Mise à jour des données du graphique des revenus
+          const incomeData = response.data.income_per_month.map((item) => item.income);
+          const incomeLabels = response.data.income_per_month.map((item) => item.month);
+
+          this.redBarChart.chartData.datasets[0].data = incomeData;
+          this.redBarChart.chartData.labels = incomeLabels;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -228,10 +356,21 @@ export default {
       this.bigLineChart.chartData = chartData;
       this.bigLineChart.activeIndex = index;
     },
+
+    async meUser() {
+      try {
+        const response = await store.dispatch("guesthouse/me");
+        this.role_id = response.data.role_id;
+        this.loadstatsAdmin(this.role_id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
-    this.loadstatsManagers();
     this.initBigChart(0);
+    this.meUser();
+    this.loadstatsAdmin();
   },
 };
 </script>

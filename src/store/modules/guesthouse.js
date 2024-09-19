@@ -82,5 +82,9 @@ export default {
             let response = await axios.get('/dashboard/managers');
             return response
         },
+        async statsAdmin() {
+            let response = await axios.get('/dashboard/admins');
+            return response
+        },
     }
 }
