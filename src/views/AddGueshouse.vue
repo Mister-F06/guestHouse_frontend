@@ -12,7 +12,7 @@
           <b-button
             v-b-modal.modal-1
             variant="primary"
-            v-if="role_id && role_id === 1"
+            v-if="role_id && role_id === 2"
             style="width: 200px !important"
             @click="changingUpdateValue()"
             >Ajouter</b-button
