@@ -25,11 +25,8 @@
           :class="{ show: isMenuOpen }"
         >
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/">Accueil</a>
-            </li>
             <li class="nav-item dropdown">
-              <a class="nav-link click-scroll" href="/hebergement">Hébergement</a>
+              <a class="nav-link click-scroll" href="/">Hébergement</a>
               <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
             </li>
             <li class="nav-item">
@@ -60,8 +57,8 @@
         <span class="tag is-warning mr-1">Intime </span>
       </div>
       <div>
-        <strong>Description</strong>
-        <p style="text-align: center">
+        <strong style="font-size: 2rem">Description</strong>
+        <p style="text-align: left">
           {{ truncatedDescription }}
           <span v-if="isTruncated">...</span>
         </p>
@@ -99,8 +96,8 @@
             <img :src="pictures[3]" width="500px" alt="" />
             <div style="text-align: right">
               <a v-b-modal.modal-5 variant="primary">
-                <i class="fa fa-eye is-small" style="font-size: small; color: green"></i>
-                voir plus
+                <i class="fa fa-eye is-small" style="font-size: small; color: blue"></i>
+                <button>Voir plus</button>
               </a>
             </div>
           </div>

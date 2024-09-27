@@ -180,6 +180,15 @@
                 v-model="model.price"
               >
               </base-input>
+              <!-- Affichage de 20% du prix -->
+              <b-col>
+                <p style="font-size: small">(20%) du prix : {{ pricePercentage }} FCFA</p>
+              </b-col>
+              <b-col>
+                <p style="font-size: small">
+                  Ce qui vous revient (80%) : {{ clientPercentage }} FCFA
+                </p>
+              </b-col>
             </b-col>
           </b-row>
           <b-row>
@@ -1083,6 +1092,12 @@ export default {
     this.listGuesthouse();
   },
   computed: {
+    pricePercentage() {
+      return (this.model.price * 0.2).toFixed(2);
+    },
+    clientPercentage() {
+      return (this.model.price * 0.8).toFixed(2);
+    },
     start() {
       return (this.currentPage - 1) * this.itemsPerPage;
     },

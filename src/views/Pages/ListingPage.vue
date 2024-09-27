@@ -25,11 +25,8 @@
           :class="{ show: isMenuOpen }"
         >
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/#section_1">Accueil</a>
-            </li>
             <li class="nav-item dropdown">
-              <a class="nav-link click-scroll" href="">Hébergement</a>
+              <a class="nav-link click-scroll" href="/">Hébergement</a>
               <!-- <a class="nav-link dropdown-toggle click-scroll" href="#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hébergement</a> -->
             </li>
             <li class="nav-item">
@@ -193,7 +190,7 @@
                 @click="searchGuesthouse"
                 v-if="this.loader"
               >
-               Chargement...
+                Chargement...
               </button>
             </div>
           </div>
@@ -357,6 +354,167 @@
       </section>
     </main>
 
+    <section class="contact-section" id="section_5">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path
+          fill="#f9f9f9"
+          fill-opacity="1"
+          d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"
+        ></path>
+      </svg>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <small class="section-small-title">OFAD GUESTHOUSE</small>
+
+            <h2 class="mb-4">Nous contacter</h2>
+          </div>
+
+          <div class="col-lg-6 col-12">
+            <form class="custom-form contact-form" action="#" method="post" role="form">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="input-group align-items-center">
+                    <label for="first-name">Nom</label>
+
+                    <input
+                      type="text"
+                      name="first-name"
+                      id="first-name"
+                      class="form-control"
+                      placeholder="Jack"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="input-group align-items-center">
+                    <label for="last-name">Prénoms</label>
+
+                    <input
+                      type="text"
+                      name="last-name"
+                      id="last-name"
+                      class="form-control"
+                      placeholder="Doe"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group align-items-center">
+                <label for="email">Adresse email</label>
+
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  pattern="[^ @]*@[^ @]*"
+                  class="form-control"
+                  placeholder="Jackdoe@gmail.com"
+                  required
+                />
+              </div>
+
+              <div class="input-group textarea-group">
+                <label for="message">Message</label>
+
+                <textarea
+                  name="message"
+                  rows="6"
+                  class="form-control"
+                  id="message"
+                  placeholder="Comment pouvons-nous vous aider ?"
+                ></textarea>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-6">
+                <button type="submit" class="form-control">Envoyer</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-lg-6 col-12 mt-5 mt-lg-0">
+            <div class="custom-block">
+              <p style="color: black">
+                Bienvenue à OFAD GUESTHOUSE, votre havre de confort et de sérénité. Située
+                en plein cœur du monde, notre maison d'hôtes allie charme authentique et
+                équipements modernes pour vous offrir une expérience inoubliable.
+              </p>
+              <h3 class="text-black mt-3 mb-2">Nous joindre</h3>
+
+              <div class="d-flex flex-wrap">
+                <p class="text-black mb-2 me-4">
+                  <i class="contact-icon bi-telephone me-1"></i>
+
+                  <a href="tel: +2296565-6565" class="text-black"> +2296565-6565 </a>
+                </p>
+
+                <p class="text-white">
+                  <i class="contact-icon bi-envelope me-1"></i>
+
+                  <a href="mailto:info@ofad-gueshouse.com" class="text-black">
+                    info@ofad-gueshouse.com
+                  </a>
+                </p>
+              </div>
+              <div
+                class="col-lg-12 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto"
+              >
+                <ul class="social-icon">
+                  <li class="social-icon-item">
+                    <a
+                      href="#"
+                      class="social-icon-link social-icon-twitter bi-twitter"
+                    ></a>
+                  </li>
+
+                  <li class="social-icon-item">
+                    <a
+                      href="#"
+                      class="social-icon-link social-icon-facebook bi-facebook"
+                    ></a>
+                  </li>
+
+                  <li class="social-icon-item">
+                    <a
+                      href="#"
+                      class="social-icon-link social-icon-instagram bi-instagram"
+                    ></a>
+                  </li>
+
+                  <li class="social-icon-item">
+                    <a
+                      href="#"
+                      class="social-icon-link social-icon-pinterest bi-pinterest"
+                    ></a>
+                  </li>
+
+                  <li class="social-icon-item">
+                    <a
+                      href="#"
+                      class="social-icon-link social-icon-whatsapp bi-whatsapp"
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d638855.3464034839!2d2.0026331471709424!3d6.841961819609705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x102354e509f894f7%3A0xc8fde921f89849f6!2sCotonou!5e0!3m2!1sfr!2sbj!4v1720895149084!5m2!1sfr!2sbj"  width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path
+        fill="#36363e"
+        fill-opacity="1"
+        d="M0,96L40,117.3C80,139,160,181,240,186.7C320,192,400,160,480,149.3C560,139,640,149,720,176C800,203,880,245,960,250.7C1040,256,1120,224,1200,229.3C1280,235,1360,277,1400,298.7L1440,320L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+      ></path>
+    </svg>
     <footer class="site-footer section-padding pb-5">
       <div class="container">
         <div class="row">

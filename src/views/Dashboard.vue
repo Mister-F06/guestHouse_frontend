@@ -39,7 +39,11 @@
             <stats-card
               title="Nombre clique"
               type="gradient-green"
-              :sub-title="statsManagers.guest_house_with_max_views.views"
+              :sub-title="
+                statsManagers.guest_house_with_max_views.views +
+                ' - ' +
+                statsManagers.guest_house_with_max_views.guest_house
+              "
               icon="ni ni-money-coins"
               class="mb-4"
             >
@@ -53,7 +57,7 @@
             <stats-card
               title="Revenue annuel "
               type="gradient-info"
-              :sub-title="statsManagers.yearly_income"
+              :sub-title="formatNumberCustom(statsManagers.yearly_income)"
               icon="ni ni-chart-bar-32"
               class="mb-4"
             >
@@ -317,6 +321,10 @@ export default {
     };
   },
   methods: {
+    formatNumberCustom(number) {
+      let numberString = number.toString();
+      return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
     async loadstatsAdmin(roleId) {
       try {
         if (roleId && roleId === 1) {
