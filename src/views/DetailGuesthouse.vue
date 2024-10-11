@@ -576,15 +576,11 @@
               <b-col>
                 <b-form-checkbox v-model="forms.isChecked" required>
                   J'accepte les
-                  <b-link
-                    href="https://docs.google.com/document/d/102WviTGqM5YBIZaEHHq_S1nY7_FxyWsvf3DxZQHN0KM/edit?usp=sharing"
-                    target="_blank"
+                  <b-link href="/cgu" target="_blank"
                     >conditions générales d'utilisation</b-link
                   >
                   et la
-                  <b-link
-                    href="https://docs.google.com/document/d/102WviTGqM5YBIZaEHHq_S1nY7_FxyWsvf3DxZQHN0KM/edit?usp=sharing"
-                    target="_blank"
+                  <b-link href="/politique-de-confidentialite" target="_blank"
                     >politique de confidentialité</b-link
                   >.
                 </b-form-checkbox>

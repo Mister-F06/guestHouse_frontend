@@ -126,10 +126,16 @@
                         <b-form-checkbox v-model="model.accept_terms">
                           <span class="text-muted" style="color: white !important"
                             >J'accepte les
-                            <a href="#!" style="color: white !important"
-                              >Politiques de confidentiallités</a
-                            ></span
-                          >
+                            <a href="/cgu" target="_blank" style="color: black !important"
+                              >conditions générales d'utilisation </a
+                            >et la
+                            <a
+                              href="/politique-de-confidentialite"
+                              target="_blank"
+                              style="color: black !important"
+                              >politique de confidentiallité</a
+                            >
+                          </span>
                         </b-form-checkbox>
                       </base-input>
                     </b-col>

@@ -203,7 +203,7 @@
           <div class="row">
             <div class="col-lg-12 col-12">
               <small class="section-small-title">OFAD GUESTHOUSE</small>
-              <h2 class="mt-2 mb-4">Maison d'<span class="tooplate-red">hôtes</span></h2>
+              <h2 class="mt-2 mb-4">Maisons d'<span class="tooplate-red">hôtes</span></h2>
             </div>
 
             <template v-if="isLoading">

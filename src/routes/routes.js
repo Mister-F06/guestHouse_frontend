@@ -14,6 +14,18 @@ const routes = [{
             import ('../views/Pages/ListingPage.vue'),
     },
     {
+        path: '/politique-de-confidentialite',
+        name: 'PolitiquePage',
+        component: () =>
+            import ('../views/PolitiqueConfig.vue'),
+    },
+    {
+        path: '/cgu',
+        name: 'CGUPage',
+        component: () =>
+            import ('../views/ConditionGenerale.vue'),
+    },
+    {
         path: '/detail-guesthouse/:id',
         name: 'DetailGuesthouse',
         // meta: { requiresAuth: true },
