@@ -1032,7 +1032,7 @@ export default {
 }
 
 .zoom-image:hover {
-  transform: scale(1.1); /* Effet de zoom */
+  transform: scale(1.2); /* Effet de zoom */
 }
 .card-content .columns .column {
   margin-bottom: 10px;

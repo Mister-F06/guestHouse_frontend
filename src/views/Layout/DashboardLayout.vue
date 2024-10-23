@@ -13,22 +13,31 @@
         </sidebar-item>
 
         <sidebar-item
-            :link="{
-              name: 'Ajouter un gueshouse',
-              path: '/dashboard/addGueshouse',
-              icon: 'ni ni-fat-add text-blue'
-              }"
-            >
+          :link="{
+            name: 'Ajouter un gueshouse',
+            path: '/dashboard/addGueshouse',
+            icon: 'ni ni-fat-add text-blue',
+          }"
+        >
+        </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Inventaire',
+            path: '/dashboard/inventory-managers',
+            icon: 'ni ni-money-coins text-blue',
+          }"
+        >
         </sidebar-item>
 
         <sidebar-item
-              :link="{
-                name: 'Profile',
-                path: '/dashboard/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
+          :link="{
+            name: 'Profile',
+            path: '/dashboard/profile',
+            icon: 'ni ni-single-02 text-yellow',
+          }"
+        >
         </sidebar-item>
-<!--
+        <!--
         <sidebar-item
                 :link="{
                   name: 'Tables',
@@ -89,49 +98,48 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-  import PerfectScrollbar from 'perfect-scrollbar';
-  import 'perfect-scrollbar/css/perfect-scrollbar.css';
+/* eslint-disable no-new */
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-  function hasElement(className) {
-    return document.getElementsByClassName(className).length > 0;
+function hasElement(className) {
+  return document.getElementsByClassName(className).length > 0;
+}
+
+function initScrollbar(className) {
+  if (hasElement(className)) {
+    new PerfectScrollbar(`.${className}`);
+  } else {
+    // try to init it later in case this component is loaded async
+    setTimeout(() => {
+      initScrollbar(className);
+    }, 100);
   }
+}
 
-  function initScrollbar(className) {
-    if (hasElement(className)) {
-      new PerfectScrollbar(`.${className}`);
-    } else {
-      // try to init it later in case this component is loaded async
-      setTimeout(() => {
-        initScrollbar(className);
-      }, 100);
-    }
-  }
+import DashboardNavbar from "./DashboardNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
+import DashboardContent from "./Content.vue";
+import { FadeTransition } from "vue2-transitions";
 
-  import DashboardNavbar from './DashboardNavbar.vue';
-  import ContentFooter from './ContentFooter.vue';
-  import DashboardContent from './Content.vue';
-  import { FadeTransition } from 'vue2-transitions';
-
-  export default {
-    components: {
-      DashboardNavbar,
-      ContentFooter,
-      DashboardContent,
-      FadeTransition
-    },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
+export default {
+  components: {
+    DashboardNavbar,
+    ContentFooter,
+    DashboardContent,
+    FadeTransition,
+  },
+  methods: {
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith("Win");
+      if (isWindows) {
+        initScrollbar("sidenav");
       }
     },
-    mounted() {
-      this.initScrollbar()
-    }
-  };
+  },
+  mounted() {
+    this.initScrollbar();
+  },
+};
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

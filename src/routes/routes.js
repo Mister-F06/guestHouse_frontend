@@ -54,6 +54,14 @@ const routes = [{
                     import ('../views/AddGueshouse.vue')
             },
             {
+                path: 'inventory-managers',
+                name: 'Inventaire Manager',
+                meta: { requiresAuth: true },
+
+                component: () =>
+                    import ('../views/InventoryManager.vue')
+            },
+            {
                 path: 'profile',
                 name: 'profile',
                 meta: { requiresAuth: true },
